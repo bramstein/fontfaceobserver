@@ -1,0 +1,73 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>FontFaceObserver</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="../node_modules/mocha/mocha.css" rel="stylesheet">
+    <style>
+      @font-face {
+        font-family: observer-test1;
+        src: url(assets/sourcesanspro-regular.woff) format('woff');
+      }
+
+      @font-face {
+        font-family: observer-test2;
+        src: url(unknown.woff) format('woff');
+      }
+
+      @font-face {
+        font-family: observer-test3;
+        src: url(assets/sourcesanspro-regular.woff) format('woff');
+      }
+
+      @font-face {
+        font-family: observer-test4;
+        src: url(assets/subset.woff) format('woff');
+        unicode-range: u+0021;
+      }
+
+      @font-face {
+        font-family: observer-test5;
+        src: url(assets/subset.woff) format('woff');
+        unicode-range: u+4e2d,u+56fd;
+      }
+
+      @font-face {
+        font-family: observer-test6;
+        src: url(assets/subset.woff) format('woff');
+        unicode-range: u+10ffff;
+      }
+
+      @font-face {
+        font-family: observer-test7;
+        src: url(assets/subset.woff) format('woff');
+        unicode-range: u+23;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="mocha"></div>
+    <script>CLOSURE_NO_DEPS = true;</script>
+    <script src="../vendor/google/base.js"></script>
+    <script src="../vendor/sunesimonsen/unexpected.js"></script>
+    <script src="../node_modules/mocha/mocha.js"></script>
+    <script src="../node_modules/sinon/pkg/sinon.js"></script>
+    <script src="deps.js"></script>
+    <script>
+      goog.require('fontface.Observer');
+      mocha.ui('bdd');
+
+      expect = weknowhow.expect;
+    </script>
+    <script src="./promise-test.js"></script>
+    <script src="./dom-test.js"></script>
+    <script src="./ruler-test.js"></script>
+    <script src="./observer-test.js"></script>
+    <script>
+      window.onload = function () {
+        mocha.run();
+      };
+    </script>
+  </body>
+</html>
