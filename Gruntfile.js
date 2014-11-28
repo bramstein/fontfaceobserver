@@ -46,7 +46,7 @@ module.exports = function (grunt) {
     closurecompiler: {
       dist: {
         files: {
-          "fontfaceobserver.js": ['src/**/*.js']
+          "fontfaceobserver.js": ['src/**/*.js', 'node_modules/promis/src/promise.js']
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
       },
       compile: {
         files: {
-          "build/fontfaceobserver.js": ['src/**/*.js'],
+          "build/fontfaceobserver.js": ['src/**/*.js', 'node_modules/promis/src/promise.js'],
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -62,7 +62,7 @@ module.exports = function (grunt) {
       },
       debug: {
         files: {
-          "build/fontfaceobserver.debug.js": ['src/**/*.js']
+          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'node_modules/promis/src/promise.js']
         },
         options: extend({}, compilerOptions, {
           debug: true,
