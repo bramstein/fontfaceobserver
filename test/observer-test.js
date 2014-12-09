@@ -50,6 +50,8 @@ describe('Observer', function () {
   describe('#check', function () {
     var defaultTimeout = null;
 
+    this.timeout(5000);
+
     beforeEach(function () {
       defaultTimeout = Observer.DEFAULT_TIMEOUT;
     });
@@ -67,7 +69,7 @@ describe('Observer', function () {
       ruler.setFont('monospace', '');
       var beforeWidth = ruler.getWidth();
 
-      Observer.DEFAULT_TIMEOUT = 500;
+      Observer.DEFAULT_TIMEOUT = 5000;
 
       ruler.setFont('observer-test1, monospace', '');
       observer.check().then(function () {
@@ -103,7 +105,7 @@ describe('Observer', function () {
     it('finds the font even if it is already loaded', function (done) {
       var observer = new Observer('observer-test3', {});
 
-      Observer.DEFAULT_TIMEOUT = 300;
+      Observer.DEFAULT_TIMEOUT = 5000;
 
       observer.check().then(function () {
         observer.check().then(function () {
@@ -120,7 +122,7 @@ describe('Observer', function () {
       var observer = new Observer('observer-test4', {}),
           ruler = new Ruler('\u0021');
 
-      Observer.DEFAULT_TIMEOUT = 300;
+      Observer.DEFAULT_TIMEOUT = 5000;
 
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
@@ -152,7 +154,7 @@ describe('Observer', function () {
       var observer = new Observer('observer-test5', {}),
           ruler = new Ruler('\u4e2d\u56fd');
 
-      Observer.DEFAULT_TIMEOUT = 300;
+      Observer.DEFAULT_TIMEOUT = 5000;
 
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
@@ -185,7 +187,7 @@ describe('Observer', function () {
       var observer = new Observer('observer-test6', {}),
           ruler = new Ruler('\udbff\udfff');
 
-      Observer.DEFAULT_TIMEOUT = 300;
+      Observer.DEFAULT_TIMEOUT = 5000;
 
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
