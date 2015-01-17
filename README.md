@@ -4,7 +4,7 @@ Font Face Observer is a small `@font-face` loader and monitor (3.5Kb minified an
 
 ## How to use
 
-Include your `@font-face` rules as usual. Fonts can be supplied by either a font service such as [Google Webfonts](http://www.google.com/webfonts), [Typekit](http://typekit.com), and [Webtype](http://webtype.com) or be self-hosted. It doesn't matter where, when, or how you load your fonts. You can set up monitoring for a single font family at a time:
+Include your `@font-face` rules as usual. Fonts can be supplied by either a font service such as [Google Fonts](http://www.google.com/fonts), [Typekit](http://typekit.com), and [Webtype](http://webtype.com) or be self-hosted. It doesn't matter where, when, or how you load your fonts. You can set up monitoring for a single font family at a time:
 
     var observer = new FontFaceObserver('My Family', {
       weight: 400
@@ -41,4 +41,4 @@ FontFaceObserver has been tested and works on the following browsers:
 
 ## License
 
-FontFaceObserver is licensed under the BSD License. Copyright 2014 Bram Stein. All rights reserved.
+FontFaceObserver is licensed under the BSD License. Copyright 2014-2015 Bram Stein. All rights reserved.
