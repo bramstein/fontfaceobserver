@@ -2,12 +2,10 @@ goog.provide('fontface.Observer');
 
 goog.require('fontface.Ruler');
 goog.require('fontface.dom');
-goog.require('lang.Promise');
 
 goog.scope(function () {
   var Ruler = fontface.Ruler,
-      dom = fontface.dom,
-      Promise = lang.Promise;
+      dom = fontface.dom;
 
   /**
    * @constructor
@@ -101,7 +99,7 @@ goog.scope(function () {
   /**
    * @param {string=} testString Optional test string to use for detecting if
    * a font is loaded.
-   * @return {lang.Promise.<fontface.Observer>}
+   * @return {Promise.<fontface.Observer>}
    */
   Observer.prototype.check = function (testString) {
     var text = testString || 'BESbswy',

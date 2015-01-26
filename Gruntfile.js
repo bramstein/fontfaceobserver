@@ -46,7 +46,7 @@ module.exports = function (grunt) {
     closurecompiler: {
       dist: {
         files: {
-          "fontfaceobserver.js": ['src/**/*.js', 'node_modules/promis/src/promise.js']
+          "fontfaceobserver.js": ['src/**/*.js']
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -54,7 +54,7 @@ module.exports = function (grunt) {
       },
       compile: {
         files: {
-          "build/fontfaceobserver.js": ['src/**/*.js', 'node_modules/promis/src/promise.js'],
+          "build/fontfaceobserver.js": ['src/**/*.js'],
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -62,12 +62,18 @@ module.exports = function (grunt) {
       },
       debug: {
         files: {
-          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'node_modules/promis/src/promise.js']
+          "build/fontfaceobserver.debug.js": ['src/**/*.js']
         },
         options: extend({}, compilerOptions, {
           debug: true,
           formatting: ['PRETTY_PRINT', 'PRINT_INPUT_DELIMITER']
         })
+      }
+    },
+    concat: {
+      dist: {
+        src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
+        dest: 'fontfaceobserver.js'
       }
     }
   });
@@ -77,6 +83,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('compile', ['closurecompiler:compile']);
@@ -84,5 +91,5 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['connect', 'exec:test']);
   grunt.registerTask('dev', ['connect', 'watch']);
-  grunt.registerTask('dist', ['closurecompiler:dist']);
+  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
 };
