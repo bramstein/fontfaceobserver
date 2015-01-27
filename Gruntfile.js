@@ -71,8 +71,12 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      dist: {
+      dist_standalone: {
         src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
+        dest: 'fontfaceobserver.standalone.js'
+      },
+      dist: {
+        src: ['build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
       }
     }
@@ -91,5 +95,5 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['connect', 'exec:test']);
   grunt.registerTask('dev', ['connect', 'watch']);
-  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
+  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist', 'concat:dist_standalone']);
 };
