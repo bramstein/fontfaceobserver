@@ -87,7 +87,7 @@ describe('Observer', function () {
         }, 0);
       }, function () {
         done(new Error('Timeout'));
-      }).catch(console.log);
+      });
     });
 
     it('fails to find a font and reject the promise', function (done) {
@@ -99,7 +99,7 @@ describe('Observer', function () {
         done(new Error('Should not resolve'));
       }, function () {
         done();
-      }).catch(console.log);
+      });
     });
 
     it('finds the font even if it is already loaded', function (done) {
@@ -115,7 +115,7 @@ describe('Observer', function () {
         });
       }, function () {
         done(new Error('Timeout'));
-      }).catch(console.log);
+      });
     });
 
     it('finds a font with a custom unicode range within ASCII', function (done) {
@@ -147,7 +147,7 @@ describe('Observer', function () {
         }, 0);
       }, function () {
         done(new Error('Timeout'));
-      }).catch(console.log);
+      });
     });
 
     it('finds a font with a custom unicode range outside ASCII (but within BMP)', function (done) {
@@ -180,7 +180,7 @@ describe('Observer', function () {
         }, 0);
       }, function () {
         done(new Error('Timeout'));
-      }).catch(console.log);
+      });
     });
 
     it('finds a font with a custom unicode range outside the BMP', function (done) {
@@ -213,7 +213,7 @@ describe('Observer', function () {
         }, 0);
       }, function () {
         done(new Error('Timeout'));
-      }).catch(console.log);
+      });
     });
 
     it('fails to find the font if it is available but does not contain the test string', function (done) {
