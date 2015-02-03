@@ -118,8 +118,14 @@ goog.scope(function () {
    * @param {function(number)} callback
    */
   Ruler.prototype.onResize = function (callback) {
-    this.collapsible.addEventListener('scroll', this.onScroll.bind(this, callback), false);
-    this.expandable.addEventListener('scroll', this.onScroll.bind(this, callback), false);
+    var that = this;
+
+    this.collapsible.addEventListener('scroll', function () {
+      that.onScroll(callback);
+    }, false);
+    this.expandable.addEventListener('scroll', function () {
+      that.onScroll(callback);
+    }, false);
     this.reset();
   };
 });
