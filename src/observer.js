@@ -97,11 +97,14 @@ goog.scope(function () {
   };
 
   /**
-   * @param {string=} testString Optional test string to use for detecting if
-   * a font is loaded.
-   * @return {Promise.<fontface.Observer>}
+   * Low-level font availability check. Use `check`.
+   *
+   * @param {string=} testString Optional test string to use for detecting if a font is available.
+   *
+   * @return {Promise.<number>} A promise resolved with the final width of the
+   * test span if the font is applied. Rejected with -1 if the font doesn't load.
    */
-  Observer.prototype.check = function (testString) {
+  Observer.prototype.available = function (testString) {
     var text = testString || 'BESbswy',
         style = this.getStyle(),
         container = dom.createElement('div'),
@@ -160,10 +163,10 @@ goog.scope(function () {
                     (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) &&
                     (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
                 // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
-                resolve(that);
+                resolve(widthA);
               }
             } else {
-              resolve(that);
+              resolve(widthA);
             }
           }
         }
@@ -171,7 +174,7 @@ goog.scope(function () {
 
       setTimeout(function () {
         dom.remove(document.body, container);
-        reject(that);
+        reject(-1);
       }, Observer.DEFAULT_TIMEOUT);
 
       rulerA.onResize(function (width) {
@@ -194,6 +197,20 @@ goog.scope(function () {
       });
 
       rulerC.setFont(that['family'] + ',monospace', style);
+    });
+  };
+
+  /**
+   * @param {string=} testString Optional test string to use for detecting if
+   * a font is loaded.
+   * @return {Promise.<fontface.Observer>}
+   */
+  Observer.prototype.check = function (testString) {
+    var that = this;
+    return this.available(testString).then(function () {
+      return that;
+    }, function () {
+      throw that;
     });
   };
 });

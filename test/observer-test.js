@@ -6,6 +6,7 @@ describe('Observer', function () {
     it('creates a new instance with the correct signature', function () {
       var observer = new Observer('my family', {});
       expect(observer, 'not to be', null);
+      expect(observer.available, 'to be a function');
       expect(observer.check, 'to be a function');
     });
 
