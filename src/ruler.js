@@ -64,7 +64,7 @@ goog.scope(function () {
                             'padding:0;' +
                             'top:0;' +
                             'white-space:nowrap;' +
-                            'font-size:300px;' +
+                            'font-size:100px;' +
                             'font-family:' + family + ';' +
                             description);
   };
