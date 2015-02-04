@@ -159,8 +159,8 @@ goog.scope(function () {
               // Except if the browser has the WebKit fallback bug, in which case we check to see if all
               // values are set to one of the last resort fonts.
 
-              if (!((widthA === fallbackWidthA && widthB === fallbackWidthA && widthC === fallbackWidthA) &&
-                    (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) &&
+              if (!((widthA === fallbackWidthA && widthB === fallbackWidthA && widthC === fallbackWidthA) ||
+                    (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) ||
                     (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
                 // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
                 resolve(widthA);
