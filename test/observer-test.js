@@ -14,8 +14,8 @@ describe('Observer', function () {
         weight: 'bold'
       });
 
-      expect(observer.family_, 'to equal', 'my family');
-      expect(observer.weight_, 'to equal', 'bold');
+      expect(observer.family, 'to equal', 'my family');
+      expect(observer.weight, 'to equal', 'bold');
     });
 
     it('defaults descriptors that are not given', function () {
@@ -23,7 +23,7 @@ describe('Observer', function () {
         weight: 'bold'
       });
 
-      expect(observer.variant_, 'to equal', 'normal');
+      expect(observer.variant, 'to equal', 'normal');
     });
   });
 
