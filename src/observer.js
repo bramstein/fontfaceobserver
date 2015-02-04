@@ -17,32 +17,32 @@ goog.scope(function () {
     /**
      * @type {string}
      */
-    this.family_ = family;
+    this['family'] = family;
 
     /**
      * @type {string}
      */
-    this.style_ = descriptors.style || 'normal';
+    this['style'] = descriptors.style || 'normal';
 
     /**
      * @type {string}
      */
-    this.variant_ = descriptors.variant || 'normal';
+    this['variant'] = descriptors.variant || 'normal';
 
     /**
      * @type {string}
      */
-    this.weight_ = descriptors.weight || 'normal';
+    this['weight'] = descriptors.weight || 'normal';
 
     /**
      * @type {string}
      */
-    this.stretch_ = descriptors.stretch || 'stretch';
+    this['stretch'] = descriptors.stretch || 'stretch';
 
     /**
      * @type {string}
      */
-    this.featureSettings_ = descriptors.featureSettings || 'normal';
+    this['featureSettings'] = descriptors.featureSettings || 'normal';
   };
 
   var Observer = fontface.Observer;
@@ -87,13 +87,13 @@ goog.scope(function () {
    * @return {string}
    */
   Observer.prototype.getStyle = function () {
-    return 'font-style:' + this.style_ + ';' +
-           'font-variant:' + this.variant_ + ';' +
-           'font-weight:' + this.weight_ + ';' +
-           'font-stretch:' + this.stretch_ + ';' +
-           'font-feature-settings:' + this.featureSettings_ + ';' +
-           '-moz-font-feature-settings:' + this.featureSettings_ + ';' +
-           '-webkit-font-feature-settings:' + this.featureSettings_ + ';';
+    return 'font-style:' + this['style'] + ';' +
+           'font-variant:' + this['variant'] + ';' +
+           'font-weight:' + this['weight'] + ';' +
+           'font-stretch:' + this['stretch'] + ';' +
+           'font-feature-settings:' + this['featureSettings'] + ';' +
+           '-moz-font-feature-settings:' + this['featureSettings'] + ';' +
+           '-webkit-font-feature-settings:' + this['featureSettings'] + ';';
   };
 
   /**
@@ -179,21 +179,21 @@ goog.scope(function () {
         check();
       });
 
-      rulerA.setFont(that.family_ + ',sans-serif', style);
+      rulerA.setFont(that['family'] + ',sans-serif', style);
 
       rulerB.onResize(function (width) {
         widthB = width;
         check();
       });
 
-      rulerB.setFont(that.family_ + ',serif', style);
+      rulerB.setFont(that['family'] + ',serif', style);
 
       rulerC.onResize(function (width) {
         widthC = width;
         check();
       });
 
-      rulerC.setFont(that.family_ + ',monospace', style);
+      rulerC.setFont(that['family'] + ',monospace', style);
     });
   };
 });
