@@ -97,14 +97,10 @@ goog.scope(function () {
   };
 
   /**
-   * Low-level font availability check. Use `check`.
-   *
    * @param {string=} testString Optional test string to use for detecting if a font is available.
-   *
-   * @return {Promise.<number>} A promise resolved with the final width of the
-   * test span if the font is applied. Rejected with -1 if the font doesn't load.
+   * @return {Promise.<fontface.Observer>}
    */
-  Observer.prototype.available = function (testString) {
+  Observer.prototype.check = function (testString) {
     var text = testString || 'BESbswy',
         style = this.getStyle(),
         container = dom.createElement('div'),
@@ -170,11 +166,11 @@ goog.scope(function () {
                     (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
                 // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
                 removeContainer();
-                resolve(widthA);
+                resolve(that);
               }
             } else {
               removeContainer();
-              resolve(widthA);
+              resolve(that);
             }
           }
         }
@@ -182,7 +178,7 @@ goog.scope(function () {
 
       setTimeout(function () {
         removeContainer();
-        reject(-1);
+        reject(that);
       }, Observer.DEFAULT_TIMEOUT);
 
       rulerA.onResize(function (width) {
@@ -205,20 +201,6 @@ goog.scope(function () {
       });
 
       rulerC.setFont(that['family'] + ',monospace', style);
-    });
-  };
-
-  /**
-   * @param {string=} testString Optional test string to use for detecting if
-   * a font is loaded.
-   * @return {Promise.<fontface.Observer>}
-   */
-  Observer.prototype.check = function (testString) {
-    var that = this;
-    return this.available(testString).then(function () {
-      return that;
-    }, function () {
-      throw that;
     });
   };
 });

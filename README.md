@@ -28,8 +28,6 @@ If your font doesn't contain latin characters you can pass a custom test string 
       console.log('Font is not available');
     });
 
-There is also the more low-level `available` method which returns a promise that is settled with the width of the test string in the loaded font. This is only for advanced use when you need to know the width of one or more glyphs and the font must be available right away. 
-
 ## Installation
 
 If you're using npm you can install Font Face Observer as a dependency:

@@ -12,10 +12,3 @@ var FontFaceObserver = function (family, descriptors) {};
  * @return {Promise.<FontFaceObserver>}
  */
 FontFaceObserver.prototype.check = function (opt_text) {};
-
-/**
- * @param {string=} opt_text
- *
- * @return {Promise.<number>}
- */
-FontFaceObserver.prototype.available = function (opt_text) {};
