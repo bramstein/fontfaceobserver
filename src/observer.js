@@ -134,6 +134,9 @@ goog.scope(function () {
     fallbackWidthC = rulerC.getWidth();
 
     return new Promise(function (resolve, reject) {
+      /**
+       * @private
+       */
       function removeContainer() {
         if (container.parentNode !== null) {
           dom.remove(document.body, container);
