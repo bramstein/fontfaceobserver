@@ -138,6 +138,12 @@ goog.scope(function () {
     fallbackWidthC = rulerC.getWidth();
 
     return new Promise(function (resolve, reject) {
+      function removeContainer() {
+        if (container.parentNode !== null) {
+          dom.remove(document.body, container);
+        }
+      }
+
       /**
        * @private
        *
@@ -163,9 +169,11 @@ goog.scope(function () {
                     (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) ||
                     (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
                 // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
+                removeContainer();
                 resolve(widthA);
               }
             } else {
+              removeContainer();
               resolve(widthA);
             }
           }
@@ -173,7 +181,7 @@ goog.scope(function () {
       }
 
       setTimeout(function () {
-        dom.remove(document.body, container);
+        removeContainer();
         reject(-1);
       }, Observer.DEFAULT_TIMEOUT);
 
