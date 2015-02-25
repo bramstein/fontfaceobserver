@@ -8,7 +8,8 @@ var FontFaceObserver = function (family, descriptors) {};
 
 /**
  * @param {string=} opt_text
+ * @param {number=} opt_timeout
  *
  * @return {Promise.<FontFaceObserver>}
  */
-FontFaceObserver.prototype.check = function (opt_text) {};
+FontFaceObserver.prototype.check = function (opt_text, opt_timeout) {};

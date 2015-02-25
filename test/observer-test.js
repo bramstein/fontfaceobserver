@@ -48,17 +48,7 @@ describe('Observer', function () {
   });
 
   describe('#check', function () {
-    var defaultTimeout = null;
-
     this.timeout(5000);
-
-    beforeEach(function () {
-      defaultTimeout = Observer.DEFAULT_TIMEOUT;
-    });
-
-    afterEach(function () {
-      Observer.DEFAULT_TIMEOUT = defaultTimeout;
-    });
 
     it('finds a font and resolve the promise', function (done) {
       var observer = new Observer('observer-test1', {}),
@@ -69,10 +59,8 @@ describe('Observer', function () {
       ruler.setFont('monospace', '');
       var beforeWidth = ruler.getWidth();
 
-      Observer.DEFAULT_TIMEOUT = 5000;
-
       ruler.setFont('observer-test1, monospace', '');
-      observer.check().then(function () {
+      observer.check(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -93,9 +81,7 @@ describe('Observer', function () {
     it('fails to find a font and reject the promise', function (done) {
       var observer = new Observer('observer-test2', {});
 
-      Observer.DEFAULT_TIMEOUT = 50;
-
-      observer.check().then(function () {
+      observer.check(null, 50).then(function () {
         done(new Error('Should not resolve'));
       }, function () {
         done();
@@ -105,10 +91,8 @@ describe('Observer', function () {
     it('finds the font even if it is already loaded', function (done) {
       var observer = new Observer('observer-test3', {});
 
-      Observer.DEFAULT_TIMEOUT = 5000;
-
-      observer.check().then(function () {
-        observer.check().then(function () {
+      observer.check(null, 5000).then(function () {
+        observer.check(null, 5000).then(function () {
           done();
         }, function () {
           done(new Error('Second call failed'));
@@ -122,8 +106,6 @@ describe('Observer', function () {
       var observer = new Observer('observer-test4', {}),
           ruler = new Ruler('\u0021');
 
-      Observer.DEFAULT_TIMEOUT = 5000;
-
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
 
@@ -131,7 +113,7 @@ describe('Observer', function () {
 
       ruler.setFont('observer-test4,monospace', '');
 
-      observer.check('\u0021').then(function () {
+      observer.check('\u0021', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -154,8 +136,6 @@ describe('Observer', function () {
       var observer = new Observer('observer-test5', {}),
           ruler = new Ruler('\u4e2d\u56fd');
 
-      Observer.DEFAULT_TIMEOUT = 5000;
-
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
 
@@ -163,7 +143,7 @@ describe('Observer', function () {
 
       ruler.setFont('observer-test5,monospace', '');
 
-      observer.check('\u4e2d\u56fd').then(function () {
+      observer.check('\u4e2d\u56fd', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -187,8 +167,6 @@ describe('Observer', function () {
       var observer = new Observer('observer-test6', {}),
           ruler = new Ruler('\udbff\udfff');
 
-      Observer.DEFAULT_TIMEOUT = 5000;
-
       ruler.setFont('monospace', '');
       document.body.appendChild(ruler.getElement());
 
@@ -196,7 +174,7 @@ describe('Observer', function () {
 
       ruler.setFont('observer-test6,monospace', '');
 
-      observer.check('\udbff\udfff').then(function () {
+      observer.check('\udbff\udfff', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -219,9 +197,7 @@ describe('Observer', function () {
     it('fails to find the font if it is available but does not contain the test string', function (done) {
       var observer = new Observer('observer-test7', {});
 
-      Observer.DEFAULT_TIMEOUT = 50;
-
-      observer.check().then(function () {
+      observer.check(null, 50).then(function () {
         done(new Error('Should not be called'));
       }, function () {
         done();

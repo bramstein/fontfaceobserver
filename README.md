@@ -28,6 +28,16 @@ If your font doesn't contain latin characters you can pass a custom test string 
       console.log('Font is not available');
     });
 
+The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `check` method.
+
+    var observer = new FontFaceObserver('My Family', {});
+
+    observer.check(null, 5000).then(function () {
+      console.log('Font is available');
+    }, function () {
+      console.log('Font is not available after waiting 5 seconds');
+    });
+
 ## Installation
 
 If you're using npm you can install Font Face Observer as a dependency:

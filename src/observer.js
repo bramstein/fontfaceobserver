@@ -97,17 +97,19 @@ goog.scope(function () {
   };
 
   /**
-   * @param {string=} testString Optional test string to use for detecting if a font is available.
+   * @param {string=} text Optional test string to use for detecting if a font is available.
+   * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    * @return {Promise.<fontface.Observer>}
    */
-  Observer.prototype.check = function (testString) {
-    var text = testString || 'BESbswy',
+  Observer.prototype.check = function (text, timeout) {
+    var testString = text || 'BESbswy',
+        timeoutValue = timeout || Observer.DEFAULT_TIMEOUT,
         style = this.getStyle(),
         container = dom.createElement('div'),
 
-        rulerA = new Ruler(text),
-        rulerB = new Ruler(text),
-        rulerC = new Ruler(text),
+        rulerA = new Ruler(testString),
+        rulerB = new Ruler(testString),
+        rulerC = new Ruler(testString),
 
         widthA = -1,
         widthB = -1,
@@ -182,7 +184,7 @@ goog.scope(function () {
       setTimeout(function () {
         removeContainer();
         reject(that);
-      }, Observer.DEFAULT_TIMEOUT);
+      }, timeoutValue);
 
       rulerA.onResize(function (width) {
         widthA = width;
