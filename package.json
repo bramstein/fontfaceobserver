@@ -1,11 +1,12 @@
 {
   "name": "fontfaceobserver",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Detect if web fonts are available",
   "directories": {
     "test": "test"
   },
   "repository": "https://github.com/bramstein/fontfaceobserver.git",
+  "main": "fontfaceobserver.js",
   "keywords": [
     "fontloader",
     "fonts",
