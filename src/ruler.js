@@ -12,6 +12,8 @@ goog.scope(function () {
   fontface.Ruler = function (text) {
     var style = 'display:inline-block;' +
                 'position:absolute;' +
+                'left:0;' +
+                'top:0;' +
                 'height:100%;' +
                 'width:100%;' +
                 'overflow:scroll;';
@@ -64,7 +66,7 @@ goog.scope(function () {
                             'padding:0;' +
                             'top:0;' +
                             'white-space:nowrap;' +
-                            'font-size:100px;' +
+                            'font-size:60px;' +
                             'font-family:' + family + ';' +
                             description);
   };
