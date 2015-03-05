@@ -57,12 +57,12 @@ goog.scope(function () {
     dom.style(this.element, 'min-width:20px;' +
                             'min-height:20px;' +
                             'display:inline-block;' +
-                            'visibility:hidden;' +
                             'position:absolute;' +
                             'width:auto;' +
                             'margin:0;' +
                             'padding:0;' +
-                            'top:0;' +
+                            'top:-999px;' +
+                            'left:-999px;' +
                             'white-space:nowrap;' +
                             'font-size:100px;' +
                             'font-family:' + family + ';' +
