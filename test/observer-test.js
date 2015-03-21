@@ -203,6 +203,16 @@ describe('Observer', function () {
         done();
       });
     });
+
+    it('finds a locally installed font', function (done) {
+      var observer = new Observer('Tahoma', {});
+
+      observer.check(null, 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect local font'));
+      });
+    });
   });
 
   describe('hasWebKitFallbackBug', function () {
