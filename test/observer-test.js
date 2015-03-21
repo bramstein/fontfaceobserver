@@ -204,7 +204,17 @@ describe('Observer', function () {
       });
     });
 
-    it('finds a locally installed font', function (done) {
+    it('finds a locally installed font', function () {
+      var observer = new Observer('Georgia', {});
+
+      observer.check(null, 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect local font'));
+      });
+    });
+
+    it('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
       var observer = new Observer('Tahoma', {});
 
       observer.check(null, 50).then(function () {
