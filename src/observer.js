@@ -148,6 +148,11 @@ goog.scope(function () {
       /**
        * @private
        *
+       * If metric compatible fonts are detected, one of the widths will be -1. This is
+       * because a metric compatible font won't trigger a scroll event. We work around
+       * this by considering a font loaded if at least two of the widths are the same.
+       * Because we have three widths, this still prevents false positives.
+       *
        * Cases:
        * 1) Font loads: both a, b and c are called and have the same value.
        * 2) Font fails to load: resize callback is never called and timeout happens.
@@ -156,10 +161,8 @@ goog.scope(function () {
        *    continue waiting until we get new values (or a timeout).
        */
       function check() {
-        if (widthA !== -1 && widthB !== -1 && widthC !== -1) {
-          // All values are changed from their initial state
-
-          if (widthA === widthB && widthB === widthC) {
+        if ((widthA !== -1 && widthB !== -1) || (widthA !== -1 && widthC !== -1) || (widthB !== -1 && widthC !== -1)) {
+          if (widthA === widthB || widthA === widthC || widthB === widthC) {
             // All values are the same, so the browser has most likely loaded the web font
 
             if (Observer.hasWebKitFallbackBug()) {
