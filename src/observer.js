@@ -184,10 +184,20 @@ goog.scope(function () {
         }
       }
 
-      setTimeout(function () {
-        removeContainer();
-        reject(that);
-      }, timeoutValue);
+      var start = Date.now();
+
+      function checkForTimeout() {
+        var now = Date.now();
+
+        if (now - start > timeoutValue) {
+          removeContainer();
+          reject(that);
+        } else {
+          setTimeout(checkForTimeout, 50);
+        }
+      }
+
+      checkForTimeout();
 
       rulerA.onResize(function (width) {
         widthA = width;
