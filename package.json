@@ -33,7 +33,8 @@
     "grunt-contrib-concat": "^0.5.1",
     "grunt-exec": "~0.4.6",
     "grunt-closurecompiler": "^0.9.9",
-    "extend": "^2.0.0"
+    "extend": "^2.0.0",
+    "unexpected": "^6.4.0"
   },
   "scripts": {
     "test": "grunt test"
