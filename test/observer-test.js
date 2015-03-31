@@ -204,7 +204,7 @@ describe('Observer', function () {
       });
     });
 
-    it('finds a locally installed font', function () {
+    it('finds a locally installed font', function (done) {
       var observer = new Observer('Georgia', {});
 
       observer.check(null, 50).then(function () {
