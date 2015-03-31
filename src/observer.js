@@ -193,6 +193,13 @@ goog.scope(function () {
           removeContainer();
           reject(that);
         } else {
+          var hidden = document['hidden'];
+          if (hidden === true || hidden === undefined) {
+            widthA = rulerA.getWidth();
+            widthB = rulerB.getWidth();
+            widthC = rulerC.getWidth();
+            check();
+          }
           setTimeout(checkForTimeout, 50);
         }
       }
