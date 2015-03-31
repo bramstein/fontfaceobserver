@@ -72,7 +72,7 @@ goog.scope(function () {
    */
   Observer.hasWebKitFallbackBug = function () {
     if (Observer.HAS_WEBKIT_FALLBACK_BUG === null) {
-      var match = /AppleWeb[kK]it\/([0-9]+)(?:\.([0-9]+))/.exec(Observer.getUserAgent());
+      var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(Observer.getUserAgent());
 
       Observer.HAS_WEBKIT_FALLBACK_BUG = !!match &&
                                           (parseInt(match[1], 10) < 536 ||
