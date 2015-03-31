@@ -189,7 +189,7 @@ goog.scope(function () {
       function checkForTimeout() {
         var now = Date.now();
 
-        if (now - start > timeoutValue) {
+        if (now - start >= timeoutValue) {
           removeContainer();
           reject(that);
         } else {
