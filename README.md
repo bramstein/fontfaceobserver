@@ -1,6 +1,6 @@
 # Font Face Observer
 
-Font Face Observer is a small `@font-face` loader and monitor (2.7KB minified and 1.1KB gzipped) compatible with any web-font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
+Font Face Observer is a small `@font-face` loader and monitor (3.1KB minified and 1.2KB gzipped) compatible with any web-font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
 
 ## How to use
 
