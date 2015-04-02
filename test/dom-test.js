@@ -55,4 +55,13 @@ describe('dom', function () {
       expect(parent.childNodes.length, 'to equal', 0);
     });
   });
+
+  describe('waitForBody', function () {
+    it('waits for the body', function (done) {
+      dom.waitForBody(function () {
+        expect(document.body, 'to be an object');
+        done();
+      });
+    });
+  });
 });

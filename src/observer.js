@@ -121,20 +121,6 @@ goog.scope(function () {
 
         that = this;
 
-    rulerA.setFont('sans-serif', style);
-    rulerB.setFont('serif', style);
-    rulerC.setFont('monospace', style);
-
-    dom.append(container, rulerA.getElement());
-    dom.append(container, rulerB.getElement());
-    dom.append(container, rulerC.getElement());
-
-    dom.append(document.body, container);
-
-    fallbackWidthA = rulerA.getWidth();
-    fallbackWidthB = rulerB.getWidth();
-    fallbackWidthC = rulerC.getWidth();
-
     return new Promise(function (resolve, reject) {
       /**
        * @private
@@ -184,48 +170,64 @@ goog.scope(function () {
         }
       }
 
-      var start = Date.now();
+      dom.waitForBody(function () {
+        var start = Date.now();
 
-      function checkForTimeout() {
-        var now = Date.now();
+        rulerA.setFont('sans-serif', style);
+        rulerB.setFont('serif', style);
+        rulerC.setFont('monospace', style);
 
-        if (now - start >= timeoutValue) {
-          removeContainer();
-          reject(that);
-        } else {
-          var hidden = document['hidden'];
-          if (hidden === true || hidden === undefined) {
-            widthA = rulerA.getWidth();
-            widthB = rulerB.getWidth();
-            widthC = rulerC.getWidth();
-            check();
+        dom.append(container, rulerA.getElement());
+        dom.append(container, rulerB.getElement());
+        dom.append(container, rulerC.getElement());
+
+        dom.append(document.body, container);
+
+        fallbackWidthA = rulerA.getWidth();
+        fallbackWidthB = rulerB.getWidth();
+        fallbackWidthC = rulerC.getWidth();
+
+        function checkForTimeout() {
+          var now = Date.now();
+
+          if (now - start >= timeoutValue) {
+            removeContainer();
+            reject(that);
+          } else {
+            var hidden = document['hidden'];
+            if (hidden === true || hidden === undefined) {
+              widthA = rulerA.getWidth();
+              widthB = rulerB.getWidth();
+              widthC = rulerC.getWidth();
+              check();
+            }
+            setTimeout(checkForTimeout, 50);
           }
-          setTimeout(checkForTimeout, 50);
         }
-      }
 
-      checkForTimeout();
+        checkForTimeout();
 
-      rulerA.onResize(function (width) {
-        widthA = width;
-        check();
+        rulerA.onResize(function (width) {
+          widthA = width;
+          check();
+        });
+
+        rulerA.setFont(that['family'] + ',sans-serif', style);
+
+        rulerB.onResize(function (width) {
+          widthB = width;
+          check();
+        });
+
+        rulerB.setFont(that['family'] + ',serif', style);
+
+        rulerC.onResize(function (width) {
+          widthC = width;
+          check();
+        });
+
+        rulerC.setFont(that['family'] + ',monospace', style);
       });
-
-      rulerA.setFont(that['family'] + ',sans-serif', style);
-
-      rulerB.onResize(function (width) {
-        widthB = width;
-        check();
-      });
-
-      rulerB.setFont(that['family'] + ',serif', style);
-
-      rulerC.onResize(function (width) {
-        widthC = width;
-        check();
-      });
-
-      rulerC.setFont(that['family'] + ',monospace', style);
     });
   };
 });
