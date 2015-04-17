@@ -1,11 +1,10 @@
 goog.provide('fontface.Observer');
 
 goog.require('fontface.Ruler');
-goog.require('fontface.dom');
+goog.require('dom');
 
 goog.scope(function () {
-  var Ruler = fontface.Ruler,
-      dom = fontface.dom;
+  var Ruler = fontface.Ruler;
 
   /**
    * @constructor
