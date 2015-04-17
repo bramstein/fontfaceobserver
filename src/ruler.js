@@ -1,10 +1,8 @@
 goog.provide('fontface.Ruler');
 
-goog.require('fontface.dom');
+goog.require('dom');
 
 goog.scope(function () {
-  var dom = fontface.dom;
-
   /**
    * @constructor
    * @param {string} text
