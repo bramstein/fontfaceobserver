@@ -13,6 +13,7 @@ goog.scope(function () {
    * @param {fontface.Descriptors} descriptors
    */
   fontface.Observer = function (family, descriptors) {
+    descriptors = descriptors || {};
     /**
      * @type {string}
      */
