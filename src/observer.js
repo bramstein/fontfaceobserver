@@ -10,9 +10,11 @@ goog.scope(function () {
    * @constructor
    *
    * @param {string} family
-   * @param {fontface.Descriptors} descriptors
+   * @param {fontface.Descriptors=} opt_descriptors
    */
-  fontface.Observer = function (family, descriptors) {
+  fontface.Observer = function (family, opt_descriptors) {
+    var descriptors = opt_descriptors || {};
+
     /**
      * @type {string}
      */
