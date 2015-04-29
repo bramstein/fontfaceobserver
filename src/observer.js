@@ -128,7 +128,7 @@ goog.scope(function () {
        */
       function removeContainer() {
         if (container.parentNode !== null) {
-          dom.remove(document.body, container);
+          dom.remove(container.parentNode, container);
         }
       }
 
