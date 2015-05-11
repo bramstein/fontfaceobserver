@@ -1,6 +1,6 @@
 # Font Face Observer
 
-Font Face Observer is a small `@font-face` loader and monitor (3.1KB minified and 1.2KB gzipped) compatible with any web font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
+Font Face Observer is a small `@font-face` loader and monitor (4.6KB minified and 1.7KB gzipped) compatible with any web font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
 
 ## How to use
 
@@ -44,9 +44,7 @@ If you're using npm you can install Font Face Observer as a dependency:
 
     > npm install fontfaceobserver
 
-You can then either include `fontfaceobserver.js` or `fontfaceobserver.standalone.js`. The former is Font Face Observer without dependencies. The latter includes a small [promise polyfill](https://github.com/bramstein/promis).
-
-If you're not using npm, grab either `fontfaceobserver.js` or `fontfaceobserver.standalone.js` and include it in your project. 
+You can then include `node_modules/fontfaceobserver/fontfaceobserver.js`. If you're not using npm, grab `fontfaceobserver.js` and include it in your project. 
 
 ## Browser support
 

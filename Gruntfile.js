@@ -26,7 +26,7 @@ module.exports = function (grunt) {
       test: {
         command: 'browserstack-test -u $BROWSERSTACK_USERNAME -p $BROWSERSTACK_PASSWORD -k $BROWSERSTACK_KEY -b browsers.json http://localhost:9999/test/index.html'
       },
-      deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
+      deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/promis/src/ -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
     },
     jshint: {
       all: ['src/**/*.js'],
@@ -47,7 +47,7 @@ module.exports = function (grunt) {
     closurecompiler: {
       dist: {
         files: {
-          "fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          "fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js']
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -55,7 +55,7 @@ module.exports = function (grunt) {
       },
       compile: {
         files: {
-          "build/fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js'],
+          "build/fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js'],
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -63,7 +63,7 @@ module.exports = function (grunt) {
       },
       debug: {
         files: {
-          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js']
         },
         options: extend({}, compilerOptions, {
           debug: true,
@@ -72,10 +72,6 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      dist_standalone: {
-        src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
-        dest: 'fontfaceobserver.standalone.js'
-      },
       dist: {
         src: ['build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
@@ -96,5 +92,5 @@ module.exports = function (grunt) {
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['connect', 'exec:test']);
   grunt.registerTask('dev', ['connect', 'watch']);
-  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist', 'concat:dist_standalone']);
+  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
 };
