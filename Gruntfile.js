@@ -82,8 +82,6 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-closurecompiler');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-exec');
 
@@ -91,6 +89,5 @@ module.exports = function (grunt) {
   grunt.registerTask('debug', ['closurecompiler:debug']);
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['connect', 'exec:test']);
-  grunt.registerTask('dev', ['connect', 'watch']);
   grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
 };
