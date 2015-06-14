@@ -223,6 +223,36 @@ describe('Observer', function () {
         done(new Error('Did not detect local font'));
       });
     });
+
+    it('finds the google-hosted material icons font', function(done){
+      var observer = new Observer('Material Icons', {});
+
+      observer.check('', 3000).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font using ligatures', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check('', 3000).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font using ligatures'))
+      });
+    });
+
+    it('finds the google-hosted material icons font using named ligatures', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check('3d_rotation', 3000).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font using named ligatures'))
+      });
+    });
   });
 
   describe('hasWebKitFallbackBug', function () {
