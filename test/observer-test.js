@@ -224,6 +224,23 @@ describe('Observer', function () {
       });
     });
 
+    it('fails to find the google-hosted material icons font before loading font', function(done){
+      var observer = new Observer('Material Icons', {});
+      var
+        link = document.createElement('link')
+      ;
+      link.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons');
+      link.setAttribute('rel', 'stylesheet');
+
+      observer.check('font_download', 50).then(function () {
+        document.querySelector('head').appendChild(link);
+        done(new Error('Finds the google-hosted material icons font before loading font'));
+      }, function () {
+        document.querySelector('head').appendChild(link);
+        done()
+      });
+    });
+
     it('finds the google-hosted material icons font with no character check', function(done){
       var observer = new Observer('Material Icons', {});
 
