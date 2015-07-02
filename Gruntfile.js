@@ -23,9 +23,6 @@ module.exports = function (grunt) {
     },
     watch: {},
     exec: {
-      test: {
-        command: 'browserstack-test -u $BROWSERSTACK_USERNAME -p $BROWSERSTACK_PASSWORD -k $BROWSERSTACK_KEY -b browsers.json http://localhost:9999/test/index.html'
-      },
       deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/promis/src/ -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
     },
     jshint: {

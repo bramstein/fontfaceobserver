@@ -1,6 +1,6 @@
 {
   "name": "fontfaceobserver",
-  "version": "1.4.12",
+  "version": "1.4.17",
   "description": "Detect if web fonts are available",
   "directories": {
     "test": "test"
@@ -19,7 +19,7 @@
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
   "license": "BSD",
   "dependencies": {
-    "promis": "=1.0.6",
+    "promis": "=1.0.8",
     "closure-dom": "=0.0.1"
   },
   "devDependencies": {
