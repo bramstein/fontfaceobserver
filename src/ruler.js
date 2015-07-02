@@ -55,6 +55,7 @@ goog.scope(function () {
     dom.style(this.element, 'min-width:20px;' +
                             'min-height:20px;' +
                             'display:inline-block;' +
+                            'overflow:hidden;' +
                             'position:absolute;' +
                             'width:auto;' +
                             'margin:0;' +
