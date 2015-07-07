@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     },
     watch: {},
     exec: {
-      deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/promis/src/ -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
+      deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
     },
     jshint: {
       all: ['src/**/*.js'],
@@ -44,7 +44,7 @@ module.exports = function (grunt) {
     closurecompiler: {
       dist: {
         files: {
-          "fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js']
+          "fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -52,7 +52,7 @@ module.exports = function (grunt) {
       },
       compile: {
         files: {
-          "build/fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js'],
+          "build/fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js'],
         },
         options: extend({}, compilerOptions, {
           define: "DEBUG=false"
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
       },
       debug: {
         files: {
-          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js', 'node_modules/promis/src/**/*.js']
+          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
         },
         options: extend({}, compilerOptions, {
           debug: true,
@@ -70,7 +70,7 @@ module.exports = function (grunt) {
     },
     concat: {
       dist: {
-        src: ['build/fontfaceobserver.js'],
+        src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
       }
     }

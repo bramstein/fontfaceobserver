@@ -2,11 +2,9 @@ goog.provide('fontface.Observer');
 
 goog.require('fontface.Ruler');
 goog.require('dom');
-goog.require('lang.Promise');
 
 goog.scope(function () {
-  var Ruler = fontface.Ruler,
-      Promise = lang.Promise;
+  var Ruler = fontface.Ruler;
 
   /**
    * @constructor
