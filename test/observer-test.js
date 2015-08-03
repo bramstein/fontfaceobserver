@@ -205,7 +205,7 @@ describe('Observer', function () {
     });
 
     it('finds a locally installed font', function (done) {
-      var observer = new Observer('Georgia', {});
+      var observer = new Observer('sans-serif', {});
 
       observer.check(null, 50).then(function () {
         done();
@@ -215,7 +215,7 @@ describe('Observer', function () {
     });
 
     it('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
-      var observer = new Observer('Tahoma', {});
+      var observer = new Observer('serif', {});
 
       observer.check(null, 50).then(function () {
         done();
