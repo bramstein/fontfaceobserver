@@ -52,7 +52,7 @@ If you're using npm you can install Font Face Observer as a dependency:
 $ npm install fontfaceobserver
 ```
 
-You can then include `node_modules/fontfaceobserver/fontfaceobserver.js`. If you're not using npm, grab `fontfaceobserver.js` and include it in your project.
+You can then include `fontfaceobserver/fontfaceobserver.js`. If you're not using npm, grab `fontfaceobserver.js` and include it in your project.
 
 ## Browser support
 
