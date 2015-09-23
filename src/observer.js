@@ -213,21 +213,21 @@ goog.scope(function () {
           check();
         });
 
-        rulerA.setFont(that['family'] + ',sans-serif', style);
+        rulerA.setFont('"' + that['family'] + '",sans-serif', style);
 
         rulerB.onResize(function (width) {
           widthB = width;
           check();
         });
 
-        rulerB.setFont(that['family'] + ',serif', style);
+        rulerB.setFont('"' + that['family'] + '",serif', style);
 
         rulerC.onResize(function (width) {
           widthC = width;
           check();
         });
 
-        rulerC.setFont(that['family'] + ',monospace', style);
+        rulerC.setFont('"' + that['family'] + '",monospace', style);
       });
     });
   };

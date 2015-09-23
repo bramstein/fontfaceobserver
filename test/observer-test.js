@@ -78,6 +78,34 @@ describe('Observer', function () {
       });
     });
 
+    it('finds a font with spaces in the name and resolve the promise', function (done) {
+      var observer = new Observer('Trebuchet W01 Regular', {}),
+          ruler = new Ruler('hello');
+
+      document.body.appendChild(ruler.getElement());
+
+      ruler.setFont('monospace', '');
+      var beforeWidth = ruler.getWidth();
+
+      ruler.setFont('"Trebuchet W01 Regular", monospace', '');
+      observer.check(null, 5000).then(function () {
+        var activeWidth = ruler.getWidth();
+
+        expect(activeWidth, 'not to equal', beforeWidth);
+
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
+
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(ruler.getElement());
+          done();
+        }, 0);
+      }, function () {
+        done(new Error('Timeout'));
+      });
+    });
+
     it('fails to find a font and reject the promise', function (done) {
       var observer = new Observer('observer-test2', {});
 
@@ -204,7 +232,7 @@ describe('Observer', function () {
       });
     });
 
-    it('finds a locally installed font', function (done) {
+    xit('finds a locally installed font', function (done) {
       var observer = new Observer('sans-serif', {});
 
       observer.check(null, 50).then(function () {
@@ -214,7 +242,7 @@ describe('Observer', function () {
       });
     });
 
-    it('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
+    xit('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
       var observer = new Observer('serif', {});
 
       observer.check(null, 50).then(function () {
