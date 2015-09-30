@@ -38,7 +38,7 @@ goog.scope(function () {
     /**
      * @type {string}
      */
-    this['stretch'] = descriptors.stretch || 'stretch';
+    this['stretch'] = descriptors.stretch || 'normal';
 
     /**
      * @type {string}
