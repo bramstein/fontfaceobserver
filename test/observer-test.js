@@ -31,7 +31,7 @@ describe('Observer', function () {
     it('creates the correct default style', function () {
       var observer = new Observer('my family', {});
 
-      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:stretch;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
+      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
     });
 
     it('passes through all descriptors', function () {
