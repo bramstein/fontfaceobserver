@@ -19,7 +19,6 @@
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
   "license": "BSD",
   "dependencies": {
-    "promis": "=1.1.2",
     "closure-dom": "=0.1.1"
   },
   "devDependencies": {
