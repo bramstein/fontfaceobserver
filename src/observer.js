@@ -98,7 +98,7 @@ goog.scope(function () {
   };
 
   /**
-   * @param {function(boolean, fontface.Observer)} callback
+   * @param {function((Error|null), fontface.Observer)} callback
    * @param {string=} text Optional test string to use for detecting if a font is available.
    * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    */
@@ -134,7 +134,7 @@ goog.scope(function () {
         if (container.parentNode !== null) {
           dom.remove(container.parentNode, container);
         }
-        callback(success, that);
+        callback(success === true ? null : new Error('Timeout'), that);
       }
     }
 

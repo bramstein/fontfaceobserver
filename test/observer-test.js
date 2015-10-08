@@ -31,7 +31,7 @@ describe('Observer', function () {
     it('creates the correct default style without a descriptor object', function () {
       var observer = new Observer('my family');
 
-      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:stretch;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
+      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
     });
 
     it('creates the correct default style', function () {
@@ -69,20 +69,20 @@ describe('Observer', function () {
       observer.check(function (error) {
         if (error) {
           done(error);
+        } else {
+          var activeWidth = ruler.getWidth();
+
+          expect(activeWidth, 'not to equal', beforeWidth);
+
+          setTimeout(function () {
+            var afterWidth = ruler.getWidth();
+
+            expect(afterWidth, 'to equal', activeWidth);
+            expect(afterWidth, 'not to equal', beforeWidth);
+            document.body.removeChild(ruler.getElement());
+            done();
+          }, 0);
         }
-
-        var activeWidth = ruler.getWidth();
-
-        expect(activeWidth, 'not to equal', beforeWidth);
-
-        setTimeout(function () {
-          var afterWidth = ruler.getWidth();
-
-          expect(afterWidth, 'to equal', activeWidth);
-          expect(afterWidth, 'not to equal', beforeWidth);
-          document.body.removeChild(ruler.getElement());
-          done();
-        }, 0);
       }, null, 5000);
     });
 
@@ -96,22 +96,24 @@ describe('Observer', function () {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('"Trebuchet W01 Regular", monospace', '');
-      observer.check(null, 5000).then(function () {
-        var activeWidth = ruler.getWidth();
+      observer.check(function (error) {
+        if (error) {
+          done(error);
+        } else {
+          var activeWidth = ruler.getWidth();
 
-        expect(activeWidth, 'not to equal', beforeWidth);
+          expect(activeWidth, 'not to equal', beforeWidth);
 
-        setTimeout(function () {
-          var afterWidth = ruler.getWidth();
+          setTimeout(function () {
+            var afterWidth = ruler.getWidth();
 
-          expect(afterWidth, 'to equal', activeWidth);
-          expect(afterWidth, 'not to equal', beforeWidth);
-          document.body.removeChild(ruler.getElement());
-          done();
-        }, 0);
-      }, function () {
-        done(new Error('Timeout'));
-      });
+            expect(afterWidth, 'to equal', activeWidth);
+            expect(afterWidth, 'not to equal', beforeWidth);
+            document.body.removeChild(ruler.getElement());
+            done();
+          }, 0);
+        }
+      }, null, 5000);
     });
 
     it('fails to find a font and reject the promise', function (done) {
@@ -131,11 +133,11 @@ describe('Observer', function () {
 
       observer.check(function (error) {
         if (error) {
-          done(new Error('Timeout'));
+          done(error);
         } else {
           observer.check(function (nestedError) {
             if (nestedError) {
-              done(new Error('Second call failed'));
+              done(nestedError);
             } else {
               done();
             }
@@ -157,7 +159,7 @@ describe('Observer', function () {
 
       observer.check(function (error) {
         if (error) {
-          done(new Error('Timeout'));
+          done(error);
         } else {
           var activeWidth = ruler.getWidth();
 
@@ -189,7 +191,7 @@ describe('Observer', function () {
 
       observer.check(function (error) {
         if (error) {
-          done(new Error('Timeout'));
+          done(error);
         } else {
           var activeWidth = ruler.getWidth();
 
@@ -222,7 +224,7 @@ describe('Observer', function () {
 
       observer.check(function (error) {
         if (error) {
-          done(new Error('Timeout'));
+          done(error);
         } else {
           var activeWidth = ruler.getWidth();
 
