@@ -38,7 +38,7 @@ goog.scope(function () {
     /**
      * @type {string}
      */
-    this['stretch'] = descriptors.stretch || 'stretch';
+    this['stretch'] = descriptors.stretch || 'normal';
 
     /**
      * @type {string}
@@ -132,7 +132,7 @@ goog.scope(function () {
         settled = true;
 
         if (container.parentNode !== null) {
-          dom.remove(document.body, container);
+          dom.remove(container.parentNode, container);
         }
         callback(success, that);
       }
@@ -216,21 +216,21 @@ goog.scope(function () {
         check();
       });
 
-      rulerA.setFont(that['family'] + ',sans-serif', style);
+      rulerA.setFont('"' + that['family'] + '",sans-serif', style);
 
       rulerB.onResize(function (width) {
         widthB = width;
         check();
       });
 
-      rulerB.setFont(that['family'] + ',serif', style);
+      rulerB.setFont('"' + that['family'] + '",serif', style);
 
       rulerC.onResize(function (width) {
         widthC = width;
         check();
       });
 
-      rulerC.setFont(that['family'] + ',monospace', style);
+      rulerC.setFont('"' + that['family'] + '",monospace', style);
     });
   };
 });

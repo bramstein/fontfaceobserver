@@ -37,7 +37,7 @@ describe('Observer', function () {
     it('creates the correct default style', function () {
       var observer = new Observer('my family', {});
 
-      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:stretch;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
+      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
     });
 
     it('passes through all descriptors', function () {
@@ -84,6 +84,34 @@ describe('Observer', function () {
           done();
         }, 0);
       }, null, 5000);
+    });
+
+    it('finds a font with spaces in the name and resolve the promise', function (done) {
+      var observer = new Observer('Trebuchet W01 Regular', {}),
+          ruler = new Ruler('hello');
+
+      document.body.appendChild(ruler.getElement());
+
+      ruler.setFont('monospace', '');
+      var beforeWidth = ruler.getWidth();
+
+      ruler.setFont('"Trebuchet W01 Regular", monospace', '');
+      observer.check(null, 5000).then(function () {
+        var activeWidth = ruler.getWidth();
+
+        expect(activeWidth, 'not to equal', beforeWidth);
+
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
+
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(ruler.getElement());
+          done();
+        }, 0);
+      }, function () {
+        done(new Error('Timeout'));
+      });
     });
 
     it('fails to find a font and reject the promise', function (done) {
@@ -226,8 +254,8 @@ describe('Observer', function () {
       }, null, 50);
     });
 
-    it('finds a locally installed font', function (done) {
-      var observer = new Observer('Georgia', {});
+    xit('finds a locally installed font', function (done) {
+      var observer = new Observer('sans-serif', {});
 
       observer.check(function (error) {
         if (error) {
@@ -238,8 +266,8 @@ describe('Observer', function () {
       }, null, 50);
     });
 
-    it('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
-      var observer = new Observer('Tahoma', {});
+    xit('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
+      var observer = new Observer('serif', {});
 
       observer.check(function (error) {
         if (error) {

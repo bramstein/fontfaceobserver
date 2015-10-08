@@ -12,7 +12,7 @@ goog.scope(function () {
                 'position:absolute;' +
                 'height:100%;' +
                 'width:100%;' +
-                'overflow:scroll;';
+                'overflow:scroll;font-size:16px;';
 
     this.element = dom.createElement('div');
     this.element.setAttribute('aria-hidden', 'true');
@@ -29,7 +29,7 @@ goog.scope(function () {
     dom.style(this.collapsible, style);
     dom.style(this.expandable, style);
     dom.style(this.expandableInner, style);
-    dom.style(this.collapsibleInner, 'display:inline-block;width:200%;height:200%;');
+    dom.style(this.collapsibleInner, 'display:inline-block;width:200%;height:200%;font-size:16px;');
 
     dom.append(this.collapsible, this.collapsibleInner);
     dom.append(this.expandable, this.expandableInner);
@@ -55,6 +55,7 @@ goog.scope(function () {
     dom.style(this.element, 'min-width:20px;' +
                             'min-height:20px;' +
                             'display:inline-block;' +
+                            'overflow:hidden;' +
                             'position:absolute;' +
                             'width:auto;' +
                             'margin:0;' +
