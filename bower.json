@@ -1,0 +1,29 @@
+{
+  "name": "fontfaceobserver",
+  "version": "1.5.4",
+  "homepage": "https://github.com/bramstein/fontfaceobserver",
+  "authors": [
+	   "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)"
+  ],
+  "description": "Detect if web fonts are available:",
+  "main": [
+    "fontfaceobserver.js"
+  ],
+  "moduleType": [
+	   "globals"
+  ],
+  "keywords": [
+    "fontloader",
+    "fonts",
+    "font",
+    "font-face",
+    "web font",
+    "font load",
+    "font events"
+  ],
+  "license": "BSD",
+  "ignore": [
+	   "node_modules",
+	    "bower_components"
+  ]
+}
