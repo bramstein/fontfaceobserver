@@ -68,24 +68,17 @@ module.exports = function (grunt) {
           formatting: ['PRETTY_PRINT', 'PRINT_INPUT_DELIMITER']
         })
       }
-    },
-    concat: {
-      dist: {
-        src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
-        dest: 'fontfaceobserver.js'
-      }
     }
   });
 
   grunt.loadNpmTasks('grunt-closurecompiler');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
-  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-exec');
 
   grunt.registerTask('compile', ['closurecompiler:compile']);
   grunt.registerTask('debug', ['closurecompiler:debug']);
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['exec:test']);
-  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
+  grunt.registerTask('dist', ['clean', 'closurecompiler:dist']);
 };

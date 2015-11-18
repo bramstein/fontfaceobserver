@@ -56,7 +56,7 @@ You can then include `fontfaceobserver/fontfaceobserver.js`. If you're not using
 
 ## Browser support
 
-FontFaceObserver has been tested and works on the following browsers:
+FontFaceObserver has been tested and works on the following browsers when a Promise polyfill is used:
 
 * Chrome (desktop & Android)
 * Firefox
@@ -64,6 +64,8 @@ FontFaceObserver has been tested and works on the following browsers:
 * Safari (desktop & iOS)
 * IE9+
 * Android WebKit
+
+It's been tested using the [promis](https://npmjs.org/package/promis) library, but any valid Promises/A+ polyfill should work.
 
 ## License
 
