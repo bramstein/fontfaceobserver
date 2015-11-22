@@ -44,6 +44,11 @@ goog.scope(function () {
      * @type {string}
      */
     this['featureSettings'] = descriptors.featureSettings || 'normal';
+
+    /**
+     * @type {integer}
+     */
+    this['timeoutId'] = null;
   };
 
   var Observer = fontface.Observer;
@@ -161,10 +166,12 @@ goog.scope(function () {
                     (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
                 // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
                 removeContainer();
+                clearTimeout(that.timeoutId);
                 resolve(that);
               }
             } else {
               removeContainer();
+              clearTimeout(that.timeoutId);
               resolve(that);
             }
           }
@@ -202,7 +209,7 @@ goog.scope(function () {
               widthC = rulerC.getWidth();
               check();
             }
-            setTimeout(checkForTimeout, 50);
+            that.timeoutId = setTimeout(checkForTimeout, 50);
           }
         }
 
