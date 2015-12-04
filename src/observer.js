@@ -46,9 +46,9 @@ goog.scope(function () {
     this['featureSettings'] = descriptors.featureSettings || 'normal';
 
     /**
-     * @type {integer}
+     * @type {number|null}
      */
-    this['timeoutId'] = null;
+    this.timeoutId = null;
   };
 
   var Observer = fontface.Observer;
