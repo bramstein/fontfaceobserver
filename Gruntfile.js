@@ -71,7 +71,7 @@ module.exports = function (grunt) {
     },
     concat: {
       dist: {
-        src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
+        src: ['build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
       }
     }
