@@ -44,6 +44,32 @@ observer.check(null, 5000).then(function () {
 });
 ```
 
+Multiple fonts can be loaded by creating a FontFaceObserver instance for each.
+
+```js
+var observer = new FontFaceObserver('Family A');
+var observer2 = new FontFaceObserver('Family B');
+
+observer.check().then(function () {
+  console.log('Family A is available');
+});
+
+observer2.check().then(function () {
+  console.log('Family B is available');
+});
+```
+
+You may also check both are loaded, rather than checking each individually.
+
+```js
+var observer = new FontFaceObserver('Family A');
+var observer2 = new FontFaceObserver('Family B');
+
+Promise.all([observer.check(), observer2.check()]).then(function () {
+  console.log('Family A & B have loaded');
+});
+```
+
 ## Installation
 
 If you're using npm you can install Font Face Observer as a dependency:
