@@ -9,41 +9,19 @@ goog.scope(function () {
   /**
    * @constructor
    *
-   * @param {string} family
-   * @param {fontface.Descriptors=} opt_descriptors
+   * @param {string=} text Optional test string to use for detecting if a font is available.
+   * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    */
-  fontface.Observer = function (family, opt_descriptors) {
-    var descriptors = opt_descriptors || {};
-
+  fontface.Observer = function (opt_text, opt_timeout) {
     /**
      * @type {string}
      */
-    this['family'] = family;
+    this.text = opt_text || 'BESbswy';
 
     /**
-     * @type {string}
+     * @type {number}
      */
-    this['style'] = descriptors.style || 'normal';
-
-    /**
-     * @type {string}
-     */
-    this['variant'] = descriptors.variant || 'normal';
-
-    /**
-     * @type {string}
-     */
-    this['weight'] = descriptors.weight || 'normal';
-
-    /**
-     * @type {string}
-     */
-    this['stretch'] = descriptors.stretch || 'normal';
-
-    /**
-     * @type {string}
-     */
-    this['featureSettings'] = descriptors.featureSettings || 'normal';
+    this.timeout = opt_timeout || Observer.DEFAULT_TIMEOUT;
   };
 
   var Observer = fontface.Observer;
@@ -85,32 +63,107 @@ goog.scope(function () {
 
   /**
    * @private
-   * @return {string}
+   *
+   * @param {number} widthA
+   * @param {number} widthB
+   * @param {number} widthC
+   * @param {number} fallbackWidthA
+   * @param {number} fallbackWidthB
+   * @param {number} fallbackWidthC
+   *
+   * @return {boolean}
    */
-  Observer.prototype.getStyle = function () {
-    return 'font-style:' + this['style'] + ';' +
-           'font-variant:' + this['variant'] + ';' +
-           'font-weight:' + this['weight'] + ';' +
-           'font-stretch:' + this['stretch'] + ';' +
-           'font-feature-settings:' + this['featureSettings'] + ';' +
-           '-moz-font-feature-settings:' + this['featureSettings'] + ';' +
-           '-webkit-font-feature-settings:' + this['featureSettings'] + ';';
+  Observer.prototype.check = function (widthA, widthB, widthC, fallbackWidthA, fallbackWidthB, fallbackWidthC) {
+    if ((widthA !== -1 && widthB !== -1) || (widthA !== -1 && widthC !== -1) || (widthB !== -1 && widthC !== -1)) {
+      if (widthA === widthB || widthA === widthC || widthB === widthC) {
+        // All values are the same, so the browser has most likely loaded the web font
+
+        if (Observer.hasWebKitFallbackBug()) {
+          // Except if the browser has the WebKit fallback bug, in which case we check to see if all
+          // values are set to one of the last resort fonts.
+
+          if (!((widthA === fallbackWidthA && widthB === fallbackWidthA && widthC === fallbackWidthA) ||
+                (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) ||
+                (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
+            // The width we got doesn't match any of the known last resort fonts, so let's assume fonts are loaded.
+            return true;
+          }
+        } else {
+          return true;
+        }
+      }
+    }
+    return false;
   };
 
   /**
+   * @param {Array.<fontface.Font>} fonts
    * @param {function((Error|null), fontface.Observer)} callback
-   * @param {string=} text Optional test string to use for detecting if a font is available.
-   * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    */
-  Observer.prototype.check = function (callback, text, timeout) {
-    var testString = text || 'BESbswy',
-        timeoutValue = timeout || Observer.DEFAULT_TIMEOUT,
-        style = this.getStyle(),
+  Observer.prototype.load = function (fonts, callback) {
+    var container = dom.createElement('div');
+    var self = this;
+
+    dom.waitForBody(function () {
+      var start = Date.now();
+
+      // Set up all the rulers
+      for (var i = 0; i < fonts.length; i++) {
+        var font = fonts[i];
+        var style = font.getStyle();
+
+        var rulerA = new Ruler(this.text, '"' + font['family'] + '",sans-serif', style);
+        var rulerB = new Ruler(this.text, '"' + font['family'] + '",serif', style);
+        var rulerC = new Ruler(this.text, '"' + font['family'] + '",monospace', style);
+
+        var fallbackRulerA = new Ruler(this.text, 'sans-serif', style);
+        var fallbackRulerB = new Ruler(this.text, 'serif', style);
+        var fallbackRulerC = new Ruler(this.text, 'monospace', style);
+
+        var widthA = -1;
+        var widthB = -1;
+        var widthC = -1;
+
+        var fallbackWidthA = -1;
+        var fallbackWidthB = -1;
+        var fallbackWidthC = -1;
+
+        dom.append(container, rulerA.getElement());
+        dom.append(container, rulerB.getElement());
+        dom.append(container, rulerC.getElement());
+
+        dom.append(container, fallbackRulerA.getElement());
+        dom.append(container, fallbackRulerB.getElement());
+        dom.append(container, fallbackRulerC.getElement());
+
+        rulerA.onResize(function (width) {
+          widthA = width;
+          self.check();
+        });
+
+        rulerB.onResize(function (width) {
+          widthB = width;
+          check();
+        });
+
+        rulerC.onResize(function (width) {
+          widthC = width;
+          check();
+        });
+      }
+
+      // Add everything to the DOM
+      dom.append(document.body, container);
+
+
+    });
+
+    var style = this.getStyle(),
         container = dom.createElement('div'),
 
-        rulerA = new Ruler(testString),
-        rulerB = new Ruler(testString),
-        rulerC = new Ruler(testString),
+        rulerA = new Ruler(this.text),
+        rulerB = new Ruler(this.text),
+        rulerC = new Ruler(this.text),
 
         widthA = -1,
         widthB = -1,
@@ -182,10 +235,6 @@ goog.scope(function () {
       rulerB.setFont('serif', style);
       rulerC.setFont('monospace', style);
 
-      dom.append(container, rulerA.getElement());
-      dom.append(container, rulerB.getElement());
-      dom.append(container, rulerC.getElement());
-
       dom.append(document.body, container);
 
       fallbackWidthA = rulerA.getWidth();
@@ -195,7 +244,7 @@ goog.scope(function () {
       function checkForTimeout() {
         var now = Date.now();
 
-        if (now - start >= timeoutValue) {
+        if (now - start >= that.timeout) {
           settle(false);
         } else {
           var hidden = document['hidden'];

@@ -6,8 +6,10 @@ goog.scope(function () {
   /**
    * @constructor
    * @param {string} text
+   * @param {string} family
+   * @param {string} description
    */
-  fontface.Ruler = function (text) {
+  fontface.Ruler = function (text, family, description) {
     var style = 'display:inline-block;' +
                 'position:absolute;' +
                 'height:100%;' +
@@ -30,6 +32,19 @@ goog.scope(function () {
     dom.style(this.expandable, style);
     dom.style(this.expandableInner, style);
     dom.style(this.collapsibleInner, 'display:inline-block;width:200%;height:200%;font-size:16px;');
+    dom.style(this.element, 'min-width:20px;' +
+                            'min-height:20px;' +
+                            'display:inline-block;' +
+                            'overflow:hidden;' +
+                            'position:absolute;' +
+                            'width:auto;' +
+                            'margin:0;' +
+                            'padding:0;' +
+                            'top:-999px;' +
+                            'left:-999px;' +
+                            'white-space:nowrap;' +
+                            'font-size:100px;' +
+                            'font-family:' + family + ';' + description);
 
     dom.append(this.collapsible, this.collapsibleInner);
     dom.append(this.expandable, this.expandableInner);
@@ -45,27 +60,6 @@ goog.scope(function () {
    */
   Ruler.prototype.getElement = function () {
     return this.element;
-  };
-
-  /**
-   * @param {string} family
-   * @param {string} description
-   */
-  Ruler.prototype.setFont = function (family, description) {
-    dom.style(this.element, 'min-width:20px;' +
-                            'min-height:20px;' +
-                            'display:inline-block;' +
-                            'overflow:hidden;' +
-                            'position:absolute;' +
-                            'width:auto;' +
-                            'margin:0;' +
-                            'padding:0;' +
-                            'top:-999px;' +
-                            'left:-999px;' +
-                            'white-space:nowrap;' +
-                            'font-size:100px;' +
-                            'font-family:' + family + ';' +
-                            description);
   };
 
   /**
