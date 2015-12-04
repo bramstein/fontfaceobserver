@@ -78,6 +78,37 @@ describe('Observer', function () {
       });
     });
 
+    it('finds a font and resolve the promise even when the page is RTL', function (done) {
+      var observer = new Observer('observer-test8', {}),
+          ruler = new Ruler('hello');
+
+      document.body.dir = "rtl";
+      document.body.appendChild(ruler.getElement());
+
+      ruler.setFont('monospace', '');
+      var beforeWidth = ruler.getWidth();
+
+      ruler.setFont('observer-test1, monospace', '');
+      observer.check(null, 5000).then(function () {
+        var activeWidth = ruler.getWidth();
+
+        expect(activeWidth, 'not to equal', beforeWidth);
+
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
+
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(ruler.getElement());
+          document.body.dir = "ltr";
+          done();
+        }, 0);
+      }, function () {
+        done(new Error('Timeout'));
+      });
+    });
+
+
     it('finds a font with spaces in the name and resolve the promise', function (done) {
       var observer = new Observer('Trebuchet W01 Regular', {}),
           ruler = new Ruler('hello');

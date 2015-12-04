@@ -127,6 +127,9 @@ goog.scope(function () {
 
         that = this;
 
+    // This ensures the scroll direction is correct.
+    container.dir = "ltr";
+
     return new Promise(function (resolve, reject) {
       /**
        * @private
