@@ -23,7 +23,7 @@ describe('Observer', function () {
         weight: 'bold'
       });
 
-      expect(observer.variant, 'to equal', 'normal');
+      expect(observer.style, 'to equal', 'normal');
     });
   });
 
@@ -31,19 +31,25 @@ describe('Observer', function () {
     it('creates the correct default style', function () {
       var observer = new Observer('my family', {});
 
-      expect(observer.getStyle(), 'to equal', 'font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-feature-settings:normal;-moz-font-feature-settings:normal;-webkit-font-feature-settings:normal;');
+      if (Observer.supportStretch()) {
+        expect(observer.getStyle('sans-serif'), 'to equal', 'normal normal normal 100px sans-serif');
+      } else {
+        expect(observer.getStyle('sans-serif'), 'to equal', 'normal normal  100px sans-serif');
+      }
     });
 
     it('passes through all descriptors', function () {
       var observer = new Observer('my family', {
         style: 'italic',
-        variant: 'small-caps',
         weight: 'bold',
-        stretch: 'condensed',
-        featureSettings: '"kern" 1'
+        stretch: 'condensed'
       });
 
-      expect(observer.getStyle(), 'to equal', 'font-style:italic;font-variant:small-caps;font-weight:bold;font-stretch:condensed;font-feature-settings:"kern" 1;-moz-font-feature-settings:"kern" 1;-webkit-font-feature-settings:"kern" 1;');
+      if (Observer.supportStretch()) {
+        expect(observer.getStyle('sans-serif'), 'to equal', 'italic bold condensed 100px sans-serif');
+      } else {
+        expect(observer.getStyle('sans-serif'), 'to equal', 'italic bold  100px sans-serif');
+      }
     });
   });
 
@@ -59,7 +65,7 @@ describe('Observer', function () {
       ruler.setFont('monospace', '');
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('observer-test1, monospace', '');
+      ruler.setFont('100px observer-test1, monospace');
       observer.check(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
@@ -88,7 +94,7 @@ describe('Observer', function () {
       ruler.setFont('monospace', '');
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('observer-test1, monospace', '');
+      ruler.setFont('100px observer-test1, monospace');
       observer.check(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
@@ -115,10 +121,10 @@ describe('Observer', function () {
 
       document.body.appendChild(ruler.getElement());
 
-      ruler.setFont('monospace', '');
+      ruler.setFont('100px monospace');
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('"Trebuchet W01 Regular", monospace', '');
+      ruler.setFont('100px "Trebuchet W01 Regular", monospace');
       observer.check(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
@@ -170,7 +176,7 @@ describe('Observer', function () {
 
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('observer-test4,monospace', '');
+      ruler.setFont('100px observer-test4,monospace');
 
       observer.check('\u0021', 5000).then(function () {
         var activeWidth = ruler.getWidth();
@@ -195,12 +201,12 @@ describe('Observer', function () {
       var observer = new Observer('observer-test5', {}),
           ruler = new Ruler('\u4e2d\u56fd');
 
-      ruler.setFont('monospace', '');
+      ruler.setFont('100px monospace');
       document.body.appendChild(ruler.getElement());
 
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('observer-test5,monospace', '');
+      ruler.setFont('100px observer-test5,monospace');
 
       observer.check('\u4e2d\u56fd', 5000).then(function () {
         var activeWidth = ruler.getWidth();
@@ -226,12 +232,12 @@ describe('Observer', function () {
       var observer = new Observer('observer-test6', {}),
           ruler = new Ruler('\udbff\udfff');
 
-      ruler.setFont('monospace', '');
+      ruler.setFont('100px monospace');
       document.body.appendChild(ruler.getElement());
 
       var beforeWidth = ruler.getWidth();
 
-      ruler.setFont('observer-test6,monospace', '');
+      ruler.setFont('100px observer-test6,monospace');
 
       observer.check('\udbff\udfff', 5000).then(function () {
         var activeWidth = ruler.getWidth();

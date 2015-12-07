@@ -12,7 +12,8 @@ goog.scope(function () {
                 'position:absolute;' +
                 'height:100%;' +
                 'width:100%;' +
-                'overflow:scroll;font-size:16px;';
+                'overflow:scroll;' +
+                'font-size:16px;';
 
     this.element = dom.createElement('div');
     this.element.setAttribute('aria-hidden', 'true');
@@ -48,10 +49,9 @@ goog.scope(function () {
   };
 
   /**
-   * @param {string} family
-   * @param {string} description
+   * @param {string} font
    */
-  Ruler.prototype.setFont = function (family, description) {
+  Ruler.prototype.setFont = function (font) {
     dom.style(this.element, 'min-width:20px;' +
                             'min-height:20px;' +
                             'display:inline-block;' +
@@ -63,9 +63,7 @@ goog.scope(function () {
                             'top:-999px;' +
                             'left:-999px;' +
                             'white-space:nowrap;' +
-                            'font-size:100px;' +
-                            'font-family:' + family + ';' +
-                            description);
+                            'font:' + font + ';');
   };
 
   /**
