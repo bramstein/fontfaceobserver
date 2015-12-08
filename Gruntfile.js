@@ -7,7 +7,8 @@ module.exports = function (grunt) {
     summary_detail_level: 3,
     language_in: 'ECMASCRIPT5_STRICT',
     output_wrapper: '(function(){%output%}());',
-    use_types_for_optimization: true
+    use_types_for_optimization: true,
+    externs: ['externs-commonjs.js']
   };
 
   grunt.initConfig({
@@ -70,8 +71,12 @@ module.exports = function (grunt) {
       }
     },
     concat: {
-      dist: {
+      dist_promises: {
         src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
+        dest: 'fontfaceobserver.promise.js'
+      },
+      dist: {
+        src: ['build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
       }
     }
@@ -87,5 +92,5 @@ module.exports = function (grunt) {
   grunt.registerTask('debug', ['closurecompiler:debug']);
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['exec:test']);
-  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist']);
+  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist', 'concat:dist_promises']);
 };
