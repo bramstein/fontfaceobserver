@@ -18,7 +18,7 @@ observer.check().then(function () {
 });
 ```
 
-The `FontFaceObserver` constructor takes two arguments: the font family name (required) and an object describing the variation (optional). The object can contain `weight`, `style`, `stretch`, `variant`, and `featureSettings` properties. If a property is not present it will default to `normal`. To start observing font loads, call the `check` method. It'll immediately return a new Promise that resolves when the font is available and rejected when the font is not available.
+The `FontFaceObserver` constructor takes two arguments: the font family name (required) and an object describing the variation (optional). The object can contain `weight`, `style`, and `stretch` properties. If a property is not present it will default to `normal`. To start observing font loads, call the `check` method. It'll immediately return a new Promise that resolves when the font is available and rejected when the font is not available.
 
 If your font doesn't contain latin characters you can pass a custom test string to the `check` method.
 
