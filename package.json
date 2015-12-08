@@ -16,6 +16,12 @@
     "font load",
     "font events"
   ],
+  "files": [
+    "fontfaceobserver.js",
+    "fontfaceobserver.standalone.js",
+    "src/*.js",
+    "externs.js"
+  ],
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
   "license": "BSD",
   "dependencies": {
