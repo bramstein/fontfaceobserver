@@ -92,7 +92,7 @@ observer.check().then(function () {
 
 If you're not using npm, grab `fontfaceobserver.js` or `fontfaceobserver.standalone.js` (see below) and include it in your project. It'll export a global `FontFaceObserver` that you can use to create new instances.
 
-Font Face Observer uses Promises in its API, so for [browsers that do not support promises](http://caniuse.com/#search=promise) you'll need to include a polyfill. If you use your own Promise polyfill you just need to include `fontfaceobserver.standalone.js` in your project. If you do not have an existing Promise polyfill you should use `fontfaceobserver.js` which includes a small Promise polyfill (adds ~500 bytes to the file size).
+Font Face Observer uses Promises in its API, so for [browsers that do not support promises](http://caniuse.com/#search=promise) you'll need to include a polyfill. If you use your own Promise polyfill you just need to include `fontfaceobserver.standalone.js` in your project. If you do not have an existing Promise polyfill you should use `fontfaceobserver.js` which includes a small Promise polyfill. Using the Promise polyfill adds roughly 1.4KB (500 bytes gzipped) to the file size.
 
 ## Browser support
 
