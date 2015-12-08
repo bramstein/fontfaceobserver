@@ -80,7 +80,7 @@ $ npm install fontfaceobserver
 
 You can then require `fontfaceobserver` as a CommonJS (Browserify) module:
 
-```
+```js
 var FontFaceObserver = require('fontfaceobserver');
 
 var observer = new FontFaceObserver('My Family');
