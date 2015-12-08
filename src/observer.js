@@ -49,6 +49,11 @@ goog.scope(function () {
   Observer.SUPPORTS_STRETCH = null;
 
   /**
+   * @type {boolean}
+   */
+  Observer.SUPPORTS_NATIVE = !!window['FontFace'];
+
+  /**
    * @type {number}
    */
   Observer.DEFAULT_TIMEOUT = 3000;
@@ -115,25 +120,31 @@ goog.scope(function () {
     var that = this;
     var testString = text || 'BESbswy';
     var timeoutValue = timeout || Observer.DEFAULT_TIMEOUT;
+    var start = Date.now();
 
     return new Promise(function (resolve, reject) {
-      if (document['fonts']) {
-        setTimeout(function () {
-          reject(that);
-        }, timeoutValue);
+      if (Observer.SUPPORTS_NATIVE) {
+        var check = function () {
+          var now = Date.now();
 
-        document.fonts.load(that.getStyle(that['family']), testString).then(function (fonts) {
-          if (fonts.length >= 1) {
-            resolve(that);
-          } else {
+          if (now - start >= timeoutValue) {
             reject(that);
+          } else {
+            document.fonts.load(that.getStyle(that['family']), testString).then(function (fonts) {
+              if (fonts.length >= 1) {
+                resolve(that);
+              } else {
+                setTimeout(check, 25);
+              }
+            }).catch(function () {
+              reject(that);
+            });
           }
-        }).catch(function () {
-          reject(that);
-        });
+        }
+
+        check();
       } else {
         dom.waitForBody(function () {
-          var start = Date.now();
           var rulerA = new Ruler(testString);
           var rulerB = new Ruler(testString);
           var rulerC = new Ruler(testString);

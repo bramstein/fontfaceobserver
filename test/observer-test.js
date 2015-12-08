@@ -84,6 +84,43 @@ describe('Observer', function () {
       });
     });
 
+    it('finds a font and resolves the promise even though the @font-face rule is not in the CSSOM yet', function (done) {
+      var observer = new Observer('observer-test9', {}),
+          ruler = new Ruler('hello');
+
+      document.body.appendChild(ruler.getElement());
+
+      ruler.setFont('monospace', '');
+      var beforeWidth = ruler.getWidth();
+
+      ruler.setFont('100px observer-test9, monospace');
+      observer.check(null, 10000).then(function () {
+        var activeWidth = ruler.getWidth();
+
+        expect(activeWidth, 'not to equal', beforeWidth);
+
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
+
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(ruler.getElement());
+          done();
+        }, 0);
+      }, function () {
+        done(new Error('Timeout'));
+      });
+
+      // We don't use a style element here because IE9/10 have issues with
+      // dynamically inserted @font-face rules.
+      var link = document.createElement('link');
+
+      link.rel = "stylesheet";
+      link.href = "assets/late.css";
+
+      document.head.appendChild(link);
+    });
+
     it('finds a font and resolve the promise even when the page is RTL', function (done) {
       var observer = new Observer('observer-test8', {}),
           ruler = new Ruler('hello');
