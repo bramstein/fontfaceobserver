@@ -1,6 +1,6 @@
 # Font Face Observer [![Build Status](https://travis-ci.org/bramstein/fontfaceobserver.png?branch=master)](https://travis-ci.org/bramstein/fontfaceobserver)
 
-Font Face Observer is a small `@font-face` loader and monitor (5.2KB minified and 1.9KB gzipped) compatible with any web font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
+Font Face Observer is a small `@font-face` loader and monitor (3.5KB minified and 1.3KB gzipped) compatible with any web font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
 
 ## How to use
 
@@ -23,7 +23,7 @@ The `FontFaceObserver` constructor takes two arguments: the font family name (re
 If your font doesn't contain latin characters you can pass a custom test string to the `check` method.
 
 ```js
-var observer = new FontFaceObserver('My Family', {});
+var observer = new FontFaceObserver('My Family');
 
 observer.check('中国').then(function () {
   console.log('Font is available');
@@ -35,7 +35,7 @@ observer.check('中国').then(function () {
 The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `check` method.
 
 ```js
-var observer = new FontFaceObserver('My Family', {});
+var observer = new FontFaceObserver('My Family');
 
 observer.check(null, 5000).then(function () {
   console.log('Font is available');
@@ -78,7 +78,21 @@ If you're using npm you can install Font Face Observer as a dependency:
 $ npm install fontfaceobserver
 ```
 
-You can then include `fontfaceobserver/fontfaceobserver.js`. If you're not using npm, grab `fontfaceobserver.js` and include it in your project.
+You can then require `fontfaceobserver` as a CommonJS (Browserify) module:
+
+```
+var FontFaceObserver = require('fontfaceobserver');
+
+var observer = new FontFaceObserver('My Family');
+
+observer.check().then(function () {
+  console.log('My Family has loaded');
+});
+```
+
+If you're not using npm, grab `fontfaceobserver.js` or `fontfaceobserver.standalone.js` (see below) and include it in your project. It'll export a global `FontFaceObserver` that you can use to create new instances.
+
+Font Face Observer uses Promises in its API, so for [browsers that do not support promises](http://caniuse.com/#search=promise) you'll need to include a polyfill. If you use your own Promise polyfill you just need to include `fontfaceobserver.standalone.js` in your project. If you do not have an existing Promise polyfill you should use `fontfaceobserver.js` which includes a small Promise polyfill (adds ~500 bytes to the file size).
 
 ## Browser support
 
