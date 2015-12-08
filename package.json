@@ -6,7 +6,7 @@
     "test": "test"
   },
   "repository": "https://github.com/bramstein/fontfaceobserver.git",
-  "main": "fontfaceobserver.js",
+  "main": "fontfaceobserver.standalone.js",
   "keywords": [
     "fontloader",
     "fonts",
