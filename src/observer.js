@@ -175,17 +175,17 @@ goog.scope(function () {
            *    continue waiting until we get new values (or a timeout).
            */
           function check() {
-            if ((widthA !== -1 && widthB !== -1) || (widthA !== -1 && widthC !== -1) || (widthB !== -1 && widthC !== -1)) {
-              if (widthA === widthB || widthA === widthC || widthB === widthC) {
+            if ((widthA != -1 && widthB != -1) || (widthA != -1 && widthC != -1) || (widthB != -1 && widthC != -1)) {
+              if (widthA == widthB || widthA == widthC || widthB == widthC) {
                 // All values are the same, so the browser has most likely loaded the web font
 
                 if (Observer.hasWebKitFallbackBug()) {
                   // Except if the browser has the WebKit fallback bug, in which case we check to see if all
                   // values are set to one of the last resort fonts.
 
-                  if (((widthA === fallbackWidthA && widthB === fallbackWidthA && widthC === fallbackWidthA) ||
-                        (widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB) ||
-                        (widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC))) {
+                  if (((widthA == fallbackWidthA && widthB == fallbackWidthA && widthC == fallbackWidthA) ||
+                        (widthA == fallbackWidthB && widthB == fallbackWidthB && widthC == fallbackWidthB) ||
+                        (widthA == fallbackWidthC && widthB == fallbackWidthC && widthC == fallbackWidthC))) {
                     // The width we got matches some of the known last resort fonts, so let's assume we're dealing with the last resort font.
                     return;
                   }
