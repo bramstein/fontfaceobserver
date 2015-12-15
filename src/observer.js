@@ -93,8 +93,9 @@ goog.scope(function () {
     if (Observer.SUPPORTS_STRETCH === null) {
       var div = dom.createElement('div');
 
-      div.style.font = 'condensed 100px sans-serif';
-
+      try {
+        div.style.font = 'condensed 100px sans-serif';
+      } catch (e) {}
       Observer.SUPPORTS_STRETCH = (div.style.font !== "");
     }
 
@@ -120,12 +121,12 @@ goog.scope(function () {
     var that = this;
     var testString = text || 'BESbswy';
     var timeoutValue = timeout || Observer.DEFAULT_TIMEOUT;
-    var start = Date.now();
+    var start = new Date().getTime();
 
     return new Promise(function (resolve, reject) {
       if (Observer.SUPPORTS_NATIVE) {
         var check = function () {
-          var now = Date.now();
+          var now = new Date().getTime();
 
           if (now - start >= timeoutValue) {
             reject(that);
@@ -136,7 +137,7 @@ goog.scope(function () {
               } else {
                 setTimeout(check, 25);
               }
-            }).catch(function () {
+            }, function () {
               reject(that);
             });
           }
@@ -226,7 +227,7 @@ goog.scope(function () {
           fallbackWidthC = rulerC.getWidth();
 
           function checkForTimeout() {
-            var now = Date.now();
+            var now = new Date().getTime();
 
             if (now - start >= timeoutValue) {
               removeContainer();
@@ -244,6 +245,7 @@ goog.scope(function () {
           }
 
           checkForTimeout();
+
 
           rulerA.onResize(function (width) {
             widthA = width;

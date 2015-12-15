@@ -117,12 +117,23 @@ goog.scope(function () {
   Ruler.prototype.onResize = function (callback) {
     var that = this;
 
-    this.collapsible.addEventListener('scroll', function () {
-      that.onScroll(callback);
-    }, false);
-    this.expandable.addEventListener('scroll', function () {
-      that.onScroll(callback);
-    }, false);
+    if (document.addEventListener) {
+      this.collapsible.addEventListener('scroll', function () {
+        that.onScroll(callback);
+      }, false);
+      this.expandable.addEventListener('scroll', function () {
+        that.onScroll(callback);
+      }, false);
+    } else {
+
+      this.collapsible.attachEvent('scroll', function () {
+        that.onScroll(callback);
+      });
+
+      this.expandable.attachEvent('scroll', function () {
+        that.onScroll(callback);
+      });
+    }
     this.reset();
   };
 });
