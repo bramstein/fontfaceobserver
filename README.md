@@ -70,6 +70,24 @@ Promise.all([observer.check(), observer2.check()]).then(function () {
 });
 ```
 
+Following example emulates FOUT with FontFaceObserver for MyCustomFont.
+
+```js
+var observer = new FontFaceObserver('MyCustomFont', {
+  weight: 400
+}).check().then(function () {
+  document.documentElement.className += " fonts-loaded";
+});
+```
+
+```css
+.fonts-loaded {
+  body {
+    font-family: 'MyCustomFont', sans-serif;
+  }
+}
+```
+
 ## Installation
 
 If you're using npm you can install Font Face Observer as a dependency:
