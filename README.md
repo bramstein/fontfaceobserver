@@ -120,9 +120,9 @@ FontFaceObserver has been tested and works on the following browsers:
 * Firefox
 * Opera
 * Safari (desktop & iOS)
-* IE9+
+* IE8+
 * Android WebKit
 
 ## License
 
-FontFaceObserver is licensed under the BSD License. Copyright 2014-2015 Bram Stein. All rights reserved.
+Font Face Observer is licensed under the BSD License. Copyright 2014-2015 Bram Stein. All rights reserved.

@@ -93,8 +93,9 @@ goog.scope(function () {
     if (Observer.SUPPORTS_STRETCH === null) {
       var div = dom.createElement('div');
 
-      div.style.font = 'condensed 100px sans-serif';
-
+      try {
+        div.style.font = 'condensed 100px sans-serif';
+      } catch (e) {}
       Observer.SUPPORTS_STRETCH = (div.style.font !== "");
     }
 
@@ -112,6 +113,15 @@ goog.scope(function () {
   };
 
   /**
+   * Returns the current time in milliseconds
+   *
+   * @return {number}
+   */
+  Observer.prototype.getTime = function () {
+    return new Date().getTime();
+  };
+
+  /**
    * @param {string=} text Optional test string to use for detecting if a font is available.
    * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    * @return {Promise.<fontface.Observer>}
@@ -120,12 +130,12 @@ goog.scope(function () {
     var that = this;
     var testString = text || 'BESbswy';
     var timeoutValue = timeout || Observer.DEFAULT_TIMEOUT;
-    var start = Date.now();
+    var start = that.getTime();
 
     return new Promise(function (resolve, reject) {
       if (Observer.SUPPORTS_NATIVE) {
         var check = function () {
-          var now = Date.now();
+          var now = that.getTime();
 
           if (now - start >= timeoutValue) {
             reject(that);
@@ -136,7 +146,7 @@ goog.scope(function () {
               } else {
                 setTimeout(check, 25);
               }
-            }).catch(function () {
+            }, function () {
               reject(that);
             });
           }
@@ -226,7 +236,7 @@ goog.scope(function () {
           fallbackWidthC = rulerC.getWidth();
 
           function checkForTimeout() {
-            var now = Date.now();
+            var now = that.getTime();
 
             if (now - start >= timeoutValue) {
               removeContainer();
@@ -244,6 +254,7 @@ goog.scope(function () {
           }
 
           checkForTimeout();
+
 
           rulerA.onResize(function (width) {
             widthA = width;

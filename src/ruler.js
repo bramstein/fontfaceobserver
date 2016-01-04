@@ -117,12 +117,12 @@ goog.scope(function () {
   Ruler.prototype.onResize = function (callback) {
     var that = this;
 
-    this.collapsible.addEventListener('scroll', function () {
+    function onScroll() {
       that.onScroll(callback);
-    }, false);
-    this.expandable.addEventListener('scroll', function () {
-      that.onScroll(callback);
-    }, false);
+    }
+
+    dom.addListener(this.collapsible, 'scroll', onScroll);
+    dom.addListener(this.expandable, 'scroll', onScroll);
     this.reset();
   };
 });
