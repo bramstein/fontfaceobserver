@@ -125,4 +125,4 @@ FontFaceObserver has been tested and works on the following browsers:
 
 ## License
 
-Font Face Observer is licensed under the BSD License. Copyright 2014-2015 Bram Stein. All rights reserved.
+Font Face Observer is licensed under the BSD License. Copyright 2014-2016 Bram Stein. All rights reserved.
