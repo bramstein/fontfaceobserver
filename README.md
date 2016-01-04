@@ -70,6 +70,24 @@ Promise.all([observer.check(), observer2.check()]).then(function () {
 });
 ```
 
+The following example emulates FOUT with Font Face Observer for "MyWebFont".
+
+```js
+var observer = new FontFaceObserver('MyWebFont');
+
+observer.check().then(function () {
+  document.documentElement.className += " fonts-loaded";
+});
+```
+
+```css
+.fonts-loaded {
+  body {
+    font-family: MyWebFont, sans-serif;
+  }
+}
+```
+
 ## Installation
 
 If you're using npm you can install Font Face Observer as a dependency:
@@ -80,7 +98,7 @@ $ npm install fontfaceobserver
 
 You can then require `fontfaceobserver` as a CommonJS (Browserify) module:
 
-```
+```js
 var FontFaceObserver = require('fontfaceobserver');
 
 var observer = new FontFaceObserver('My Family');
