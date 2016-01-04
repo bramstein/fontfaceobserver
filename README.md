@@ -70,12 +70,12 @@ Promise.all([observer.check(), observer2.check()]).then(function () {
 });
 ```
 
-Following example emulates FOUT with FontFaceObserver for MyCustomFont.
+The following example emulates FOUT with Font Face Observer for "MyWebFont".
 
 ```js
-var observer = new FontFaceObserver('MyCustomFont', {
-  weight: 400
-}).check().then(function () {
+var observer = new FontFaceObserver('MyWebFont');
+
+observer.check().then(function () {
   document.documentElement.className += " fonts-loaded";
 });
 ```
@@ -83,7 +83,7 @@ var observer = new FontFaceObserver('MyCustomFont', {
 ```css
 .fonts-loaded {
   body {
-    font-family: 'MyCustomFont', sans-serif;
+    font-family: MyWebFont, sans-serif;
   }
 }
 ```
