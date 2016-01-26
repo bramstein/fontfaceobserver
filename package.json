@@ -23,7 +23,7 @@
     "externs.js"
   ],
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
     "promis": "=1.1.4",
