@@ -23,11 +23,11 @@
     "externs.js"
   ],
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
-  "license": "BSD",
+  "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
     "promis": "=1.1.4",
-    "closure-dom": "=0.2.1",
+    "closure-dom": "=0.2.3",
     "extend": "^2.0.0",
     "grunt": "^0.4.5",
     "grunt-closurecompiler": "^0.9.9",
