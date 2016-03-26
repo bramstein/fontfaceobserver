@@ -126,7 +126,7 @@ goog.scope(function () {
    * @param {number=} timeout Optional timeout for giving up on font load detection and rejecting the promise (defaults to 3 seconds).
    * @return {Promise.<fontface.Observer>}
    */
-  Observer.prototype.check = function (text, timeout) {
+  Observer.prototype.load = function (text, timeout) {
     var that = this;
     var testString = text || 'BESbswy';
     var timeoutValue = timeout || Observer.DEFAULT_TIMEOUT;

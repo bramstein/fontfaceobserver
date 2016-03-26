@@ -11,33 +11,33 @@ var observer = new FontFaceObserver('My Family', {
   weight: 400
 });
 
-observer.check().then(function () {
+observer.load().then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available');
 });
 ```
 
-The `FontFaceObserver` constructor takes two arguments: the font family name (required) and an object describing the variation (optional). The object can contain `weight`, `style`, and `stretch` properties. If a property is not present it will default to `normal`. To start observing font loads, call the `check` method. It'll immediately return a new Promise that resolves when the font is available and rejected when the font is not available.
+The `FontFaceObserver` constructor takes two arguments: the font family name (required) and an object describing the variation (optional). The object can contain `weight`, `style`, and `stretch` properties. If a property is not present it will default to `normal`. To start observing font loads, call the `load` method. It'll immediately return a new Promise that resolves when the font is available and rejected when the font is not available.
 
-If your font doesn't contain latin characters you can pass a custom test string to the `check` method.
+If your font doesn't contain latin characters you can pass a custom test string to the `load` method.
 
 ```js
 var observer = new FontFaceObserver('My Family');
 
-observer.check('中国').then(function () {
+observer.load('中国').then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available');
 });
 ```
 
-The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `check` method.
+The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `load` method.
 
 ```js
 var observer = new FontFaceObserver('My Family');
 
-observer.check(null, 5000).then(function () {
+observer.load(null, 5000).then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available after waiting 5 seconds');
@@ -50,22 +50,22 @@ Multiple fonts can be loaded by creating a FontFaceObserver instance for each.
 var observer = new FontFaceObserver('Family A');
 var observer2 = new FontFaceObserver('Family B');
 
-observer.check().then(function () {
+observer.load().then(function () {
   console.log('Family A is available');
 });
 
-observer2.check().then(function () {
+observer2.load().then(function () {
   console.log('Family B is available');
 });
 ```
 
-You may also check both are loaded, rather than checking each individually.
+You may also load both at the same time, rather than loading each individually.
 
 ```js
 var observer = new FontFaceObserver('Family A');
 var observer2 = new FontFaceObserver('Family B');
 
-Promise.all([observer.check(), observer2.check()]).then(function () {
+Promise.all([observer.load(), observer2.load()]).then(function () {
   console.log('Family A & B have loaded');
 });
 ```
@@ -75,7 +75,7 @@ The following example emulates FOUT with Font Face Observer for "MyWebFont".
 ```js
 var observer = new FontFaceObserver('MyWebFont');
 
-observer.check().then(function () {
+observer.load().then(function () {
   document.documentElement.className += " fonts-loaded";
 });
 ```
@@ -103,7 +103,7 @@ var FontFaceObserver = require('fontfaceobserver');
 
 var observer = new FontFaceObserver('My Family');
 
-observer.check().then(function () {
+observer.load().then(function () {
   console.log('My Family has loaded');
 });
 ```
