@@ -26,19 +26,19 @@
   "license": "BSD-3-Clause",
   "dependencies": {},
   "devDependencies": {
-    "promis": "=1.1.4",
+    "extend": "^3.0.0",
     "closure-dom": "=0.2.3",
-    "extend": "^2.0.0",
+    "promis": "=1.1.4",
     "grunt": "^0.4.5",
     "grunt-closurecompiler": "^0.9.9",
-    "grunt-contrib-clean": "=0.6.0",
-    "grunt-contrib-concat": "^0.5.1",
-    "grunt-contrib-jshint": "^0.11.1",
-    "mocha-phantomjs-core": "^1.0.1",
+    "grunt-contrib-clean": "=1.0.0",
+    "grunt-contrib-concat": "^1.0.0",
+    "grunt-contrib-jshint": "^1.0.0",
+    "mocha-phantomjs-core": "^2.0.0",
     "grunt-exec": "~0.4.6",
-    "mocha": "=2.2.1",
-    "sinon": "=1.14.1",
-    "unexpected": "^6.4.0"
+    "mocha": "=2.4.5",
+    "sinon": "=1.17.3",
+    "unexpected": "^10.10.12"
   },
   "scripts": {
     "test": "grunt test"
