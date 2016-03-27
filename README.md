@@ -7,11 +7,11 @@ Font Face Observer is a small `@font-face` loader and monitor (3.5KB minified an
 Include your `@font-face` rules as usual. Fonts can be supplied by either a font service such as [Google Fonts](http://www.google.com/fonts), [Typekit](http://typekit.com), and [Webtype](http://webtype.com) or be self-hosted. It doesn't matter where, when, or how you load your fonts. You can set up monitoring for a single font family at a time:
 
 ```js
-var observer = new FontFaceObserver('My Family', {
+var font = new FontFaceObserver('My Family', {
   weight: 400
 });
 
-observer.load().then(function () {
+font.load().then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available');
@@ -23,9 +23,9 @@ The `FontFaceObserver` constructor takes two arguments: the font family name (re
 If your font doesn't contain latin characters you can pass a custom test string to the `load` method.
 
 ```js
-var observer = new FontFaceObserver('My Family');
+var font = new FontFaceObserver('My Family');
 
-observer.load('中国').then(function () {
+font.load('中国').then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available');
@@ -35,9 +35,9 @@ observer.load('中国').then(function () {
 The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `load` method.
 
 ```js
-var observer = new FontFaceObserver('My Family');
+var font = new FontFaceObserver('My Family');
 
-observer.load(null, 5000).then(function () {
+font.load(null, 5000).then(function () {
   console.log('Font is available');
 }, function () {
   console.log('Font is not available after waiting 5 seconds');
@@ -47,14 +47,14 @@ observer.load(null, 5000).then(function () {
 Multiple fonts can be loaded by creating a FontFaceObserver instance for each.
 
 ```js
-var observer = new FontFaceObserver('Family A');
-var observer2 = new FontFaceObserver('Family B');
+var fontA = new FontFaceObserver('Family A');
+var fontB = new FontFaceObserver('Family B');
 
-observer.load().then(function () {
+fontA.load().then(function () {
   console.log('Family A is available');
 });
 
-observer2.load().then(function () {
+fontB.load().then(function () {
   console.log('Family B is available');
 });
 ```
@@ -62,20 +62,20 @@ observer2.load().then(function () {
 You may also load both at the same time, rather than loading each individually.
 
 ```js
-var observer = new FontFaceObserver('Family A');
-var observer2 = new FontFaceObserver('Family B');
+var fontA = new FontFaceObserver('Family A');
+var fontB = new FontFaceObserver('Family B');
 
-Promise.all([observer.load(), observer2.load()]).then(function () {
+Promise.all([fontA.load(), fontB.load()]).then(function () {
   console.log('Family A & B have loaded');
 });
 ```
 
-The following example emulates FOUT with Font Face Observer for "MyWebFont".
+The following example emulates FOUT with Font Face Observer for "My Family".
 
 ```js
-var observer = new FontFaceObserver('MyWebFont');
+var font = new FontFaceObserver('My Family');
 
-observer.load().then(function () {
+font.load().then(function () {
   document.documentElement.className += " fonts-loaded";
 });
 ```
@@ -83,7 +83,7 @@ observer.load().then(function () {
 ```css
 .fonts-loaded {
   body {
-    font-family: MyWebFont, sans-serif;
+    font-family: My Family, sans-serif;
   }
 }
 ```
@@ -101,9 +101,9 @@ You can then require `fontfaceobserver` as a CommonJS (Browserify) module:
 ```js
 var FontFaceObserver = require('fontfaceobserver');
 
-var observer = new FontFaceObserver('My Family');
+var font = new FontFaceObserver('My Family');
 
-observer.load().then(function () {
+font.load().then(function () {
   console.log('My Family has loaded');
 });
 ```
