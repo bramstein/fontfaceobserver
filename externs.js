@@ -12,4 +12,4 @@ var FontFaceObserver = function (family, descriptors) {};
  *
  * @return {Promise.<FontFaceObserver>}
  */
-FontFaceObserver.prototype.check = function (opt_text, opt_timeout) {};
+FontFaceObserver.prototype.load = function (opt_text, opt_timeout) {};

@@ -6,7 +6,7 @@ describe('Observer', function () {
     it('creates a new instance with the correct signature', function () {
       var observer = new Observer('my family', {});
       expect(observer, 'not to be', null);
-      expect(observer.check, 'to be a function');
+      expect(observer.load, 'to be a function');
     });
 
     it('parses descriptors', function () {
@@ -53,7 +53,7 @@ describe('Observer', function () {
     });
   });
 
-  describe('#check', function () {
+  describe('#load', function () {
     this.timeout(5000);
 
     it('finds a font and resolve the promise', function (done) {
@@ -66,7 +66,7 @@ describe('Observer', function () {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('100px observer-test1, monospace');
-      observer.check(null, 5000).then(function () {
+      observer.load(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -94,7 +94,7 @@ describe('Observer', function () {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('100px observer-test9, monospace');
-      observer.check(null, 10000).then(function () {
+      observer.load(null, 10000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -132,7 +132,7 @@ describe('Observer', function () {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('100px observer-test1, monospace');
-      observer.check(null, 5000).then(function () {
+      observer.load(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -162,7 +162,7 @@ describe('Observer', function () {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('100px "Trebuchet W01 Regular", monospace');
-      observer.check(null, 5000).then(function () {
+      observer.load(null, 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -183,7 +183,7 @@ describe('Observer', function () {
     it('fails to find a font and reject the promise', function (done) {
       var observer = new Observer('observer-test2', {});
 
-      observer.check(null, 50).then(function () {
+      observer.load(null, 50).then(function () {
         done(new Error('Should not resolve'));
       }, function () {
         done();
@@ -193,8 +193,8 @@ describe('Observer', function () {
     it('finds the font even if it is already loaded', function (done) {
       var observer = new Observer('observer-test3', {});
 
-      observer.check(null, 5000).then(function () {
-        observer.check(null, 5000).then(function () {
+      observer.load(null, 5000).then(function () {
+        observer.load(null, 5000).then(function () {
           done();
         }, function () {
           done(new Error('Second call failed'));
@@ -215,7 +215,7 @@ describe('Observer', function () {
 
       ruler.setFont('100px observer-test4,monospace');
 
-      observer.check('\u0021', 5000).then(function () {
+      observer.load('\u0021', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -245,7 +245,7 @@ describe('Observer', function () {
 
       ruler.setFont('100px observer-test5,monospace');
 
-      observer.check('\u4e2d\u56fd', 5000).then(function () {
+      observer.load('\u4e2d\u56fd', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -276,7 +276,7 @@ describe('Observer', function () {
 
       ruler.setFont('100px observer-test6,monospace');
 
-      observer.check('\udbff\udfff', 5000).then(function () {
+      observer.load('\udbff\udfff', 5000).then(function () {
         var activeWidth = ruler.getWidth();
 
         expect(activeWidth, 'not to equal', beforeWidth);
@@ -299,7 +299,7 @@ describe('Observer', function () {
     it('fails to find the font if it is available but does not contain the test string', function (done) {
       var observer = new Observer('observer-test7', {});
 
-      observer.check(null, 50).then(function () {
+      observer.load(null, 50).then(function () {
         done(new Error('Should not be called'));
       }, function () {
         done();
@@ -309,7 +309,7 @@ describe('Observer', function () {
     xit('finds a locally installed font', function (done) {
       var observer = new Observer('sans-serif', {});
 
-      observer.check(null, 50).then(function () {
+      observer.load(null, 50).then(function () {
         done();
       }, function () {
         done(new Error('Did not detect local font'));
@@ -319,7 +319,7 @@ describe('Observer', function () {
     xit('finds a locally installed font with the same metrics as the a fallback font (on OS X)', function (done) {
       var observer = new Observer('serif', {});
 
-      observer.check(null, 50).then(function () {
+      observer.load(null, 50).then(function () {
         done();
       }, function () {
         done(new Error('Did not detect local font'));
