@@ -13,7 +13,12 @@ module.exports = function (grunt) {
 
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-    clean: ['build'],
+    clean: {
+      options: {
+        force: true
+      },
+      build: ['build']
+    },
     connect: {
       server: {
         options: {
