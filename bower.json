@@ -1,0 +1,22 @@
+{
+  "name": "fontfaceobserver",
+  "description": "Fast and simple web font loading.",
+  "main": "fontfaceobserver.standalone.js",
+  "authors": [
+    "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)"
+  ],
+  "license": "BSD-3-Clause",
+  "keywords": [
+    "fontloader",
+    "fonts",
+    "font",
+    "font-face",
+    "web",
+    "font",
+    "font",
+    "load",
+    "font",
+    "events"
+  ],
+  "homepage": "https://github.com/bramstein/fontfaceobserver"
+}
