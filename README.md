@@ -1,5 +1,7 @@
 # Font Face Observer [![Build Status](https://travis-ci.org/bramstein/fontfaceobserver.png?branch=master)](https://travis-ci.org/bramstein/fontfaceobserver)
 
+[![Join the chat at https://gitter.im/bramstein/fontfaceobserver](https://badges.gitter.im/bramstein/fontfaceobserver.svg)](https://gitter.im/bramstein/fontfaceobserver?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Font Face Observer is a small `@font-face` loader and monitor (3.5KB minified and 1.3KB gzipped) compatible with any web font service. It will monitor when a web font is applied to the page and notify you. It does not limit you in any way in where, when, or how you load your web fonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
 
 ## How to use
