@@ -37,6 +37,7 @@
     "mocha-phantomjs-core": "^2.0.0",
     "grunt-exec": "~0.4.6",
     "mocha": "=2.4.5",
+    "phantomjs-prebuilt": "^2.1.7",
     "sinon": "=1.17.3",
     "unexpected": "^10.10.12"
   },
