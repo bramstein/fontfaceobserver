@@ -115,8 +115,8 @@ describe('Observer', function () {
       // dynamically inserted @font-face rules.
       var link = document.createElement('link');
 
-      link.rel = "stylesheet";
-      link.href = "assets/late.css";
+      link.rel = 'stylesheet';
+      link.href = 'assets/late.css';
 
       document.head.appendChild(link);
     });
@@ -125,7 +125,7 @@ describe('Observer', function () {
       var observer = new Observer('observer-test8', {}),
           ruler = new Ruler('hello');
 
-      document.body.dir = "rtl";
+      document.body.dir = 'rtl';
       document.body.appendChild(ruler.getElement());
 
       ruler.setFont('monospace', '');
@@ -143,7 +143,7 @@ describe('Observer', function () {
           expect(afterWidth, 'to equal', activeWidth);
           expect(afterWidth, 'not to equal', beforeWidth);
           document.body.removeChild(ruler.getElement());
-          document.body.dir = "ltr";
+          document.body.dir = 'ltr';
           done();
         }, 0);
       }, function () {

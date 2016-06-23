@@ -12,22 +12,12 @@ module.exports = function (grunt) {
   };
 
   grunt.initConfig({
-    pkg: grunt.file.readJSON('package.json'),
     clean: {
       options: {
         force: true
       },
       build: ['build']
     },
-    connect: {
-      server: {
-        options: {
-          base: "",
-          port: 9999
-        }
-      }
-    },
-    watch: {},
     exec: {
       test: 'phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html',
       deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
@@ -36,38 +26,38 @@ module.exports = function (grunt) {
       all: ['src/**/*.js'],
       options: {
         // ... better written as dot notation
-        "-W069": true,
+        '-W069': true,
 
         // type definitions
-        "-W030": true,
+        '-W030': true,
 
         // Don't make functions within loops
-        "-W083": true,
+        '-W083': true,
 
         // Wrap the /regexp/ literal in parens to disambiguate the slash operator
-        "-W092": true
+        '-W092': true
       }
     },
     closurecompiler: {
       dist: {
         files: {
-          "fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          'fontfaceobserver.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
         },
         options: extend({}, compilerOptions, {
-          define: "DEBUG=false"
+          define: 'DEBUG=false'
         })
       },
       compile: {
         files: {
-          "build/fontfaceobserver.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js'],
+          'build/fontfaceobserver.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
         },
         options: extend({}, compilerOptions, {
-          define: "DEBUG=false"
+          define: 'DEBUG=false'
         })
       },
       debug: {
         files: {
-          "build/fontfaceobserver.debug.js": ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          'build/fontfaceobserver.debug.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
         },
         options: extend({}, compilerOptions, {
           debug: true,
@@ -96,6 +86,6 @@ module.exports = function (grunt) {
   grunt.registerTask('compile', ['closurecompiler:compile']);
   grunt.registerTask('debug', ['closurecompiler:debug']);
   grunt.registerTask('default', ['compile']);
-  grunt.registerTask('test', ['exec:test']);
+  grunt.registerTask('test', ['jshint', 'exec:test']);
   grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist', 'concat:dist_promises']);
 };
