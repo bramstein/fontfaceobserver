@@ -51,7 +51,7 @@ goog.scope(function () {
   /**
    * @type {boolean}
    */
-  Observer.SUPPORTS_NATIVE = !!window['FontFace'];
+  Observer.SUPPORTS_NATIVE = Boolean(window['FontFace']);
 
   /**
    * @type {number}
@@ -75,7 +75,7 @@ goog.scope(function () {
     if (Observer.HAS_WEBKIT_FALLBACK_BUG === null) {
       var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(Observer.getUserAgent());
 
-      Observer.HAS_WEBKIT_FALLBACK_BUG = !!match &&
+      Observer.HAS_WEBKIT_FALLBACK_BUG = Boolean(match) &&
                                           (parseInt(match[1], 10) < 536 ||
                                            (parseInt(match[1], 10) === 536 &&
                                             parseInt(match[2], 10) <= 11));
@@ -96,7 +96,7 @@ goog.scope(function () {
       try {
         div.style.font = 'condensed 100px sans-serif';
       } catch (e) {}
-      Observer.SUPPORTS_STRETCH = (div.style.font !== "");
+      Observer.SUPPORTS_STRETCH = div.style.font !== '';
     }
 
     return Observer.SUPPORTS_STRETCH;
@@ -207,17 +207,17 @@ goog.scope(function () {
            *    continue waiting until we get new values (or a timeout).
            */
           function check() {
-            if ((widthA != -1 && widthB != -1) || (widthA != -1 && widthC != -1) || (widthB != -1 && widthC != -1)) {
-              if (widthA == widthB || widthA == widthC || widthB == widthC) {
+            if (widthA !== -1 && widthB !== -1 || widthA !== -1 && widthC !== -1 || widthB !== -1 && widthC !== -1) {
+              if (widthA === widthB || widthA === widthC || widthB === widthC) {
                 // All values are the same, so the browser has most likely loaded the web font
 
                 if (Observer.hasWebKitFallbackBug()) {
                   // Except if the browser has the WebKit fallback bug, in which case we check to see if all
                   // values are set to one of the last resort fonts.
 
-                  if (((widthA == fallbackWidthA && widthB == fallbackWidthA && widthC == fallbackWidthA) ||
-                        (widthA == fallbackWidthB && widthB == fallbackWidthB && widthC == fallbackWidthB) ||
-                        (widthA == fallbackWidthC && widthB == fallbackWidthC && widthC == fallbackWidthC))) {
+                  if (widthA === fallbackWidthA && widthB === fallbackWidthA && widthC === fallbackWidthA ||
+                        widthA === fallbackWidthB && widthB === fallbackWidthB && widthC === fallbackWidthB ||
+                        widthA === fallbackWidthC && widthB === fallbackWidthC && widthC === fallbackWidthC) {
                     // The width we got matches some of the known last resort fonts, so let's assume we're dealing with the last resort font.
                     return;
                   }
@@ -230,7 +230,7 @@ goog.scope(function () {
           }
 
           // This ensures the scroll direction is correct.
-          container.dir = "ltr";
+          container.dir = 'ltr';
 
           rulerA.setFont(that.getStyle('sans-serif'));
           rulerB.setFont(that.getStyle('serif'));
