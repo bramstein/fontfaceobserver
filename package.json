@@ -41,7 +41,7 @@
     "grunt-contrib-concat": "^1.0.1",
     "grunt-contrib-jshint": "^1.0.0",
     "grunt-exec": "~1.0.0",
-    "mocha": "=2.5.3",
+    "mocha": "^2.5.3",
     "mocha-phantomjs-core": "^2.0.0",
     "phantomjs-prebuilt": "^2.1.7",
     "promis": "=1.1.4",
