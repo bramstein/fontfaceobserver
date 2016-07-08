@@ -49,9 +49,9 @@ goog.scope(function () {
   Observer.SUPPORTS_STRETCH = null;
 
   /**
-   * @type {boolean}
+   * @type {null|boolean}
    */
-  Observer.SUPPORTS_NATIVE = !!window['FontFace'];
+  Observer.SUPPORTS_NATIVE_FONT_LOADING = null;
 
   /**
    * @type {number}
@@ -81,6 +81,19 @@ goog.scope(function () {
                                             parseInt(match[2], 10) <= 11));
     }
     return Observer.HAS_WEBKIT_FALLBACK_BUG;
+  };
+
+  /**
+   * Returns true if the browser supports the native font loading
+   * API.
+   *
+   * @return {boolean}
+   */
+  Observer.supportsNativeFontLoading = function () {
+    if (Observer.SUPPORTS_NATIVE_FONT_LOADING === null) {
+      Observer.SUPPORTS_NATIVE_FONT_LOADING = !!window['FontFace'];
+    }
+    return Observer.SUPPORTS_NATIVE_FONT_LOADING;
   };
 
   /**
@@ -133,7 +146,7 @@ goog.scope(function () {
     var start = that.getTime();
 
     return new Promise(function (resolve, reject) {
-      if (Observer.SUPPORTS_NATIVE) {
+      if (Observer.supportsNativeFontLoading()) {
         var loader = new Promise(function (resolve, reject) {
           var check = function () {
             var now = that.getTime();
