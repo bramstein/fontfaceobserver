@@ -5,7 +5,14 @@
   "directories": {
     "test": "test"
   },
-  "repository": "https://github.com/bramstein/fontfaceobserver.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bramstein/fontfaceobserver.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bramstein/fontfaceobserver/issues"
+  },
+  "homepage": "https://fontfaceobserver.com/",
   "main": "fontfaceobserver.standalone.js",
   "keywords": [
     "fontloader",
