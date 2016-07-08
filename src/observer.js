@@ -96,7 +96,7 @@ goog.scope(function () {
       try {
         div.style.font = 'condensed 100px sans-serif';
       } catch (e) {}
-      Observer.SUPPORTS_STRETCH = (div.style.font !== "");
+      Observer.SUPPORTS_STRETCH = (div.style.font !== '');
     }
 
     return Observer.SUPPORTS_STRETCH;
@@ -230,7 +230,7 @@ goog.scope(function () {
           }
 
           // This ensures the scroll direction is correct.
-          container.dir = "ltr";
+          container.dir = 'ltr';
 
           rulerA.setFont(that.getStyle('sans-serif'));
           rulerB.setFont(that.getStyle('serif'));
