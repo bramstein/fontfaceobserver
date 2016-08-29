@@ -91,7 +91,7 @@ goog.scope(function () {
    */
   Observer.supportsNativeFontLoading = function () {
     if (Observer.SUPPORTS_NATIVE_FONT_LOADING === null) {
-      Observer.SUPPORTS_NATIVE_FONT_LOADING = !!window['FontFace'];
+      Observer.SUPPORTS_NATIVE_FONT_LOADING = !!document['fonts'];
     }
     return Observer.SUPPORTS_NATIVE_FONT_LOADING;
   };
