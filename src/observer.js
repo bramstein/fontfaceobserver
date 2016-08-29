@@ -154,7 +154,7 @@ goog.scope(function () {
             if (now - start >= timeoutValue) {
               reject();
             } else {
-              document.fonts.load(that.getStyle(that['family']), testString).then(function (fonts) {
+              document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString).then(function (fonts) {
                 if (fonts.length >= 1) {
                   resolve();
                 } else {
