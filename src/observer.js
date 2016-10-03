@@ -174,7 +174,7 @@ goog.scope(function () {
         });
 
         Promise.race([timer, loader]).then(function () {
-          clearTimeout( timeoutId );
+          clearTimeout(timeoutId);
           resolve(that);
         }, function () {
           reject(that);
