@@ -142,6 +142,7 @@ goog.scope(function () {
   Observer.prototype.load = function (text, timeout) {
     var that = this;
     var testString = text || 'BESbswy';
+    var timeoutId = 0;
     var timeoutValue = timeout || Observer.DEFAULT_TIMEOUT;
     var start = that.getTime();
 
@@ -169,10 +170,11 @@ goog.scope(function () {
         });
 
         var timer = new Promise(function (resolve, reject) {
-          setTimeout(reject, timeoutValue);
+          timeoutId = setTimeout(reject, timeoutValue);
         });
 
         Promise.race([timer, loader]).then(function () {
+          clearTimeout(timeoutId);
           resolve(that);
         }, function () {
           reject(that);
@@ -192,8 +194,6 @@ goog.scope(function () {
           var fallbackWidthC = -1;
 
           var container = dom.createElement('div');
-
-          var timeoutId = 0;
 
           /**
            * @private
