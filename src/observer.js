@@ -46,6 +46,11 @@ goog.scope(function () {
   /**
    * @type {null|boolean}
    */
+  Observer.HAS_SAFARI_10_BUG = null;
+
+  /**
+   * @type {null|boolean}
+   */
   Observer.SUPPORTS_STRETCH = null;
 
   /**
@@ -81,6 +86,29 @@ goog.scope(function () {
                                             parseInt(match[2], 10) <= 11));
     }
     return Observer.HAS_WEBKIT_FALLBACK_BUG;
+  };
+
+  /**
+   * Returns true if this browser is Safari 10. The native font
+   * load API in Safari 10 has two bugs that cause the
+   * document.fonts.load and FontFace.prototype.load methods to
+   * return promises that don't reliably get settled.
+   *
+   * The bugs are described in more detail here:
+   *  - https://bugs.webkit.org/show_bug.cgi?id=165037
+   *  - https://bugs.webkit.org/show_bug.cgi?id=164902
+   *
+   * Until patches for these bugs have landed in a stable version
+   * this code will disable using the native font loading API on
+   * Safari 10.
+   *
+   * @return {boolean}
+   */
+  Observer.hasSafari10Bug = function () {
+    if (Observer.HAS_SAFARI_10_BUG === null) {
+      Observer.HAS_SAFARI_10_BUG = /OS X.*Version\/10\..*Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
+    }
+    return Observer.HAS_SAFARI_10_BUG;
   };
 
   /**
@@ -147,7 +175,7 @@ goog.scope(function () {
     var start = that.getTime();
 
     return new Promise(function (resolve, reject) {
-      if (Observer.supportsNativeFontLoading()) {
+      if (Observer.supportsNativeFontLoading() && !Observer.hasSafari10Bug()) {
         var loader = new Promise(function (resolve, reject) {
           var check = function () {
             var now = that.getTime();
