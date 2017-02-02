@@ -65,6 +65,7 @@ goog.scope(function () {
                             'top:-999px;' +
                             'left:-999px;' +
                             'white-space:nowrap;' +
+                            'font-synthesis:none;' +
                             'font:' + font + ';');
   };
 
