@@ -71,6 +71,13 @@ goog.scope(function () {
   };
 
   /**
+   * @return {string}
+   */
+  Observer.getNavigatorVendor = function () {
+    return window.navigator.vendor;
+  };
+
+  /**
    * Returns true if this browser is WebKit and it has the fallback bug
    * which is present in WebKit 536.11 and earlier.
    *
@@ -98,15 +105,14 @@ goog.scope(function () {
    *  - https://bugs.webkit.org/show_bug.cgi?id=165037
    *  - https://bugs.webkit.org/show_bug.cgi?id=164902
    *
-   * Until patches for these bugs have landed in a stable version
-   * this code will disable using the native font loading API on
-   * Safari 10.
+   * These patches have landed in Safari 10.1, so we'll re-enable
+   * the native font loading API from that version onwards.
    *
    * @return {boolean}
    */
   Observer.hasSafari10Bug = function () {
     if (Observer.HAS_SAFARI_10_BUG === null) {
-      Observer.HAS_SAFARI_10_BUG = /OS X.*Version\/10\..*Safari/.test(navigator.userAgent) && /Apple/.test(navigator.vendor);
+      Observer.HAS_SAFARI_10_BUG = /OS X.*Version\/10\.0.*Safari/.test(Observer.getUserAgent()) && /Apple/.test(Observer.getNavigatorVendor());
     }
     return Observer.HAS_SAFARI_10_BUG;
   };
