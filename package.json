@@ -35,7 +35,7 @@
   "devDependencies": {
     "closure-dom": "=0.2.6",
     "extend": "^3.0.0",
-    "google-closure-compiler": "=20160911.0.0",
+    "google-closure-compiler": "=20161024.0.0",
     "grunt": "^0.4.5",
     "grunt-contrib-clean": "^1.0.0",
     "grunt-contrib-concat": "^1.0.1",
