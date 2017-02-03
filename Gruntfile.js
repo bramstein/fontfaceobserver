@@ -1,6 +1,8 @@
 var extend = require('extend');
 
 module.exports = function (grunt) {
+  require('google-closure-compiler').grunt(grunt);
+
   var compilerOptions = {
     compilation_level: 'ADVANCED_OPTIMIZATIONS',
     warning_level: 'VERBOSE',
@@ -10,6 +12,14 @@ module.exports = function (grunt) {
     use_types_for_optimization: true,
     externs: ['externs-commonjs.js']
   };
+
+  var src = [
+    'node_modules/closure-dom/src/dom.js',
+    'src/descriptors.js',
+    'src/ruler.js',
+    'src/observer.js',
+    'exports.js'
+  ];
 
   grunt.initConfig({
     clean: {
@@ -38,26 +48,22 @@ module.exports = function (grunt) {
         '-W092': true
       }
     },
-    closurecompiler: {
+    'closure-compiler': {
       dist: {
         files: {
-          'fontfaceobserver.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          'fontfaceobserver.js': src
         },
-        options: extend({}, compilerOptions, {
-          define: 'DEBUG=false'
-        })
+        options: compilerOptions
       },
       compile: {
         files: {
-          'build/fontfaceobserver.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js'],
+          'build/fontfaceobserver.js': src
         },
-        options: extend({}, compilerOptions, {
-          define: 'DEBUG=false'
-        })
+        options: compilerOptions
       },
       debug: {
         files: {
-          'build/fontfaceobserver.debug.js': ['src/**/*.js', 'exports.js', 'node_modules/closure-dom/src/dom.js']
+          'build/fontfaceobserver.debug.js': src
         },
         options: extend({}, compilerOptions, {
           debug: true,
@@ -83,9 +89,9 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-exec');
 
-  grunt.registerTask('compile', ['closurecompiler:compile']);
-  grunt.registerTask('debug', ['closurecompiler:debug']);
+  grunt.registerTask('compile', ['closure-compiler:compile']);
+  grunt.registerTask('debug', ['closure-compiler:debug']);
   grunt.registerTask('default', ['compile']);
   grunt.registerTask('test', ['jshint', 'exec:test']);
-  grunt.registerTask('dist', ['clean', 'closurecompiler:compile', 'concat:dist', 'concat:dist_promises']);
+  grunt.registerTask('dist', ['clean', 'closure-compiler:compile', 'concat:dist', 'concat:dist_promises']);
 };
