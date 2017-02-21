@@ -378,8 +378,15 @@ describe('Observer', function () {
       expect(Observer.hasSafari10Bug(), 'to be false');
     });
 
-    it('returns true if the Safari 10 font loading bug is present', function () {
+    it('returns true if the browser is an affected version of Safari 10', function () {
       getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14');
+      getNavigatorVendor.returns('Apple');
+
+      expect(Observer.hasSafari10Bug(), 'to be true');
+    });
+
+    it('returns true if the browser is an WebView with an affected version of Safari 10', function () {
+      getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/602.2.14 (KHTML, like Gecko) FxiOS/6.1 Safari/602.2.14');
       getNavigatorVendor.returns('Apple');
 
       expect(Observer.hasSafari10Bug(), 'to be true');

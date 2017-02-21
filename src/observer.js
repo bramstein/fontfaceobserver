@@ -96,23 +96,37 @@ goog.scope(function () {
   };
 
   /**
-   * Returns true if this browser is Safari 10. The native font
-   * load API in Safari 10 has two bugs that cause the
-   * document.fonts.load and FontFace.prototype.load methods to
-   * return promises that don't reliably get settled.
+   * Returns true if the browser has the Safari 10 bugs. The
+   * native font load API in Safari 10 has two bugs that cause
+   * the document.fonts.load and FontFace.prototype.load methods
+   * to return promises that don't reliably get settled.
    *
    * The bugs are described in more detail here:
    *  - https://bugs.webkit.org/show_bug.cgi?id=165037
    *  - https://bugs.webkit.org/show_bug.cgi?id=164902
    *
-   * These patches have landed in Safari 10.1, so we'll re-enable
-   * the native font loading API from that version onwards.
+   * Safari 10.0 was around AppleWebKit version 602, so any
+   * versions do not have the bug.
+   * These bugs was fixed in Safari Technology Preview 19, which
+   * corresponds to AppleWebKit version 603.1.14, so any
+   * version later than this does not have the bug either.
+   * So we simply check if it's an Apple-browser with a
+   * AppleWebKit version between 602 and 603.1.14.
    *
    * @return {boolean}
    */
   Observer.hasSafari10Bug = function () {
     if (Observer.HAS_SAFARI_10_BUG === null) {
-      Observer.HAS_SAFARI_10_BUG = /OS X.*Version\/10\.0.*Safari/.test(Observer.getUserAgent()) && /Apple/.test(Observer.getNavigatorVendor());
+      var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(Observer.getUserAgent());
+
+      Observer.HAS_SAFARI_10_BUG = !!match &&
+                                    (/Apple/.test(Observer.getNavigatorVendor()) &&
+                                     (parseInt(match[1], 10) >= 602 &&
+                                      (parseInt(match[1], 10) < 603 ||
+                                       (parseInt(match[1], 10) === 603 &&
+                                        (parseInt(match[2], 10) < 1 ||
+                                         (parseInt(match[2], 10) === 1 &&
+                                          parseInt(match[3], 10) < 14))))));
     }
     return Observer.HAS_SAFARI_10_BUG;
   };
