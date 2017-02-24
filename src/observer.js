@@ -105,28 +105,22 @@ goog.scope(function () {
    *  - https://bugs.webkit.org/show_bug.cgi?id=165037
    *  - https://bugs.webkit.org/show_bug.cgi?id=164902
    *
-   * Safari 10.0 was around AppleWebKit version 602, so any
-   * versions do not have the bug.
-   * These bugs was fixed in Safari Technology Preview 19, which
-   * corresponds to AppleWebKit version 603.1.14, so any
-   * version later than this does not have the bug either.
-   * So we simply check if it's an Apple-browser with a
-   * AppleWebKit version between 602 and 603.1.14.
+   * If the browser is made by Apple, and has native font
+   * loading support, it is potentially affected. But the API
+   * was fixed around AppleWebKit version 603, so any newer
+   * versions that that does not contain the bug.
    *
    * @return {boolean}
    */
   Observer.hasSafari10Bug = function () {
     if (Observer.HAS_SAFARI_10_BUG === null) {
-      var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(Observer.getUserAgent());
+      if (Observer.supportsNativeFontLoading() && /Apple/.test(Observer.getNavigatorVendor())) {
+        var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(Observer.getUserAgent());
 
-      Observer.HAS_SAFARI_10_BUG = !!match &&
-                                    (/Apple/.test(Observer.getNavigatorVendor()) &&
-                                     (parseInt(match[1], 10) >= 602 &&
-                                      (parseInt(match[1], 10) < 603 ||
-                                       (parseInt(match[1], 10) === 603 &&
-                                        (parseInt(match[2], 10) < 1 ||
-                                         (parseInt(match[2], 10) === 1 &&
-                                          parseInt(match[3], 10) < 14))))));
+        Observer.HAS_SAFARI_10_BUG = !!match && parseInt(match[1], 10) < 603;
+      } else {
+        Observer.HAS_SAFARI_10_BUG = false;
+      }
     }
     return Observer.HAS_SAFARI_10_BUG;
   };
