@@ -96,23 +96,31 @@ goog.scope(function () {
   };
 
   /**
-   * Returns true if this browser is Safari 10. The native font
-   * load API in Safari 10 has two bugs that cause the
-   * document.fonts.load and FontFace.prototype.load methods to
-   * return promises that don't reliably get settled.
+   * Returns true if the browser has the Safari 10 bugs. The
+   * native font load API in Safari 10 has two bugs that cause
+   * the document.fonts.load and FontFace.prototype.load methods
+   * to return promises that don't reliably get settled.
    *
    * The bugs are described in more detail here:
    *  - https://bugs.webkit.org/show_bug.cgi?id=165037
    *  - https://bugs.webkit.org/show_bug.cgi?id=164902
    *
-   * These patches have landed in Safari 10.1, so we'll re-enable
-   * the native font loading API from that version onwards.
+   * If the browser is made by Apple, and has native font
+   * loading support, it is potentially affected. But the API
+   * was fixed around AppleWebKit version 603, so any newer
+   * versions that that does not contain the bug.
    *
    * @return {boolean}
    */
   Observer.hasSafari10Bug = function () {
     if (Observer.HAS_SAFARI_10_BUG === null) {
-      Observer.HAS_SAFARI_10_BUG = /OS X.*Version\/10\.0.*Safari/.test(Observer.getUserAgent()) && /Apple/.test(Observer.getNavigatorVendor());
+      if (Observer.supportsNativeFontLoading() && /Apple/.test(Observer.getNavigatorVendor())) {
+        var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(Observer.getUserAgent());
+
+        Observer.HAS_SAFARI_10_BUG = !!match && parseInt(match[1], 10) < 603;
+      } else {
+        Observer.HAS_SAFARI_10_BUG = false;
+      }
     }
     return Observer.HAS_SAFARI_10_BUG;
   };

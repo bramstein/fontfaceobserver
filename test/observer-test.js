@@ -358,29 +358,42 @@ describe('Observer', function () {
   describe('hasSafari10Bug', function () {
     var getUserAgent = null;
     var getNavigatorVendor = null;
+    var supportsNativeFontLoading = null;
 
     beforeEach(function () {
       Observer.HAS_SAFARI_10_BUG = null;
 
       getUserAgent = sinon.stub(Observer, 'getUserAgent');
       getNavigatorVendor = sinon.stub(Observer, 'getNavigatorVendor');
+      supportsNativeFontLoading = sinon.stub(Observer, 'supportsNativeFontLoading');
     });
 
     afterEach(function () {
       getUserAgent.restore();
       getNavigatorVendor.restore();
+      supportsNativeFontLoading.restore();
     });
 
     it('returns false when the user agent is not WebKit', function () {
       getUserAgent.returns('Mozilla/5.0 (Android; Mobile; rv:13.0) Gecko/15.0 Firefox/14.0');
       getNavigatorVendor.returns('Google');
+      supportsNativeFontLoading.returns(true);
 
       expect(Observer.hasSafari10Bug(), 'to be false');
     });
 
-    it('returns true if the Safari 10 font loading bug is present', function () {
+    it('returns true if the browser is an affected version of Safari 10', function () {
       getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/602.2.14 (KHTML, like Gecko) Version/10.0.1 Safari/602.2.14');
       getNavigatorVendor.returns('Apple');
+      supportsNativeFontLoading.returns(true);
+
+      expect(Observer.hasSafari10Bug(), 'to be true');
+    });
+
+    it('returns true if the browser is an WebView with an affected version of Safari 10', function () {
+      getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/602.2.14 (KHTML, like Gecko) FxiOS/6.1 Safari/602.2.14');
+      getNavigatorVendor.returns('Apple');
+      supportsNativeFontLoading.returns(true);
 
       expect(Observer.hasSafari10Bug(), 'to be true');
     });
@@ -388,6 +401,7 @@ describe('Observer', function () {
     it('returns false in older versions of Safari', function () {
       getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_6) AppleWebKit/537.75.14 (KHTML, like Gecko) Version/9.3.2 Safari/537.75.14');
       getNavigatorVendor.returns('Apple');
+      supportsNativeFontLoading.returns(false);
 
       expect(Observer.hasSafari10Bug(), 'to be false');
     });
@@ -395,6 +409,7 @@ describe('Observer', function () {
     it('returns false in newer versions of Safari', function () {
       getUserAgent.returns('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_4) AppleWebKit/603.1.20 (KHTML, like Gecko) Version/10.1 Safari/603.1.20');
       getNavigatorVendor.returns('Apple');
+      supportsNativeFontLoading.returns(true);
 
       expect(Observer.hasSafari10Bug(), 'to be false');
     });
