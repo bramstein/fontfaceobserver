@@ -1,6 +1,6 @@
 goog.require('fontface.Observer');
 
-if (typeof module !== 'undefined') {
+if (typeof module === 'object') {
   module.exports = fontface.Observer;
 } else {
   window['FontFaceObserver'] = fontface.Observer;
