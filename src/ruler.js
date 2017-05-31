@@ -53,6 +53,8 @@ goog.scope(function () {
    * @param {string} font
    */
   Ruler.prototype.setFont = function (font) {
+	var isRTL = document.documentElement.dir.toLowerCase() == "rtl";
+
     dom.style(this.element, 'max-width:none;' +
                             'min-width:20px;' +
                             'min-height:20px;' +
@@ -63,7 +65,7 @@ goog.scope(function () {
                             'margin:0;' +
                             'padding:0;' +
                             'top:-999px;' +
-                            'left:-999px;' +
+                            (isRTL ? 'right:-999px;' : 'left:-999px;') +
                             'white-space:nowrap;' +
                             'font-synthesis:none;' +
                             'font:' + font + ';');
