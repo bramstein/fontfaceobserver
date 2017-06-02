@@ -22,6 +22,7 @@ module.exports = function (grunt) {
   ];
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     clean: {
       options: {
         force: true
@@ -72,6 +73,9 @@ module.exports = function (grunt) {
       }
     },
     concat: {
+      options: {
+        banner: '/* Font Face Observer v<%= pkg.version %> - © Bram Stein. License: BSD-3-Clause */'
+      },
       dist_promises: {
         src: ['node_modules/promis/promise.js', 'build/fontfaceobserver.js'],
         dest: 'fontfaceobserver.js'
