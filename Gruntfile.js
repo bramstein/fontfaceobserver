@@ -1,4 +1,6 @@
 var extend = require('extend');
+var fs = require('fs');
+var license = fs.readFileSync('LICENSE', 'utf8');
 
 module.exports = function (grunt) {
   require('google-closure-compiler').grunt(grunt);
@@ -8,7 +10,7 @@ module.exports = function (grunt) {
     warning_level: 'VERBOSE',
     summary_detail_level: 3,
     language_in: 'ECMASCRIPT5_STRICT',
-    output_wrapper: '(function(){%output%}());',
+    output_wrapper: '/* \n' + license + ' \n*/(function(){%output%}());',
     use_types_for_optimization: true,
     externs: ['externs-commonjs.js']
   };
