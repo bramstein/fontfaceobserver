@@ -63,7 +63,6 @@ goog.scope(function () {
                             'margin:0;' +
                             'padding:0;' +
                             'top:-999px;' +
-                            'left:-999px;' +
                             'white-space:nowrap;' +
                             'font-synthesis:none;' +
                             'font:' + font + ';');
