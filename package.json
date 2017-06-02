@@ -1,6 +1,6 @@
 {
   "name": "fontfaceobserver",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "description": "Detect if web fonts are available",
   "directories": {
     "test": "test"
