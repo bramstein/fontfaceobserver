@@ -49,6 +49,9 @@
     "unexpected": "^10.14.2"
   },
   "scripts": {
+    "preversion": "npm test",
+    "version": "grunt dist && git add fontfaceobserver.js && git add fontfaceobserver.standalone.js",
+    "postversion": "git push --tags && rm -rf build",
     "test": "grunt test"
   }
 }
