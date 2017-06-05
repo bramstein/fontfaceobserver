@@ -353,6 +353,103 @@ describe('Observer', function () {
         done(new Error('Did not detect local font'));
       });
     });
+
+    it('fails to find the google-hosted material icons font before loading font', function(done){
+      var observer = new Observer('Material Icons', {});
+      var
+        link = document.createElement('link')
+      ;
+      link.setAttribute('href', 'https://fonts.googleapis.com/icon?family=Material+Icons');
+      link.setAttribute('rel', 'stylesheet');
+
+      observer.check('font_download', 50).then(function () {
+        document.querySelector('head').appendChild(link);
+        done(new Error('Finds the google-hosted material icons font before loading font'));
+      }, function () {
+        document.querySelector('head').appendChild(link);
+        done()
+      });
+    });
+
+    it('finds the google-hosted material icons font with no character check', function(done){
+      var observer = new Observer('Material Icons', {});
+
+      observer.check(null, 3000).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font with no character check + ligatures', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check(null, 3000).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font with character check', function(done){
+      var observer = new Observer('Material Icons', {});
+
+      observer.check('', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font with character check + ligatures', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check('', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font via unicode string', function(done){
+      var observer = new Observer('Material Icons', {});
+
+      observer.check('\ue167', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font via unicode string + ligatures', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check('\ue167', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font'))
+      });
+    });
+
+    it('finds the google-hosted material icons font using named ligature, without specifying ligature feature', function(done){
+      var observer = new Observer('Material Icons', {});
+
+      observer.check('font_download', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font using named ligatures'))
+      });
+    });
+
+    it('finds the google-hosted material icons font using named ligature, while specifying ligature feature', function(done){
+      var observer = new Observer('Material Icons', {featureSettings: 'liga'});
+
+      observer.check('font_download', 50).then(function () {
+        done();
+      }, function () {
+        done(new Error('Did not detect google-hosted material icons font using named ligatures'))
+      });
+    });
   });
 
   describe('hasSafari10Bug', function () {
