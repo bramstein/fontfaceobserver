@@ -196,19 +196,27 @@ goog.scope(function () {
 
             if (now - start >= timeoutValue) {
               reject();
+              return;
+            }
+
+            if (document.fonts.check(that.getStyle('"' + that['family'] + '"'))) {
+              resolve();
             } else {
-              document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString).then(function (fonts) {
-                if (fonts.length >= 1) {
-                  resolve();
-                } else {
-                  setTimeout(check, 25);
-                }
-              }, function () {
-                reject();
-              });
+              setTimeout(check, 25);
             }
           };
-          check();
+
+
+          document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString)
+            .then(function (fonts) {
+              if (fonts.length >= 1) {
+                resolve();
+              } else {
+                setTimeout(check, 25);
+              }
+            }, function () {
+              reject();
+            });
         });
 
         var timer = new Promise(function (resolve, reject) {
