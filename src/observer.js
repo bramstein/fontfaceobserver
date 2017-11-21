@@ -88,9 +88,9 @@ goog.scope(function () {
       var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(Observer.getUserAgent());
 
       Observer.HAS_WEBKIT_FALLBACK_BUG = !!match &&
-                                          (parseInt(match[1], 10) < 536 ||
-                                           (parseInt(match[1], 10) === 536 &&
-                                            parseInt(match[2], 10) <= 11));
+          (parseInt(match[1], 10) < 536 ||
+          (parseInt(match[1], 10) === 536 &&
+          parseInt(match[2], 10) <= 11));
     }
     return Observer.HAS_WEBKIT_FALLBACK_BUG;
   };
@@ -197,15 +197,11 @@ goog.scope(function () {
             if (now - start >= timeoutValue) {
               reject();
             } else {
-              document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString).then(function (fonts) {
-                if (fonts.length >= 1) {
-                  resolve();
-                } else {
-                  setTimeout(check, 25);
-                }
-              }, function () {
-                reject();
-              });
+              if(document.fonts.check(that.getStyle('"' + that['family'] + '"'))){
+                resolve();
+              } else {
+                setTimeout(check, 25);
+              }
             }
           };
           check();
@@ -271,8 +267,8 @@ goog.scope(function () {
                   // values are set to one of the last resort fonts.
 
                   if (((widthA == fallbackWidthA && widthB == fallbackWidthA && widthC == fallbackWidthA) ||
-                        (widthA == fallbackWidthB && widthB == fallbackWidthB && widthC == fallbackWidthB) ||
-                        (widthA == fallbackWidthC && widthB == fallbackWidthC && widthC == fallbackWidthC))) {
+                      (widthA == fallbackWidthB && widthB == fallbackWidthB && widthC == fallbackWidthB) ||
+                      (widthA == fallbackWidthC && widthB == fallbackWidthC && widthC == fallbackWidthC))) {
                     // The width we got matches some of the known last resort fonts, so let's assume we're dealing with the last resort font.
                     return;
                   }
