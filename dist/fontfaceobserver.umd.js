@@ -1,4 +1,4 @@
-/* Font Face Observer v3.0.0 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
+/* Font Face Observer v2.0.13 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
   typeof define === 'function' && define.amd ? define(factory) :
@@ -158,8 +158,8 @@
     }, {
       key: "reset",
       value: function reset() {
-        var offsetWidth = this.getWidth(),
-            width = offsetWidth + 100;
+        var offsetWidth = this.getWidth();
+        var width = offsetWidth + 100;
 
         this.expandableInner.style.width = width + "px";
         this.expandable.scrollLeft = width;

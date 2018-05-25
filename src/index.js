@@ -163,7 +163,7 @@ class FontFaceObserver {
   load(text, timeout) {
     const that = this;
     const testString = text || "BESbswy";
-    const timeoutId = 0;
+    let timeoutId = 0;
     const timeoutValue = timeout || FontFaceObserver.DEFAULT_TIMEOUT;
     const start = that.getTime();
 
@@ -217,13 +217,13 @@ class FontFaceObserver {
           const rulerB = new Ruler(testString);
           const rulerC = new Ruler(testString);
 
-          const widthA = -1;
-          const widthB = -1;
-          const widthC = -1;
+          let widthA = -1;
+          let widthB = -1;
+          let widthC = -1;
 
-          const fallbackWidthA = -1;
-          const fallbackWidthB = -1;
-          const fallbackWidthC = -1;
+          let fallbackWidthA = -1;
+          let fallbackWidthB = -1;
+          let fallbackWidthC = -1;
 
           const container = document.createElement("div");
 
