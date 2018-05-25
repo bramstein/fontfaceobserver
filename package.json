@@ -27,7 +27,7 @@
   ],
   "files": [
     "dist/fontfaceobserver.cjs.js",
-    "dist/fontfaceobserver.es.js",
+    "dist/fontfaceobserver.esm.js",
     "dist/fontfaceobserver.umd.js",
     "src/*.js"
   ],
