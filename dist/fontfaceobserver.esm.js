@@ -1,4 +1,4 @@
-/* Font Face Observer v3.1.0 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
+/* Font Face Observer v3.1.1 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
 var classCallCheck = function (instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
