@@ -1,9 +1,10 @@
 {
-  "name": "fontfaceobserver",
+  "name": "fontfaceobserver-es",
   "description": "Fast and simple web font loading.",
-  "main": "fontfaceobserver.standalone.js",
+  "main": "dist/fontfaceobserver.umd.js",
   "authors": [
-    "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)"
+    "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
+    "Damien Seguin <https://twitter.com/dmnsgn> (https://dmnsgn.me/)"
   ],
   "license": "BSD-3-Clause",
   "keywords": [
@@ -18,5 +19,5 @@
     "font",
     "events"
   ],
-  "homepage": "https://github.com/bramstein/fontfaceobserver"
+  "homepage": "https://github.com/dmnsgn/fontfaceobserver"
 }

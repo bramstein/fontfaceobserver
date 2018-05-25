@@ -1,5 +1,5 @@
 {
-  "name": "fontfaceobserver",
+  "name": "fontfaceobserver-es",
   "version": "2.0.13",
   "description": "Detect if web fonts are available",
   "directories": {
@@ -7,13 +7,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bramstein/fontfaceobserver.git"
+    "url": "git+https://github.com/dmnsgn/fontfaceobserver.git"
   },
   "bugs": {
-    "url": "https://github.com/bramstein/fontfaceobserver/issues"
+    "url": "https://github.com/dmnsgn/fontfaceobserver/issues"
   },
   "homepage": "https://fontfaceobserver.com/",
-  "main": "fontfaceobserver.standalone.js",
+  "main": "dist/fontfaceobserver.cjs.js",
+  "browser": "dist/fontfaceobserver.umd.js",
+  "module": "dist/fontfaceobserver.esm.js",
   "keywords": [
     "fontloader",
     "fonts",
@@ -24,34 +26,70 @@
     "font events"
   ],
   "files": [
-    "fontfaceobserver.js",
-    "fontfaceobserver.standalone.js",
-    "src/*.js",
-    "externs.js"
+    "dist/fontfaceobserver.cjs.js",
+    "dist/fontfaceobserver.es.js",
+    "dist/fontfaceobserver.umd.js",
+    "src/*.js"
   ],
-  "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
+	"author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
+	"contributors": [
+		"Damien Seguin <https://twitter.com/dmnsgn> (https://dmnsgn.me/)"
+	],
   "license": "BSD-3-Clause",
-  "dependencies": {},
   "devDependencies": {
-    "closure-dom": "=0.2.6",
-    "extend": "^3.0.0",
-    "google-closure-compiler": "=20161024.0.0",
-    "grunt": "^0.4.5",
-    "grunt-contrib-clean": "^1.0.0",
-    "grunt-contrib-concat": "^1.0.1",
-    "grunt-contrib-jshint": "^1.0.0",
-    "grunt-exec": "~1.0.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "eslint": "^4.19.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "jsdoc": "^3.5.5",
     "mocha": "^2.5.3",
     "mocha-phantomjs-core": "^2.0.0",
     "phantomjs-prebuilt": "^2.1.7",
-    "promis": "=1.1.4",
+    "prettier": "^1.12.1",
+    "rollup": "^0.59.3",
+    "rollup-plugin-babel": "^3.0.4",
+    "rollup-plugin-commonjs": "^9.1.3",
+    "rollup-plugin-node-resolve": "^3.3.0",
     "sinon": "^1.17.4",
-    "unexpected": "^10.14.2"
+    "unexpected": "^10.38.0"
   },
   "scripts": {
-    "preversion": "npm test",
-    "version": "grunt dist && git add fontfaceobserver.js && git add fontfaceobserver.standalone.js",
-    "postversion": "git push && git push --tags && rm -rf build && npm publish",
-    "test": "grunt test"
-  }
+    "dev": "rollup -c -w -m inline",
+    "build": "rollup -c",
+    "clean": "rm -rf dist && rm -rf docs",
+    "lint": "eslint src/**",
+    "docs": "jsdoc ./src --destination docs --readme README.md",
+    "preversion": "npm test && npm run lint",
+    "version": "npm run build && npm run docs && git add -A",
+    "postversion": "git push && git push --tags && npm publish",
+    "test": "phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html spec"
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "extends": [
+      "prettier"
+    ],
+    "plugins": [
+      "prettier"
+    ],
+    "rules": {
+      "prettier/prettier": "error"
+    },
+    "parserOptions": {
+      "ecmaVersion": 2018,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "experimentalObjectRestSpread": false
+      }
+    }
+  },
+  "eslintIgnore": [
+    "node_modules"
+  ]
 }

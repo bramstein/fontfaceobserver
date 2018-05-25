@@ -1,21 +1,83 @@
-# Font Face Observer [![Build Status](https://travis-ci.org/bramstein/fontfaceobserver.png?branch=master)](https://travis-ci.org/bramstein/fontfaceobserver)
+# Font Face Observer
 
-Font Face Observer is a small `@font-face` loader and monitor (3.5KB minified and 1.3KB gzipped) compatible with any webfont service. It will monitor when a webfont is loaded and notify you. It does not limit you in any way in where, when, or how you load your webfonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
+[![Build Status](https://travis-ci.org/dmnsgn/fontfaceobserver.svg?branch=master)](https://travis-ci.org/dmnsgn/fontfaceobserver)
+[![npm version](https://badge.fury.io/js/fontfaceobserver.svg)](https://www.npmjs.com/package/fontfaceobserver-es)
+[![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
 
-## How to use
+> Font Face Observer is a small `@font-face` loader and monitor (3.5KB minified and 1.3KB gzipped) compatible with any webfont service. It will monitor when a webfont is loaded and notify you. It does not limit you in any way in where, when, or how you load your webfonts. Unlike the [Web Font Loader](https://github.com/typekit/webfontloader) Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.
+
+## Documentation
+
+For details on how to use, check out the [documentation](https://dmnsgn.github.io/fontfaceobserver/).
+
+## Installation
+
+Font Face Observer comes with three bundles:
+
+* A CommonJS bundle (`dist/fontfaceobserver.cjs.js`) for use in NodeJS:
+
+```shell
+npm install fontfaceobserver
+```
+
+```js
+var FontFaceObserver = require("fontfaceobserver-es");
+
+var font = new FontFaceObserver("My Family");
+
+font.load().then(function() {
+  console.log("My Family has loaded");
+});
+```
+
+* An ES module bundle (`dist/fontfaceobserver.esm.js`) for the above and also directly in the browser:
+
+```html
+<script type="module" src="https://unpkg.com/fontfaceobserver-es@3.0.0/dist/fontfaceobserver.esm.js"></script>
+```
+
+```js
+import FontFaceObserver from "fontfaceobserver-es";
+
+const font = new FontFaceObserver("My Family");
+
+font.load().then(function() {
+  console.log("My Family has loaded");
+});
+```
+
+* A UMD build (`dist/fontfaceobserver.umd.js`) mainly for browser without ES module support:
+
+```js
+<script src="https://unpkg.com/fontfaceobserver-es@3.0.0/dist/fontfaceobserver.umd.js"></script>
+<script>
+const font = new FontFaceObserver("My Family");
+
+font.load().then(function() {
+  console.log("My Family has loaded");
+});
+</script>
+```
+
+You'll need to include the required Polyfill for Promise support. See [babel-polyfill](https://babeljs.io/docs/usage/polyfill/) and [core-js](https://github.com/zloirock/core-js#commonjs).
+
+## Usage
 
 Include your `@font-face` rules as usual. Fonts can be supplied by either a font service such as [Google Fonts](http://www.google.com/fonts), [Typekit](http://typekit.com), and [Webtype](http://webtype.com) or be self-hosted. You can set up monitoring for a single font family at a time:
 
 ```js
-var font = new FontFaceObserver('My Family', {
+const font = new FontFaceObserver("My Family", {
   weight: 400
 });
 
-font.load().then(function () {
-  console.log('Font is available');
-}, function () {
-  console.log('Font is not available');
-});
+font.load().then(
+  function() {
+    console.log("Font is available");
+  },
+  function() {
+    console.log("Font is not available");
+  }
+);
 ```
 
 The `FontFaceObserver` constructor takes two arguments: the font-family name (required) and an object describing the variation (optional). The object can contain `weight`, `style`, and `stretch` properties. If a property is not present it will default to `normal`. To start loading the font, call the `load` method. It'll immediately return a new Promise that resolves when the font is loaded and rejected when the font fails to load.
@@ -23,59 +85,65 @@ The `FontFaceObserver` constructor takes two arguments: the font-family name (re
 If your font doesn't contain at least the latin "BESbwy" characters you must pass a custom test string to the `load` method.
 
 ```js
-var font = new FontFaceObserver('My Family');
+const font = new FontFaceObserver("My Family");
 
-font.load('中国').then(function () {
-  console.log('Font is available');
-}, function () {
-  console.log('Font is not available');
-});
+font.load("中国").then(
+  function() {
+    console.log("Font is available");
+  },
+  function() {
+    console.log("Font is not available");
+  }
+);
 ```
 
 The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the `load` method.
 
 ```js
-var font = new FontFaceObserver('My Family');
+var font = new FontFaceObserver("My Family");
 
-font.load(null, 5000).then(function () {
-  console.log('Font is available');
-}, function () {
-  console.log('Font is not available after waiting 5 seconds');
-});
+font.load(null, 5000).then(
+  function() {
+    console.log("Font is available");
+  },
+  function() {
+    console.log("Font is not available after waiting 5 seconds");
+  }
+);
 ```
 
 Multiple fonts can be loaded by creating a `FontFaceObserver` instance for each.
 
 ```js
-var fontA = new FontFaceObserver('Family A');
-var fontB = new FontFaceObserver('Family B');
+var fontA = new FontFaceObserver("Family A");
+var fontB = new FontFaceObserver("Family B");
 
-fontA.load().then(function () {
-  console.log('Family A is available');
+fontA.load().then(function() {
+  console.log("Family A is available");
 });
 
-fontB.load().then(function () {
-  console.log('Family B is available');
+fontB.load().then(function() {
+  console.log("Family B is available");
 });
 ```
 
 You may also load both at the same time, rather than loading each individually.
 
 ```js
-var fontA = new FontFaceObserver('Family A');
-var fontB = new FontFaceObserver('Family B');
+var fontA = new FontFaceObserver("Family A");
+var fontB = new FontFaceObserver("Family B");
 
-Promise.all([fontA.load(), fontB.load()]).then(function () {
-  console.log('Family A & B have loaded');
+Promise.all([fontA.load(), fontB.load()]).then(function() {
+  console.log("Family A & B have loaded");
 });
 ```
 
 The following example emulates FOUT with Font Face Observer for `My Family`.
 
 ```js
-var font = new FontFaceObserver('My Family');
+var font = new FontFaceObserver("My Family");
 
-font.load().then(function () {
+font.load().then(function() {
   document.documentElement.className += " fonts-loaded";
 });
 ```
@@ -87,30 +155,6 @@ font.load().then(function () {
   }
 }
 ```
-
-## Installation
-
-If you're using npm you can install Font Face Observer as a dependency:
-
-```shell
-$ npm install fontfaceobserver
-```
-
-You can then require `fontfaceobserver` as a CommonJS (Browserify) module:
-
-```js
-var FontFaceObserver = require('fontfaceobserver');
-
-var font = new FontFaceObserver('My Family');
-
-font.load().then(function () {
-  console.log('My Family has loaded');
-});
-```
-
-If you're not using npm, grab `fontfaceobserver.js` or `fontfaceobserver.standalone.js` (see below) and include it in your project. It'll export a global `FontFaceObserver` that you can use to create new instances.
-
-Font Face Observer uses Promises in its API, so for [browsers that do not support promises](http://caniuse.com/#search=promise) you'll need to include a polyfill. If you use your own Promise polyfill you just need to include `fontfaceobserver.standalone.js` in your project. If you do not have an existing Promise polyfill you should use `fontfaceobserver.js` which includes a small Promise polyfill. Using the Promise polyfill adds roughly 1.4KB (500 bytes gzipped) to the file size.
 
 ## Browser support
 
@@ -125,4 +169,4 @@ FontFaceObserver has been tested and works on the following browsers:
 
 ## License
 
-Font Face Observer is licensed under the BSD License. Copyright 2014-2017 Bram Stein. All rights reserved.
+Font Face Observer is licensed under the BSD License. Copyright 2014-2017 Bram Stein and Damien Seguin. All rights reserved.
