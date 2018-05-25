@@ -1,4 +1,4 @@
-/* Font Face Observer v2.0.13 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
+/* Font Face Observer v3.0.0 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
 'use strict';
 
 var classCallCheck = function (instance, Constructor) {

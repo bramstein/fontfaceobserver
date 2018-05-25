@@ -1,6 +1,6 @@
 {
   "name": "fontfaceobserver-es",
-  "version": "2.0.13",
+  "version": "3.0.0",
   "description": "Detect if web fonts are available",
   "directories": {
     "test": "test"
@@ -31,10 +31,10 @@
     "dist/fontfaceobserver.umd.js",
     "src/*.js"
   ],
-	"author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
-	"contributors": [
-		"Damien Seguin <https://twitter.com/dmnsgn> (https://dmnsgn.me/)"
-	],
+  "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
+  "contributors": [
+    "Damien Seguin <https://twitter.com/dmnsgn> (https://dmnsgn.me/)"
+  ],
   "license": "BSD-3-Clause",
   "devDependencies": {
     "babel-core": "^6.26.3",
