@@ -17,7 +17,7 @@ Font Face Observer comes with three bundles:
 * A CommonJS bundle (`dist/fontfaceobserver.cjs.js`) for use in NodeJS:
 
 ```shell
-npm install fontfaceobserver
+npm install fontfaceobserver-es
 ```
 
 ```js
