@@ -59,7 +59,7 @@ export default [
               targets: {
                 browsers: ["last 2 versions"]
               },
-              modules: "commonjs"
+              modules: false
             }
           ]
         ]
