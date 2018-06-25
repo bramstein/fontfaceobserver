@@ -70,6 +70,43 @@ Promise.all([fontA.load(), fontB.load()]).then(function () {
 });
 ```
 
+If you are working with a large number of fonts, you may decide to create `FontFaceObserver` instances dynamically:
+
+```js
+// An example collection of font data with additional metadata,
+// in this case “color.”
+var exampleFontData = {
+  'Family A': { weight: 400, color: 'red' },
+  'Family B': { weight: 400, color: 'orange' },
+  'Family C': { weight: 900, color: 'yellow' },
+  // Etc.
+};
+
+var observers = [];
+
+// Make one observer for each font,
+// by iterating over the data we already have
+Object.keys(exampleFontData).forEach(function(family) {
+  var data = exampleFontData[family];
+  var obs = new FontFaceObserver(family, data);
+  observers.push(obs.load());
+});
+
+Promise.all(observers)
+  .then(function(fonts) {
+    fonts.forEach(function(font) {
+      console.log(font.family + ' ' + font.weight + ' ' + 'loaded');
+
+      // Map the result of the Promise back to our existing data,
+      // to get the other properties we need.
+      console.log(exampleFontData[font.family].color);
+    });
+  })
+  .catch(function(err) {
+    console.warn('Some critical font are not available:', err);
+  });
+```
+
 The following example emulates FOUT with Font Face Observer for `My Family`.
 
 ```js
