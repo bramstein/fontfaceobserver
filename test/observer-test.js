@@ -25,6 +25,12 @@ describe('Observer', function () {
 
       expect(observer.style, 'to equal', 'normal');
     });
+
+    it('defaults context to current window', function () {
+      var observer = new Observer('my family', {});
+
+      expect(observer.context, 'to equal', window);
+    });
   });
 
   describe('#getStyle', function () {
@@ -80,6 +86,51 @@ describe('Observer', function () {
           done();
         }, 0);
       }, function () {
+        done(new Error('Timeout'));
+      });
+    });
+
+    it('finds a font and resolve the promise in an iframe (context)', function (done) {
+      var iframe = document.createElement('iframe');
+      iframe.style.position = 'fixed';
+      iframe.style.left = '-9999px';
+      document.body.appendChild(iframe);
+
+      // Can't just load a local HTML file, because under file:// we wouldn't
+      // be able to interact with it due to same-origin policy
+      var style = iframe.contentWindow.document.createElement('style');
+      style.textContent =
+        "@font-face {" +
+        "  font-family: observer-test1;" +
+        "  src: url(assets/sourcesanspro-regular.woff) format('woff')," +
+        "       url(assets/sourcesanspro-regular.ttf) format('truetype');" +
+        "}";
+      iframe.contentWindow.document.head.appendChild(style);
+
+      var observer = new Observer('observer-test1', {}, iframe.contentWindow),
+          ruler = new Ruler('hello');
+
+      iframe.contentWindow.document.body.appendChild(ruler.getElement());
+
+      ruler.setFont('monospace', '');
+      var beforeWidth = ruler.getWidth();
+
+      ruler.setFont('100px observer-test1, monospace');
+      observer.load(null, 5000).then(function () {
+        var activeWidth = ruler.getWidth();
+
+        expect(activeWidth, 'not to equal', beforeWidth);
+
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
+
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(iframe);
+          done();
+        }, 0);
+      }, function () {
+        document.body.removeChild(iframe);
         done(new Error('Timeout'));
       });
     });
