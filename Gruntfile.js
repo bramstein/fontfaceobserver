@@ -30,7 +30,7 @@ module.exports = function (grunt) {
       build: ['build']
     },
     exec: {
-      test: 'phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html',
+      test: './node_modules/.bin/phantomjs node_modules/mocha-phantomjs-core/mocha-phantomjs-core.js test/index.html',
       deps: 'calcdeps -i src -i exports.js -p src -p ./vendor/google/base.js -p node_modules/closure-dom/src/dom.js -o deps > test/deps.js'
     },
     jshint: {
