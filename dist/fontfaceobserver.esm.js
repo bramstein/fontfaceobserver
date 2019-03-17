@@ -400,7 +400,7 @@ var FontFaceObserver = function () {
               var now = that.getTime();
 
               if (now - start >= timeoutValue) {
-                reject();
+                reject(new Error("" + timeoutValue + "ms timeout exceeded"));
               } else {
                 document.fonts.load(that.getStyle('"' + that["family"] + '"'), testString).then(function (fonts) {
                   if (fonts.length >= 1) {
@@ -408,24 +408,22 @@ var FontFaceObserver = function () {
                   } else {
                     setTimeout(check, 25);
                   }
-                }, function () {
-                  reject();
-                });
+                }, reject);
               }
             };
             check();
           });
 
           var timer = new Promise(function (resolve, reject) {
-            timeoutId = setTimeout(reject, timeoutValue);
+            timeoutId = setTimeout(function () {
+              reject(new Error("" + timeoutValue + "ms timeout exceeded"));
+            }, timeoutValue);
           });
 
           Promise.race([timer, loader]).then(function () {
             clearTimeout(timeoutId);
             resolve(that);
-          }, function () {
-            reject(that);
-          });
+          }, reject);
         } else {
           onReady(function () {
             var rulerA = new Ruler(testString);
@@ -516,7 +514,7 @@ var FontFaceObserver = function () {
 
               if (now - start >= timeoutValue) {
                 removeContainer();
-                reject(that);
+                reject(new Error("" + timeoutValue + "ms timeout exceeded"));
               } else {
                 var hidden = document["hidden"];
                 if (hidden === true || hidden === undefined) {
