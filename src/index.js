@@ -177,40 +177,32 @@ class FontFaceObserver {
             const now = that.getTime();
 
             if (now - start >= timeoutValue) {
-              reject();
+              reject(new Error("" + timeoutValue + "ms timeout exceeded"));
             } else {
               document.fonts
                 .load(that.getStyle('"' + that["family"] + '"'), testString)
-                .then(
-                  function(fonts) {
-                    if (fonts.length >= 1) {
-                      resolve();
-                    } else {
-                      setTimeout(check, 25);
-                    }
-                  },
-                  function() {
-                    reject();
+                .then(function(fonts) {
+                  if (fonts.length >= 1) {
+                    resolve();
+                  } else {
+                    setTimeout(check, 25);
                   }
-                );
+                }, reject);
             }
           };
           check();
         });
 
         const timer = new Promise(function(resolve, reject) {
-          timeoutId = setTimeout(reject, timeoutValue);
+          timeoutId = setTimeout(function() {
+            reject(new Error("" + timeoutValue + "ms timeout exceeded"));
+          }, timeoutValue);
         });
 
-        Promise.race([timer, loader]).then(
-          function() {
-            clearTimeout(timeoutId);
-            resolve(that);
-          },
-          function() {
-            reject(that);
-          }
-        );
+        Promise.race([timer, loader]).then(function() {
+          clearTimeout(timeoutId);
+          resolve(that);
+        }, reject);
       } else {
         onReady(function() {
           const rulerA = new Ruler(testString);
@@ -315,7 +307,7 @@ class FontFaceObserver {
 
             if (now - start >= timeoutValue) {
               removeContainer();
-              reject(that);
+              reject(new Error("" + timeoutValue + "ms timeout exceeded"));
             } else {
               const hidden = document["hidden"];
               if (hidden === true || hidden === undefined) {

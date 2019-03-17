@@ -217,35 +217,45 @@ describe("Observer", function() {
       var beforeWidth = ruler.getWidth();
 
       ruler.setFont('100px "Neue Frutiger 1450 W04", monospace');
-      observer.load(null, 5000).then(
-        function() {
-          var activeWidth = ruler.getWidth();
+      observer.load(null, 5000).then(function () {
+        var activeWidth = ruler.getWidth();
 
-          expect(activeWidth, "not to equal", beforeWidth);
+        expect(activeWidth, 'not to equal', beforeWidth);
 
-          setTimeout(function() {
-            var afterWidth = ruler.getWidth();
+        setTimeout(function () {
+          var afterWidth = ruler.getWidth();
 
-            expect(afterWidth, "to equal", activeWidth);
-            expect(afterWidth, "not to equal", beforeWidth);
-            document.body.removeChild(ruler.getElement());
-            done();
-          }, 0);
-        },
-        function() {
-          done(new Error("Timeout"));
-        }
-      );
+          expect(afterWidth, 'to equal', activeWidth);
+          expect(afterWidth, 'not to equal', beforeWidth);
+          document.body.removeChild(ruler.getElement());
+          done();
+        }, 0);
+      }, function () {
+        done(new Error('Timeout'));
+      });
     });
 
-    it("fails to find a font and reject the promise", function(done) {
-      var observer = new FontFaceObserver("observer-test2", {});
+    it('fails to find a font and reject the promise', function (done) {
+      var observer = new Observer('observer-test2', {});
 
-      observer.load(null, 50).then(
-        function() {
-          done(new Error("Should not resolve"));
-        },
-        function() {
+      observer.load(null, 50).then(function () {
+        done(new Error('Should not resolve'));
+      }, function (err) {
+        try {
+          expect(err.message, 'to equal', '50ms timeout exceeded');
+          expect(err.constructor.name, 'to equal', 'Error');
+          done();
+        } catch(testFailure) {
+          done(testFailure);
+        }
+      });
+    });
+
+    it('finds the font even if it is already loaded', function (done) {
+      var observer = new Observer('observer-test3', {});
+
+      observer.load(null, 5000).then(function () {
+        observer.load(null, 5000).then(function () {
           done();
         }
       );
