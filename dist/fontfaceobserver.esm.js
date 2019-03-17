@@ -1,41 +1,59 @@
 /* Font Face Observer v3.2.0 - © Bram Stein - Damien Seguin. License: BSD-3-Clause */
-var classCallCheck = function (instance, Constructor) {
+function _classCallCheck(instance, Constructor) {
   if (!(instance instanceof Constructor)) {
     throw new TypeError("Cannot call a class as a function");
   }
-};
+}
 
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
+function _defineProperties(target, props) {
+  for (var i = 0; i < props.length; i++) {
+    var descriptor = props[i];
+    descriptor.enumerable = descriptor.enumerable || false;
+    descriptor.configurable = true;
+    if ("value" in descriptor) descriptor.writable = true;
+    Object.defineProperty(target, descriptor.key, descriptor);
+  }
+}
+
+function _createClass(Constructor, protoProps, staticProps) {
+  if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+  if (staticProps) _defineProperties(Constructor, staticProps);
+  return Constructor;
+}
+
+function _defineProperty(obj, key, value) {
+  if (key in obj) {
+    Object.defineProperty(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
   }
 
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
+  return obj;
+}
 
-var _extends = Object.assign || function (target) {
+function _objectSpread(target) {
   for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i];
+    var source = arguments[i] != null ? arguments[i] : {};
+    var ownKeys = Object.keys(source);
 
-    for (var key in source) {
-      if (Object.prototype.hasOwnProperty.call(source, key)) {
-        target[key] = source[key];
-      }
+    if (typeof Object.getOwnPropertySymbols === 'function') {
+      ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(source, sym).enumerable;
+      }));
     }
+
+    ownKeys.forEach(function (key) {
+      _defineProperty(target, key, source[key]);
+    });
   }
 
   return target;
-};
+}
 
 var styles = {
   maxWidth: "none",
@@ -46,7 +64,6 @@ var styles = {
   overflow: "scroll",
   fontSize: "16px"
 };
-
 var collapsibleInnerStyles = {
   display: "inline-block",
   height: "200%",
@@ -54,7 +71,6 @@ var collapsibleInnerStyles = {
   fontSize: "16px",
   maxWidth: "none"
 };
-
 var fontStyle = {
   maxWidth: "none",
   minWidth: "20px",
@@ -70,49 +86,43 @@ var fontStyle = {
   fontSynthesis: "none"
 };
 
-var Ruler = function () {
+var Ruler =
+/*#__PURE__*/
+function () {
   /**
    *
    * @param {string} text
    */
   function Ruler(text) {
-    classCallCheck(this, Ruler);
+    _classCallCheck(this, Ruler);
 
     this.element = document.createElement("div");
     this.element.setAttribute("aria-hidden", "true");
-
     this.element.appendChild(document.createTextNode(text));
-
     this.collapsible = document.createElement("span");
     this.expandable = document.createElement("span");
     this.collapsibleInner = document.createElement("span");
     this.expandableInner = document.createElement("span");
-
     this.lastOffsetWidth = -1;
-
     Object.assign(this.collapsible.style, styles);
     Object.assign(this.expandable.style, styles);
     Object.assign(this.expandableInner.style, styles);
     Object.assign(this.collapsibleInner.style, collapsibleInnerStyles);
-
     this.collapsible.appendChild(this.collapsibleInner);
     this.expandable.appendChild(this.expandableInner);
-
     this.element.appendChild(this.collapsible);
     this.element.appendChild(this.expandable);
   }
-
   /**
    * @return {Element}
    */
 
 
-  createClass(Ruler, [{
+  _createClass(Ruler, [{
     key: "getElement",
     value: function getElement() {
       return this.element;
     }
-
     /**
      * @param {string} font
      */
@@ -120,9 +130,10 @@ var Ruler = function () {
   }, {
     key: "setFont",
     value: function setFont(font) {
-      Object.assign(this.element.style, _extends({}, fontStyle, { font: font }));
+      Object.assign(this.element.style, _objectSpread({}, fontStyle, {
+        font: font
+      }));
     }
-
     /**
      * @return {number}
      */
@@ -132,7 +143,6 @@ var Ruler = function () {
     value: function getWidth() {
       return this.element.offsetWidth;
     }
-
     /**
      * @param {string} width
      */
@@ -142,7 +152,6 @@ var Ruler = function () {
     value: function setWidth(width) {
       this.element.style.width = width + "px";
     }
-
     /**
      * @private
      *
@@ -154,7 +163,6 @@ var Ruler = function () {
     value: function reset() {
       var offsetWidth = this.getWidth();
       var width = offsetWidth + 100;
-
       this.expandableInner.style.width = width + "px";
       this.expandable.scrollLeft = width;
       this.collapsible.scrollLeft = this.collapsible.scrollWidth + 100;
@@ -166,7 +174,6 @@ var Ruler = function () {
         return false;
       }
     }
-
     /**
      * @private
      * @param {function(number)} callback
@@ -179,7 +186,6 @@ var Ruler = function () {
         callback(this.lastOffsetWidth);
       }
     }
-
     /**
      * @param {function(number)} callback
      */
@@ -198,6 +204,7 @@ var Ruler = function () {
       this.reset();
     }
   }]);
+
   return Ruler;
 }();
 
@@ -212,45 +219,40 @@ function onReady(callback) {
 
 /** Class for FontFaceObserver. */
 
-var FontFaceObserver = function () {
-  createClass(FontFaceObserver, null, [{
+var FontFaceObserver =
+/*#__PURE__*/
+function () {
+  _createClass(FontFaceObserver, null, [{
     key: "getUserAgent",
 
-
     /**
-     * @return {string}
+     * @type {null|boolean}
      */
-
 
     /**
      * @type {null|boolean}
      */
 
+    /**
+     * @type {null|boolean}
+     */
 
     /**
      * @type {null|boolean}
      */
-    value: function getUserAgent() {
-      return window.navigator.userAgent;
-    }
-
-    /**
-     * @return {string}
-     */
-
 
     /**
      * @type {number}
      */
 
-
     /**
-     * @type {null|boolean}
+     * @return {string}
      */
-
-
+    value: function getUserAgent() {
+      return window.navigator.userAgent;
+    }
     /**
-     * @type {null|boolean}
+     * @return {string}
      */
 
   }, {
@@ -258,7 +260,6 @@ var FontFaceObserver = function () {
     value: function getNavigatorVendor() {
       return window.navigator.vendor;
     }
-
     /**
      * Returns true if this browser is WebKit and it has the fallback bug which is
      * present in WebKit 536.11 and earlier.
@@ -271,12 +272,11 @@ var FontFaceObserver = function () {
     value: function hasWebKitFallbackBug() {
       if (FontFaceObserver.HAS_WEBKIT_FALLBACK_BUG === null) {
         var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))/.exec(FontFaceObserver.getUserAgent());
-
         FontFaceObserver.HAS_WEBKIT_FALLBACK_BUG = !!match && (parseInt(match[1], 10) < 536 || parseInt(match[1], 10) === 536 && parseInt(match[2], 10) <= 11);
       }
+
       return FontFaceObserver.HAS_WEBKIT_FALLBACK_BUG;
     }
-
     /**
      * Returns true if the browser has the Safari 10 bugs. The native font load
      * API in Safari 10 has two bugs that cause the document.fonts.load and
@@ -300,15 +300,14 @@ var FontFaceObserver = function () {
       if (FontFaceObserver.HAS_SAFARI_10_BUG === null) {
         if (FontFaceObserver.supportsNativeFontLoading() && /Apple/.test(FontFaceObserver.getNavigatorVendor())) {
           var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(FontFaceObserver.getUserAgent());
-
           FontFaceObserver.HAS_SAFARI_10_BUG = !!match && parseInt(match[1], 10) < 603;
         } else {
           FontFaceObserver.HAS_SAFARI_10_BUG = false;
         }
       }
+
       return FontFaceObserver.HAS_SAFARI_10_BUG;
     }
-
     /**
      * Returns true if the browser supports the native font loading API.
      *
@@ -321,9 +320,9 @@ var FontFaceObserver = function () {
       if (FontFaceObserver.SUPPORTS_NATIVE_FONT_LOADING === null) {
         FontFaceObserver.SUPPORTS_NATIVE_FONT_LOADING = !!document["fonts"];
       }
+
       return FontFaceObserver.SUPPORTS_NATIVE_FONT_LOADING;
     }
-
     /**
      * Returns true if the browser supports font-style in the font short-hand
      * syntax.
@@ -340,18 +339,19 @@ var FontFaceObserver = function () {
         try {
           div.style.font = "condensed 100px sans-serif";
         } catch (e) {}
+
         FontFaceObserver.SUPPORTS_STRETCH = div.style.font !== "";
       }
 
       return FontFaceObserver.SUPPORTS_STRETCH;
     }
-
     /**
      * @typedef {Object} Descriptors
      * @property {string|undefined} style
      * @property {string|undefined} weight
      * @property {string|undefined} stretch
      */
+
     /**
      *
      * @param {string} family font-family name (required)
@@ -364,17 +364,15 @@ var FontFaceObserver = function () {
 
   function FontFaceObserver(family) {
     var descriptors = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
-    classCallCheck(this, FontFaceObserver);
+
+    _classCallCheck(this, FontFaceObserver);
 
     this.family = family;
-
     this.style = descriptors.style || "normal";
     this.weight = descriptors.weight || "normal";
     this.stretch = descriptors.stretch || "normal";
-
     return this;
   }
-
   /**
    * @param {string=} text Optional test string to use for detecting if a font
    * is available.
@@ -384,7 +382,7 @@ var FontFaceObserver = function () {
    */
 
 
-  createClass(FontFaceObserver, [{
+  _createClass(FontFaceObserver, [{
     key: "load",
     value: function load(text, timeout) {
       var that = this;
@@ -392,7 +390,6 @@ var FontFaceObserver = function () {
       var timeoutId = 0;
       var timeoutValue = timeout || FontFaceObserver.DEFAULT_TIMEOUT;
       var start = that.getTime();
-
       return new Promise(function (resolve, reject) {
         if (FontFaceObserver.supportsNativeFontLoading() && !FontFaceObserver.hasSafari10Bug()) {
           var loader = new Promise(function (resolve, reject) {
@@ -411,15 +408,14 @@ var FontFaceObserver = function () {
                 }, reject);
               }
             };
+
             check();
           });
-
           var timer = new Promise(function (resolve, reject) {
             timeoutId = setTimeout(function () {
               reject(new Error("" + timeoutValue + "ms timeout exceeded"));
             }, timeoutValue);
           });
-
           Promise.race([timer, loader]).then(function () {
             clearTimeout(timeoutId);
             resolve(that);
@@ -429,26 +425,22 @@ var FontFaceObserver = function () {
             var rulerA = new Ruler(testString);
             var rulerB = new Ruler(testString);
             var rulerC = new Ruler(testString);
-
             var widthA = -1;
             var widthB = -1;
             var widthC = -1;
-
             var fallbackWidthA = -1;
             var fallbackWidthB = -1;
             var fallbackWidthC = -1;
-
             var container = document.createElement("div");
-
             /**
              * @private
              */
+
             function removeContainer() {
               if (container.parentNode !== null) {
                 container.parentNode.removeChild(container);
               }
             }
-
             /**
              * @private
              *
@@ -467,17 +459,17 @@ var FontFaceObserver = function () {
              *    ignore this and continue waiting until we get new values (or a
              *    timeout).
              */
+
+
             function check() {
               if (widthA != -1 && widthB != -1 || widthA != -1 && widthC != -1 || widthB != -1 && widthC != -1) {
                 if (widthA == widthB || widthA == widthC || widthB == widthC) {
                   // All values are the same, so the browser has most likely
                   // loaded the web font
-
                   if (FontFaceObserver.hasWebKitFallbackBug()) {
                     // Except if the browser has the WebKit fallback bug, in which
                     // case we check to see if all values are set to one of the
                     // last resort fonts.
-
                     if (widthA == fallbackWidthA && widthB == fallbackWidthA && widthC == fallbackWidthA || widthA == fallbackWidthB && widthB == fallbackWidthB && widthC == fallbackWidthB || widthA == fallbackWidthC && widthB == fallbackWidthC && widthC == fallbackWidthC) {
                       // The width we got matches some of the known last resort
                       // fonts, so let's assume we're dealing with the last resort
@@ -485,26 +477,23 @@ var FontFaceObserver = function () {
                       return;
                     }
                   }
+
                   removeContainer();
                   clearTimeout(timeoutId);
                   resolve(that);
                 }
               }
-            }
+            } // This ensures the scroll direction is correct.
 
-            // This ensures the scroll direction is correct.
+
             container.dir = "ltr";
-
             rulerA.setFont(that.getStyle("sans-serif"));
             rulerB.setFont(that.getStyle("serif"));
             rulerC.setFont(that.getStyle("monospace"));
-
             container.appendChild(rulerA.getElement());
             container.appendChild(rulerB.getElement());
             container.appendChild(rulerC.getElement());
-
             document.body.appendChild(container);
-
             fallbackWidthA = rulerA.getWidth();
             fallbackWidthB = rulerB.getWidth();
             fallbackWidthC = rulerC.getWidth();
@@ -517,43 +506,38 @@ var FontFaceObserver = function () {
                 reject(new Error("" + timeoutValue + "ms timeout exceeded"));
               } else {
                 var hidden = document["hidden"];
+
                 if (hidden === true || hidden === undefined) {
                   widthA = rulerA.getWidth();
                   widthB = rulerB.getWidth();
                   widthC = rulerC.getWidth();
                   check();
                 }
+
                 timeoutId = setTimeout(checkForTimeout, 50);
               }
             }
 
             checkForTimeout();
-
             rulerA.onResize(function (width) {
               widthA = width;
               check();
             });
-
             rulerA.setFont(that.getStyle('"' + that["family"] + '",sans-serif'));
-
             rulerB.onResize(function (width) {
               widthB = width;
               check();
             });
-
             rulerB.setFont(that.getStyle('"' + that["family"] + '",serif'));
-
             rulerC.onResize(function (width) {
               widthC = width;
               check();
             });
-
             rulerC.setFont(that.getStyle('"' + that["family"] + '",monospace'));
           });
         }
       });
     }
-
     /**
      * @private
      *
@@ -578,14 +562,20 @@ var FontFaceObserver = function () {
       return new Date().getTime();
     }
   }]);
+
   return FontFaceObserver;
 }();
 
-FontFaceObserver.Ruler = Ruler;
-FontFaceObserver.HAS_WEBKIT_FALLBACK_BUG = null;
-FontFaceObserver.HAS_SAFARI_10_BUG = null;
-FontFaceObserver.SUPPORTS_STRETCH = null;
-FontFaceObserver.SUPPORTS_NATIVE_FONT_LOADING = null;
-FontFaceObserver.DEFAULT_TIMEOUT = 3000;
+_defineProperty(FontFaceObserver, "Ruler", Ruler);
+
+_defineProperty(FontFaceObserver, "HAS_WEBKIT_FALLBACK_BUG", null);
+
+_defineProperty(FontFaceObserver, "HAS_SAFARI_10_BUG", null);
+
+_defineProperty(FontFaceObserver, "SUPPORTS_STRETCH", null);
+
+_defineProperty(FontFaceObserver, "SUPPORTS_NATIVE_FONT_LOADING", null);
+
+_defineProperty(FontFaceObserver, "DEFAULT_TIMEOUT", 3000);
 
 export default FontFaceObserver;

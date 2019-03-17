@@ -10,9 +10,8 @@ const banner = `/* Font Face Observer v${pkg.version} - ${copyright} */`;
 const babelCommonOptions = {
   exclude: ["node_modules/**"],
   plugins: [
-    "external-helpers",
-    "transform-class-properties",
-    "transform-object-rest-spread"
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-object-rest-spread"
   ]
 };
 
@@ -27,7 +26,7 @@ export default [
         ...babelCommonOptions,
         presets: [
           [
-            "env",
+            "@babel/preset-env",
             {
               targets: {
                 browsers: ["ie >= 8"]
@@ -54,7 +53,7 @@ export default [
         ...babelCommonOptions,
         presets: [
           [
-            "env",
+            "@babel/preset-env",
             {
               targets: {
                 browsers: ["last 2 versions"]
@@ -79,7 +78,7 @@ export default [
         ...babelCommonOptions,
         presets: [
           [
-            "env",
+            "@babel/preset-env",
             {
               targets: {
                 browsers: ["last 2 versions"]
