@@ -11,9 +11,11 @@ goog.scope(function () {
    *
    * @param {string} family
    * @param {fontface.Descriptors=} opt_descriptors
+   * @param {Window=} opt_context
    */
-  fontface.Observer = function (family, opt_descriptors) {
+  fontface.Observer = function (family, opt_descriptors, opt_context) {
     var descriptors = opt_descriptors || {};
+    var context = opt_context || window;
 
     /**
      * @type {string}
@@ -34,6 +36,11 @@ goog.scope(function () {
      * @type {string}
      */
     this['stretch'] = descriptors.stretch || 'normal';
+
+    /**
+     * @type {Window}
+     */
+    this['context'] = context;
   };
 
   var Observer = fontface.Observer;
@@ -112,9 +119,9 @@ goog.scope(function () {
    *
    * @return {boolean}
    */
-  Observer.hasSafari10Bug = function () {
+  Observer.hasSafari10Bug = function (context) {
     if (Observer.HAS_SAFARI_10_BUG === null) {
-      if (Observer.supportsNativeFontLoading() && /Apple/.test(Observer.getNavigatorVendor())) {
+      if (Observer.supportsNativeFontLoading(context) && /Apple/.test(Observer.getNavigatorVendor())) {
         var match = /AppleWebKit\/([0-9]+)(?:\.([0-9]+))(?:\.([0-9]+))/.exec(Observer.getUserAgent());
 
         Observer.HAS_SAFARI_10_BUG = !!match && parseInt(match[1], 10) < 603;
@@ -131,9 +138,9 @@ goog.scope(function () {
    *
    * @return {boolean}
    */
-  Observer.supportsNativeFontLoading = function () {
+  Observer.supportsNativeFontLoading = function (context) {
     if (Observer.SUPPORTS_NATIVE_FONT_LOADING === null) {
-      Observer.SUPPORTS_NATIVE_FONT_LOADING = !!document['fonts'];
+      Observer.SUPPORTS_NATIVE_FONT_LOADING = !!context.document['fonts'];
     }
     return Observer.SUPPORTS_NATIVE_FONT_LOADING;
   };
@@ -189,7 +196,7 @@ goog.scope(function () {
     var start = that.getTime();
 
     return new Promise(function (resolve, reject) {
-      if (Observer.supportsNativeFontLoading() && !Observer.hasSafari10Bug()) {
+      if (Observer.supportsNativeFontLoading(that['context']) && !Observer.hasSafari10Bug(that['context'])) {
         var loader = new Promise(function (resolve, reject) {
           var check = function () {
             var now = that.getTime();
@@ -197,7 +204,7 @@ goog.scope(function () {
             if (now - start >= timeoutValue) {
               reject(new Error('' + timeoutValue + 'ms timeout exceeded'));
             } else {
-              document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString).then(function (fonts) {
+              that['context'].document.fonts.load(that.getStyle('"' + that['family'] + '"'), testString).then(function (fonts) {
                 if (fonts.length >= 1) {
                   resolve();
                 } else {
@@ -294,7 +301,7 @@ goog.scope(function () {
           dom.append(container, rulerB.getElement());
           dom.append(container, rulerC.getElement());
 
-          dom.append(document.body, container);
+          dom.append(that['context'].document.body, container);
 
           fallbackWidthA = rulerA.getWidth();
           fallbackWidthB = rulerB.getWidth();
@@ -307,7 +314,7 @@ goog.scope(function () {
               removeContainer();
               reject(new Error('' + timeoutValue + 'ms timeout exceeded'));
             } else {
-              var hidden = document['hidden'];
+              var hidden = that['context'].document['hidden'];
               if (hidden === true || hidden === undefined) {
                 widthA = rulerA.getWidth();
                 widthB = rulerB.getWidth();
