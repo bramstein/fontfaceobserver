@@ -11,6 +11,7 @@ goog.scope(function () {
    *
    * @param {string} family
    * @param {fontface.Descriptors=} opt_descriptors
+   * @param {Window=} opt_context
    */
   fontface.Observer = function (family, opt_descriptors, opt_context) {
     var descriptors = opt_descriptors || {};
