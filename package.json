@@ -64,7 +64,7 @@
     "dev": "rollup -c -w -m inline --environment NODE_ENV:development",
     "build": "rollup -c --environment NODE_ENV:production",
     "clean": "rm -rf dist && rm -rf docs",
-    "lint": "eslint src/**",
+    "lint": "eslint 'src/**/*.js'",
     "docs": "jsdoc ./src --destination docs --readme README.md",
     "preversion": "npm test && npm run lint",
     "version": "npm run build && npm run docs && git add -A",
