@@ -16,6 +16,7 @@
   "main": "dist/fontfaceobserver.cjs.js",
   "browser": "dist/fontfaceobserver.umd.js",
   "module": "dist/fontfaceobserver.esm.js",
+  "types": "src/types.d.ts",
   "keywords": [
     "fontloader",
     "fonts",
