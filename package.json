@@ -30,7 +30,8 @@
     "dist/fontfaceobserver.cjs.js",
     "dist/fontfaceobserver.esm.js",
     "dist/fontfaceobserver.umd.js",
-    "src/*.js"
+    "src/*.js",
+    "src/*.ts"
   ],
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
   "contributors": [
