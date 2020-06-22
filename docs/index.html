@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Home</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Home</h1>
+
+    
+
+
+
+    
+
+
+    <h3> </h3>
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+    <section>
+        <article><h1>Font Face Observer</h1><p><a href="https://travis-ci.org/dmnsgn/fontfaceobserver"><img src="https://travis-ci.org/dmnsgn/fontfaceobserver.svg?branch=master" alt="Build Status"></a>
+<a href="https://www.npmjs.com/package/fontfaceobserver-es"><img src="https://badge.fury.io/js/fontfaceobserver.svg" alt="npm version"></a>
+<a href="https://github.com/prettier/prettier"><img src="https://img.shields.io/badge/styled_with-prettier-ff69b4.svg" alt="styled with prettier"></a></p>
+<blockquote>
+<p>Font Face Observer is a small <code>@font-face</code> loader and monitor (3.5KB minified and 1.3KB gzipped) compatible with any webfont service. It will monitor when a webfont is loaded and notify you. It does not limit you in any way in where, when, or how you load your webfonts. Unlike the <a href="https://github.com/typekit/webfontloader">Web Font Loader</a> Font Face Observer uses scroll events to detect font loads efficiently and with minimum overhead.</p>
+</blockquote>
+<h2>Documentation</h2><p>For details on how to use, check out the <a href="https://dmnsgn.github.io/fontfaceobserver/">documentation</a>.</p>
+<h2>Installation</h2><p>Font Face Observer comes with three bundles:</p>
+<ul>
+<li>A CommonJS bundle (<code>dist/fontfaceobserver.cjs.js</code>) for use in NodeJS:</li>
+</ul>
+<pre class="prettyprint source lang-shell"><code>npm install fontfaceobserver-es</code></pre><pre class="prettyprint source lang-js"><code>var FontFaceObserver = require(&quot;fontfaceobserver-es&quot;);
+
+var font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load().then(function() {
+  console.log(&quot;My Family has loaded&quot;);
+});</code></pre><ul>
+<li>An ES module bundle (<code>dist/fontfaceobserver.esm.js</code>) for the above and also directly in the browser:</li>
+</ul>
+<pre class="prettyprint source lang-html"><code>&lt;script type=&quot;module&quot; src=&quot;https://unpkg.com/fontfaceobserver-es@3.0.0/dist/fontfaceobserver.esm.js&quot;>&lt;/script></code></pre><pre class="prettyprint source lang-js"><code>import FontFaceObserver from &quot;fontfaceobserver-es&quot;;
+
+const font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load().then(function() {
+  console.log(&quot;My Family has loaded&quot;);
+});</code></pre><ul>
+<li>A UMD build (<code>dist/fontfaceobserver.umd.js</code>) mainly for browser without ES module support:</li>
+</ul>
+<pre class="prettyprint source lang-js"><code>&lt;script src=&quot;https://unpkg.com/fontfaceobserver-es@3.0.0/dist/fontfaceobserver.umd.js&quot;>&lt;/script>
+&lt;script>
+const font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load().then(function() {
+  console.log(&quot;My Family has loaded&quot;);
+});
+&lt;/script></code></pre><p>You'll need to include the required Polyfill for Promise support. See <a href="https://babeljs.io/docs/usage/polyfill/">babel-polyfill</a> and <a href="https://github.com/zloirock/core-js#commonjs">core-js</a>.</p>
+<h2>Usage</h2><p>Include your <code>@font-face</code> rules as usual. Fonts can be supplied by either a font service such as <a href="http://www.google.com/fonts">Google Fonts</a>, <a href="http://typekit.com">Typekit</a>, and <a href="http://webtype.com">Webtype</a> or be self-hosted. You can set up monitoring for a single font family at a time:</p>
+<pre class="prettyprint source lang-js"><code>const font = new FontFaceObserver(&quot;My Family&quot;, {
+  weight: 400
+});
+
+font.load().then(
+  function() {
+    console.log(&quot;Font is available&quot;);
+  },
+  function() {
+    console.log(&quot;Font is not available&quot;);
+  }
+);</code></pre><p>The <code>FontFaceObserver</code> constructor takes two arguments: the font-family name (required) and an object describing the variation (optional). The object can contain <code>weight</code>, <code>style</code>, and <code>stretch</code> properties. If a property is not present it will default to <code>normal</code>. To start loading the font, call the <code>load</code> method. It'll immediately return a new Promise that resolves when the font is loaded and rejected when the font fails to load.</p>
+<p>If your font doesn't contain at least the latin &quot;BESbwy&quot; characters you must pass a custom test string to the <code>load</code> method.</p>
+<pre class="prettyprint source lang-js"><code>const font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load(&quot;中国&quot;).then(
+  function() {
+    console.log(&quot;Font is available&quot;);
+  },
+  function() {
+    console.log(&quot;Font is not available&quot;);
+  }
+);</code></pre><p>The default timeout for giving up on font loading is 3 seconds. You can increase or decrease this by passing a number of milliseconds as the second parameter to the <code>load</code> method.</p>
+<pre class="prettyprint source lang-js"><code>var font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load(null, 5000).then(
+  function() {
+    console.log(&quot;Font is available&quot;);
+  },
+  function() {
+    console.log(&quot;Font is not available after waiting 5 seconds&quot;);
+  }
+);</code></pre><p>Multiple fonts can be loaded by creating a <code>FontFaceObserver</code> instance for each.</p>
+<pre class="prettyprint source lang-js"><code>var fontA = new FontFaceObserver(&quot;Family A&quot;);
+var fontB = new FontFaceObserver(&quot;Family B&quot;);
+
+fontA.load().then(function() {
+  console.log(&quot;Family A is available&quot;);
+});
+
+fontB.load().then(function() {
+  console.log(&quot;Family B is available&quot;);
+});</code></pre><p>You may also load both at the same time, rather than loading each individually.</p>
+<pre class="prettyprint source lang-js"><code>var fontA = new FontFaceObserver(&quot;Family A&quot;);
+var fontB = new FontFaceObserver(&quot;Family B&quot;);
+
+Promise.all([fontA.load(), fontB.load()]).then(function() {
+  console.log(&quot;Family A & B have loaded&quot;);
+});</code></pre><p>If you are working with a large number of fonts, you may decide to create <code>FontFaceObserver</code> instances dynamically:</p>
+<pre class="prettyprint source lang-js"><code>// An example collection of font data with additional metadata,
+// in this case “color.”
+var exampleFontData = {
+  'Family A': { weight: 400, color: 'red' },
+  'Family B': { weight: 400, color: 'orange' },
+  'Family C': { weight: 900, color: 'yellow' },
+  // Etc.
+};
+
+var observers = [];
+
+// Make one observer for each font,
+// by iterating over the data we already have
+Object.keys(exampleFontData).forEach(function(family) {
+  var data = exampleFontData[family];
+  var obs = new FontFaceObserver(family, data);
+  observers.push(obs.load());
+});
+
+Promise.all(observers)
+  .then(function(fonts) {
+    fonts.forEach(function(font) {
+      console.log(font.family + ' ' + font.weight + ' ' + 'loaded');
+
+      // Map the result of the Promise back to our existing data,
+      // to get the other properties we need.
+      console.log(exampleFontData[font.family].color);
+    });
+  })
+  .catch(function(err) {
+    console.warn('Some critical font are not available:', err);
+  });</code></pre><p>The following example emulates FOUT with Font Face Observer for <code>My Family</code>.</p>
+<pre class="prettyprint source lang-js"><code>var font = new FontFaceObserver(&quot;My Family&quot;);
+
+font.load().then(function() {
+  document.documentElement.className += &quot; fonts-loaded&quot;;
+});</code></pre><pre class="prettyprint source lang-css"><code>.fonts-loaded {
+  body {
+    font-family: My Family, sans-serif;
+  }
+}</code></pre><h2>Browser support</h2><p>FontFaceObserver has been tested and works on the following browsers:</p>
+<ul>
+<li>Chrome (desktop &amp; Android)</li>
+<li>Firefox</li>
+<li>Opera</li>
+<li>Safari (desktop &amp; iOS)</li>
+<li>IE8+</li>
+<li>Android WebKit</li>
+</ul>
+<h2>License</h2><p>Font Face Observer is licensed under the BSD License. Copyright 2014-2017 Bram Stein and Damien Seguin. All rights reserved.</p></article>
+    </section>
+
+
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="FontFaceObserver.html">FontFaceObserver</a></li><li><a href="Ruler.html">Ruler</a></li></ul><h3><a href="global.html">Global</a></h3>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Jun 22 2020 13:41:52 GMT+0100 (British Summer Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

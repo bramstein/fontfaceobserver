@@ -74,14 +74,12 @@
   <body>
     <div id="mocha"></div>
     <script>CLOSURE_NO_DEPS = true;</script>
-    <script src="../vendor/google/base.js"></script>
+    <script src="../dist/fontfaceobserver.umd.js"></script>
+    <script src="../node_modules/babel-polyfill/dist/polyfill.js"></script>
     <script src="../node_modules/unexpected/unexpected.js"></script>
     <script src="../node_modules/mocha/mocha.js"></script>
     <script src="../node_modules/sinon/pkg/sinon.js"></script>
-    <script src="../node_modules/promis/promise.js"></script>
-    <script src="deps.js"></script>
     <script>
-      goog.require('fontface.Observer');
       mocha.ui('bdd');
 
       expect = weknowhow.expect;

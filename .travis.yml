@@ -2,11 +2,11 @@ sudo: false
 
 language: node_js
 
-before_install:
-  - npm install -g grunt-cli
-
 node_js:
-  - "4"
+  - '8'
+  - '9'
+  - '10'
+  - '11'
 
 matrix:
   fast_finish: true
