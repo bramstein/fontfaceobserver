@@ -1,4 +1,4 @@
-import Ruler from "./Ruler.js";
+import Ruler from "./ruler.js";
 import { onReady } from "./dom.js";
 
 /** Class for FontFaceObserver. */
