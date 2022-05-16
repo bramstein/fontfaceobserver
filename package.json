@@ -43,7 +43,7 @@
     "mocha": "^10.0.0",
     "mocha-headless-chrome": "^4.0.0",
     "promis": "=1.1.4",
-    "sinon": "^1.17.4",
+    "sinon": "^14.0.0",
     "unexpected": "^13.0.0"
   },
   "scripts": {
