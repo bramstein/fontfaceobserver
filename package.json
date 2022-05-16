@@ -30,7 +30,7 @@
     "externs.js"
   ],
   "author": "Bram Stein <b.l.stein@gmail.com> (http://www.bramstein.com/)",
-  "license": "BSD-3-Clause",
+  "license": "BSD-2-Clause",
   "devDependencies": {
     "closure-dom": "=0.2.6",
     "google-closure-compiler": "=v20220502",
