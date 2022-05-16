@@ -1,0 +1,25 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Browser Test</title>
+    <meta charset="utf-8">
+    <style>
+      @font-face {
+        font-family: test;
+        src: url(assets/sourcesanspro-regular.woff);
+      }
+    </style>
+  </head>
+  <body>
+    <script src="../fontfaceobserver.js"></script>
+    <script>
+      const font = new FontFaceObserver('test');
+
+      font.load().then(f => {
+        console.log('Font has loaded');
+      }).catch(e => {
+        console.error(e);
+      });
+    </script>
+  </body>
+</html>
