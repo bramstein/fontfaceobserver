@@ -1,7 +1,9 @@
 var extend = require('extend');
 
 module.exports = function (grunt) {
-  require('google-closure-compiler').grunt(grunt);
+  require('google-closure-compiler').grunt(grunt, {
+    max_parallel_compilations: require('os').cpus().length
+  });
 
   var compilerOptions = {
     compilation_level: 'ADVANCED_OPTIMIZATIONS',
@@ -14,6 +16,7 @@ module.exports = function (grunt) {
   };
 
   var src = [
+    'vendor/google/base.js',
     'node_modules/closure-dom/src/dom.js',
     'src/descriptors.js',
     'src/ruler.js',
@@ -87,7 +90,6 @@ module.exports = function (grunt) {
     }
   });
 
-  grunt.loadNpmTasks('grunt-closurecompiler');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
