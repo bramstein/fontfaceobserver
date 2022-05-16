@@ -1,5 +1,3 @@
-var extend = require('extend');
-
 module.exports = function (grunt) {
   require('google-closure-compiler').grunt(grunt, {
     max_parallel_compilations: require('os').cpus().length
@@ -69,7 +67,7 @@ module.exports = function (grunt) {
         files: {
           'build/fontfaceobserver.debug.js': src
         },
-        options: extend({}, compilerOptions, {
+        options: Object.assign({}, compilerOptions, {
           debug: true,
           formatting: ['PRETTY_PRINT', 'PRINT_INPUT_DELIMITER']
         })

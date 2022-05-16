@@ -33,7 +33,6 @@
   "license": "BSD-3-Clause",
   "devDependencies": {
     "closure-dom": "=0.2.6",
-    "extend": "^3.0.0",
     "google-closure-compiler": "=v20220502",
     "grunt": "^1.0.3",
     "grunt-contrib-clean": "^2.0.1",
