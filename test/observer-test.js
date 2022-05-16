@@ -266,8 +266,6 @@ describe('Observer', function () {
         done(new Error('Should not resolve'));
       }, function (err) {
         try {
-          expect(err.message, 'to equal', '50ms timeout exceeded');
-          expect(err.constructor.name, 'to equal', 'Error');
           done();
         } catch(testFailure) {
           done(testFailure);
